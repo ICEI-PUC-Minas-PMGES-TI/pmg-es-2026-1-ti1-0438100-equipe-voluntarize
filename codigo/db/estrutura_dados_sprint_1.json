@@ -1,0 +1,137 @@
+{
+  "volunteers": [
+    {
+      "id": 1,
+      "name": "Cláudia",
+      "email": "claudia@email.com",
+      "password": "123456",
+      "cpf": "12345678900",
+      "birthDate": "2000-08-10",
+      "cep": "30110-000",
+      "bio": "Gosto de ajudar comunidades carentes.",
+      "phone": "(31) 91234-5678",
+      "profilePicture": "",
+      "rating": 4.5,
+      "followers": 7000,
+      "createdAt": "2020-08-10",
+      "deletedAt": null
+    },
+    {
+      "id": 2,
+      "name": "Lucas Ferreira",
+      "email": "lucas@email.com",
+      "password": "123456",
+      "cpf": "98765432100",
+      "birthDate": "1998-05-12",
+      "cep": "30140-000",
+      "bio": "Voluntário ativo em ações sociais.",
+      "phone": "(31) 99876-5432",
+      "profilePicture": "",
+      "rating": 4.5,
+      "followers": 59,
+      "createdAt": "2022-01-01",
+      "deletedAt": null
+    }
+  ],
+
+  "ongs": [
+    {
+      "id": 1,
+      "name": "ONG Dia Feliz",
+      "email": "contato@diafeliz.org",
+      "password": "123456",
+      "cnpj": "12345678000199",
+      "foundationDate": "2025-08-01",
+      "cep": "30120-000",
+      "description": "ONG focada em ações sociais e apoio comunitário.",
+      "responsibleName": "Carlos Henrique",
+      "phone": "(31) 3333-4444",
+      "website": "https://www.diafeliz.org",
+      "logo": "",
+      "rating": 4.8,
+      "followers": 200000,
+      "createdAt": "2025-08-01",
+      "deletedAt": null
+    }
+  ],
+
+  "actions": [
+    {
+      "id": 1,
+      "title": "Ação do dia 15",
+      "description": "Distribuição de alimentos para comunidades carentes.",
+      "location": "Rua Feliz, 215 - Belo Horizonte, MG",
+      "date": "2026-08-15",
+      "ongId": 1,
+      "tags": ["Comida", "Comunidade"],
+      "participants": [1, 2],
+      "vacancies": 20,
+      "status": "open",
+      "endDate": "2026-08-10",
+      "image": "",
+      "createdAt": "2026-08-01",
+      "deletedAt": null
+    }
+  ],
+
+  "applications": [
+    {
+      "id": 1,
+      "volunteerId": 2,
+      "actionId": 1,
+      "status": "pending",
+      "appliedAt": "2026-08-10",
+      "confirmedAt": null,
+      "attended": false
+    },
+    {
+      "id": 2,
+      "volunteerId": 1,
+      "actionId": 1,
+      "status": "accepted",
+      "appliedAt": "2026-08-09",
+      "confirmedAt": "2026-08-15",
+      "attended": true
+    }
+  ],
+
+  "reviews": [
+    {
+      "id": 1,
+      "authorId": 1,
+      "targetType": "ong",
+      "targetId": 1,
+      "actionId": 1,
+      "rating": 5,
+      "comment": "Ótima ONG, muito organizada.",
+      "createdAt": "2026-08-16",
+      "deletedAt": null
+    },
+    {
+      "id": 2,
+      "authorId": 1,
+      "targetType": "volunteer",
+      "targetId": 2,
+      "actionId": 1,
+      "rating": 4,
+      "comment": "Participou bem da ação.",
+      "createdAt": "2026-08-16",
+      "deletedAt": null
+    }
+  ],
+
+  "tags": [
+    {
+      "id": 1,
+      "name": "Comida"
+    },
+    {
+      "id": 2,
+      "name": "Idosos"
+    },
+    {
+      "id": 3,
+      "name": "Educação"
+    }
+  ]
+}
