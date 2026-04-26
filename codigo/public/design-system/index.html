@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voluntarize Design System</title>
+    <link rel="stylesheet" href="css/globals.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="divider-label">
+      <span>Design System</span>
+    </div>
+
+    <div class="container header-shell">
+      <header class="site-header">
+        <img
+          class="brand-logo"
+          src="../assets/images/logo/logo-horizontal.png"
+          alt="Voluntarize"
+        />
+        <nav class="site-nav" aria-label="Navegacao">
+          <a href="#cores">Cores</a>
+          <a href="#tipografia">Tipografia</a>
+          <a href="#inputs">Inputs</a>
+          <a href="#botoes">Botoes</a>
+        </nav>
+        <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuario">
+            <i class="fa-regular fa-user"></i>
+          </button>
+      </header>
+    </div>
+
+    <main class="container section stack">
+      <section id="cores" class="surface stack">
+        <h2>Cores e Containers</h2>
+        <div class="grid grid-3">
+          <div class="surface surface-white">Container branco</div>
+          <div class="surface surface-green">Container verde</div>
+          <div class="surface surface-purple">Container roxo</div>
+        </div>
+        <div class="grid grid-3">
+          <div class="surface surface-flat">surface-flat</div>
+          <div class="surface surface-soft">surface-soft</div>
+          <div class="surface surface-heavy">surface-heavy</div>
+        </div>
+        <div class="grid grid-3">
+          <div class="surface rounded-none shadow-sm p-2">rounded-none + shadow-sm + p-2</div>
+          <div class="surface rounded-lg shadow-lg p-5">rounded-lg + shadow-lg + p-5</div>
+          <div class="surface rounded-full shadow-xl p-3">rounded-full + shadow-xl + p-3</div>
+        </div>
+        <div class="grid grid-1">            
+            <div class="surface rounded-xs shadow-md p-2 text-center text-uppercase text-xs text-md">Container de título da sessão</div>
+        </div>
+      </section>
+
+      <div class="divider-label"><span>Utilidades</span></div>
+
+      <section class="surface stack">
+        <h2>Alinhamento e Flex</h2>
+        <div class="flex flex-col gap-2">
+          <div class="flex justify-between items-center gap-2 surface surface-xs">
+            <span class="text-xs text-semibold">justify-between + items-center</span>
+            <span class="text-xs">A</span>
+          </div>
+          <div class="flex justify-center items-center gap-2 surface surface-xs">
+            <span class="text-xs text-semibold">justify-center</span>
+            <span class="text-xs">B</span>
+          </div>
+          <div class="flex justify-end items-center gap-2 surface surface-xs">
+            <span class="text-xs text-semibold">justify-end</span>
+            <span class="text-xs">C</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider-label"><span>Tipografia</span></div>
+
+      <section id="tipografia" class="surface stack">
+        <h1>Titulo principal</h1>
+        <h2>Subtitulo</h2>
+        <h3>Titulo de secao</h3>
+        <p class="text-lg">Texto de destaque para introducoes.</p>
+        <p class="text-md">Texto padrao para conteudo comum.</p>
+        <p class="text-sm">Texto pequeno para notas e detalhes.</p>
+        <p class="font-alt">Fonte auxiliar: Oxygen.</p>
+      </section>
+
+      <div class="divider-label"><span>Inputs</span></div>
+
+      <section id="inputs" class="surface stack">
+        <div class="grid grid-2">
+          <label class="stack input-group">
+            <span class="ml-2 text-md text-semibold">Nome</span>
+            <div class="field">
+              <span class="field-icon" aria-hidden="true">
+                <i class="fa-regular fa-user"></i>
+              </span>
+              <input
+                class="field-input"
+                type="text"
+                placeholder="Digite seu nome"
+              />
+            </div>
+          </label>
+          <label class="stack input-group">
+            <span class="ml-2 text-md text-semibold">Email</span>
+            <div class="field">
+              <span class="field-icon" aria-hidden="true">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <input
+                class="field-input"
+                type="email"
+                placeholder="Digite seu email"
+              />
+            </div>
+          </label>
+        </div>
+        <label class="stack input-group mt-2">
+          <span class="ml-2 text-md text-semibold">Descricao</span>
+          <div class="field field-textarea">
+            <span class="field-icon" aria-hidden="true">
+              <i class="fa-regular fa-comment"></i>
+            </span>
+            <textarea
+              class="field-input"
+              placeholder="Digite uma descricao"
+            ></textarea>
+          </div>
+        </label>
+      </section>
+
+      <div class="divider-line divider-black divider-prism-sm prism-left" aria-hidden="true"></div>
+      <div class="divider-line divider-green divider-prism-md prism-right" aria-hidden="true"></div>
+      <div class="divider-line divider-purple divider-prism-lg prism-both" aria-hidden="true"></div>
+
+      <div class="divider-label"><span>Botoes</span></div>
+
+      <section id="botoes" class="surface stack">
+        <h2>Botoes</h2>
+        <div class="grid grid-2">
+          <div class="stack">
+            <button class="btn btn-primary">Primario</button>
+            <button class="btn btn-secondary">Secundario</button>
+          </div>
+          <div class="stack">
+            <button class="btn btn-outline">Outline</button>
+            <button class="btn btn-primary" disabled>Desabilitado</button>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <button class="btn btn-primary btn-icon btn-pad-sm btn-shadow-sm btn-border-thin">
+            <i class="fa-solid fa-heart"></i>
+            Doar agora
+          </button>
+          <button class="btn btn-secondary btn-icon btn-pad-lg btn-shadow-xl btn-border-thick btn-rounded-lg">
+            <i class="fa-solid fa-hand-holding-heart"></i>
+            Quero ajudar
+          </button>
+          <button class="btn btn-outline btn-icon-only btn-shadow-md" aria-label="Editar perfil">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+          <button class="btn btn-primary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuario">
+            <i class="fa-regular fa-user"></i>
+          </button>
+          <button class="btn btn-outline btn-icon btn-pad-xs btn-shadow-none btn-border-base btn-rounded-sm">
+            <i class="fa-solid fa-plus"></i>
+            Novo
+          </button>
+          <button class="btn btn-primary btn-icon-only btn-icon-only-xs btn-shadow-xs btn-rounded-full" aria-label="Mini ação">
+            <i class="fa-solid fa-bolt"></i>
+          </button>
+        </div>
+
+        <div class="stack">
+          <h3>Variacoes de icone</h3>
+          <div class="grid grid-3">
+            <span class="icon-token icon-xs icon-green icon-shadow-sm"><i class="fa-solid fa-leaf"></i></span>
+            <span class="icon-token icon-md icon-purple icon-shadow-md"><i class="fa-solid fa-bolt"></i></span>
+            <span class="icon-token icon-lg icon-black icon-shadow-lg"><i class="fa-solid fa-star"></i></span>
+          </div>
+          <div class="grid grid-3">
+            <span class="icon-token icon-sm icon-white icon-square">A</span>
+            <span class="icon-token icon-md icon-green">B</span>
+            <span class="icon-token icon-lg icon-purple icon-square">C</span>
+            <span class="icon-token icon-xs icon-black">D</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider-label"><span>Tags</span></div>
+
+      <section class="surface stack">
+        <h2>Tags</h2>
+        <div class="flex flex-wrap gap-2 items-center">
+          <span class="tag tag-green tag-sm">
+            <span class="tag-text">Saúde</span>
+            <button class="tag-remove" type="button" aria-label="Remover Saúde">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </span>
+          <span class="tag tag-purple tag-sm">
+            <span class="tag-text">Educação</span>
+            <button class="tag-remove" type="button" aria-label="Remover Educação">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </span>
+          <span class="tag tag-white tag-static tag-xs">Cultura</span>
+          <span class="tag tag-green tag-static tag-xs">Assistência</span>
+        </div>
+      </section>
+    </main>
+
+    <div class="container mb-4">
+      <footer class="site-footer">
+        <img
+          class="brand-logo"
+          src="../assets/images/logo/logo-horizontal.png"
+          alt="Voluntarize"
+        />
+        <p class="text-sm">Plataforma de voluntarios @ 2026</p>
+      </footer>
+    </div>
+  </body>
+</html>
