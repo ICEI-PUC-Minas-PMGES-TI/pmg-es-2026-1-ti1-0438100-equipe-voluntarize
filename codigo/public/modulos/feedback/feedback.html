@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avaliação do Voluntário</title>
+  <link rel="stylesheet" href="\codigo\public\design-system\css\globals.css" />
+  <link rel="stylesheet" href="feedback.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+    <div class="container header-shell">
+    <header class="site-header">
+      <img class="brand-logo" src="\codigo\public\assets\images\logo\logo-horizontal.png" alt="Voluntarize" />
+      <nav class="site-nav" aria-label="Navegação">
+          <a href="/pagina">Link</a>
+      </nav>
+      <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário">
+          <i class="fa-regular fa-user"></i>
+      </button>
+    </header>
+  </div>
+
+  <div class="page">
+    <button class="btn btn-secondary btn-pad-sm back-btn" type="button" onclick="history.back()">
+      <i class="fa-solid fa-rotate-left"></i>
+      Voltar
+    </button>
+
+    <section class="review-card">
+      <div class="review-grid">
+        <!-- Ilustração do celular -->
+        <div class="phone-illustration" aria-hidden="true">
+          <div class="phone">
+            <span class="bubble b1"><span class="dollar">$</span><span class="line"></span><i class="fa-solid fa-check check"></i></span>
+            <span class="bubble b2"><span class="dollar">$</span><span class="line"></span><i class="fa-solid fa-check check"></i></span>
+            <span class="bubble b3"><span class="dollar">$</span><span class="line"></span><i class="fa-solid fa-check check"></i></span>
+            <span class="bubble b4"><span class="dollar">$</span><span class="line"></span><i class="fa-solid fa-check check"></i></span>
+            <span class="bubble b5"><span class="dollar">$</span><span class="line"></span><i class="fa-solid fa-check check"></i></span>
+          </div>
+        </div>
+
+        
+        <div class="review-content">
+          <div class="review-title-pill">Avaliação do voluntário</div>
+
+          <p class="review-description">
+            Deixe uma avaliação sobre o que achou da participação e desempenho do voluntário
+          </p>
+
+          <div class="stars" role="radiogroup" aria-label="Avaliação por estrelas">
+            <button type="button" class="star-btn" data-value="1" aria-label="1 estrela">
+              <img src="star-regular-full.svg" alt="" />
+            </button>
+            <button type="button" class="star-btn" data-value="2" aria-label="2 estrelas">
+              <img src="star-regular-full.svg" alt="" />
+            </button>
+            <button type="button" class="star-btn" data-value="3" aria-label="3 estrelas">
+              <img src="star-regular-full.svg" alt="" />
+            </button>
+            <button type="button" class="star-btn" data-value="4" aria-label="4 estrelas">
+              <img src="star-regular-full.svg" alt="" />
+            </button>
+            <button type="button" class="star-btn" data-value="5" aria-label="5 estrelas">
+              <img src="star-regular-full.svg" alt="" />
+            </button>
+          </div>
+
+          <label class="review-textarea-wrap">
+            <div class="field field-textarea">
+              <span class="field-icon" aria-hidden="true">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </span>
+              <textarea id="comentario" class="field-input" placeholder="Digite seu comentário (Opcional)"></textarea>
+            </div>
+          </label>
+
+          <button id="btnConcluir" class="btn btn-primary btn-pad-lg conclude-btn" type="button">
+            Concluir
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+    <div class="container mb-4">
+      <footer class="site-footer">
+          <img class="brand-logo" src="\codigo\public\assets\images\logo\logo-horizontal.png" alt="Voluntarize" />
+          <p class="text-sm">Plataforma de voluntários @ 2026</p>
+      </footer>
+    </div>
+
+  <script src="feedback.js"></script>
+</body>
+</html>
