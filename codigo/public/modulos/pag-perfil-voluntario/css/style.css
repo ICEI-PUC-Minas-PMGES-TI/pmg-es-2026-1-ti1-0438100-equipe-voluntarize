@@ -78,8 +78,8 @@
 }
 
 .user-shortcut {
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -101,16 +101,20 @@
 }
 
 .user-shortcut::before {
-  width: 9px;
-  height: 9px;
-  top: 7px;
+  width: 11px;
+  height: 11px;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
   border-radius: 50%;
 }
 
 .user-shortcut::after {
-  width: 20px;
-  height: 12px;
-  bottom: 7px;
+  width: 25px;
+  height: 15px;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
   border-bottom: 0;
   border-radius: 999px 999px 0 0;
 }
