@@ -1,1 +1,153 @@
-<!-- Estrutura inicial da pagina de perfil do voluntario. -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil da Voluntária | Voluntarize</title>
+    <link rel="stylesheet" href="../../design-system/css/globals.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/script.js" defer></script>
+  </head>
+  <body class="volunteer-profile-page">
+    <header class="profile-topbar" aria-label="Navegação principal">
+      <a class="brand-link" href="#" aria-label="Voluntarize">
+        <img
+          class="brand-mark"
+          src="../../assets/images/logo/logo-horizontal.png"
+          alt="Voluntarize"
+        />
+      </a>
+
+      <nav class="profile-nav" aria-label="Menu do site">
+        <a href="#">Início</a>
+        <a href="#">Perfil</a>
+        <a href="#">Vagas</a>
+        <a href="#">Minhas Candidaturas</a>
+      </nav>
+
+      <a class="user-shortcut" href="#" aria-label="Abrir perfil">♙</a>
+    </header>
+
+    <main class="profile-shell">
+      <section class="profile-hero" aria-labelledby="volunteer-name">
+        <div class="profile-avatar" aria-hidden="true">
+          <div class="avatar-head"></div>
+          <div class="avatar-body"></div>
+        </div>
+
+        <div class="profile-summary">
+          <h1 id="volunteer-name">Cláudia</h1>
+          <p id="volunteer-since">Voluntária desde Ago. de 2020</p>
+          <p id="last-action">Usuária da Voluntarize desde Dez. 2020</p>
+        </div>
+
+        <div class="profile-stats" aria-label="Resumo da voluntária">
+          <span id="volunteer-rating" class="stat-pill">4,5 ☆</span>
+          <span id="volunteer-followers" class="stat-pill">7K Seguidores</span>
+          <a class="follow-button" href="#">Seguindo</a>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true">
+        <span>Sobre mim</span>
+      </div>
+
+      <section class="about-panel" aria-labelledby="about-title">
+        <div class="about-copy">
+          <a class="section-button" href="#" id="about-title">Conheça um pouco mais sobre Cláudia</a>
+          <p id="about-text">
+            Apaixonada por impacto social, Cláudia participa de ações de apoio
+            comunitário, arrecadações e projetos educativos. Ela acredita que
+            pequenas atitudes consistentes podem transformar a rotina de muitas
+            famílias.
+          </p>
+          <p>
+            Seu trabalho voluntário é marcado por pontualidade, cuidado com as
+            pessoas atendidas e disposição para colaborar em equipes diversas.
+          </p>
+        </div>
+
+        <img
+          class="about-illustration"
+          src="./img/profile-illustration.png"
+          alt="Ilustração de uma voluntária"
+        />
+      </section>
+
+      <div class="section-divider" aria-hidden="true">
+        <span>Histórico de Ações</span>
+      </div>
+
+      <section class="actions-panel" aria-labelledby="actions-title">
+        <h2 id="actions-title" class="sr-only">Histórico de Ações</h2>
+        <a class="carousel-control" href="#" aria-label="Ação anterior">&lt;</a>
+
+        <div class="action-list" id="actions-list">
+          <article class="action-card">
+            <div class="action-media">
+              <img src="./img/profile-illustration.png" alt="Voluntária na ação" />
+              <span class="action-rating">4,8 ☆</span>
+            </div>
+            <h3>Ação do Dia 15</h3>
+            <p>Distribuição de alimentos para comunidades carentes.</p>
+            <a class="details-button" href="#">Ver detalhes</a>
+          </article>
+
+          <article class="action-card">
+            <div class="action-media">
+              <img src="./img/profile-illustration.png" alt="Voluntária na ação" />
+              <span class="action-rating">4,8 ☆</span>
+            </div>
+            <h3>Ação do Dia 15</h3>
+            <p>Organização de kits de apoio e acolhimento comunitário.</p>
+            <a class="details-button" href="#">Ver detalhes</a>
+          </article>
+        </div>
+
+        <a class="carousel-control" href="#" aria-label="Próxima ação">&gt;</a>
+      </section>
+
+      <div class="section-divider" aria-hidden="true">
+        <span>Avaliações</span>
+      </div>
+
+      <section class="reviews-panel" aria-labelledby="reviews-title">
+        <div class="reviews-callout">
+          <span aria-hidden="true">♡</span>
+          <h2 id="reviews-title">Veja o que outros usuários disseram sobre trabalhar com Cláudia</h2>
+        </div>
+
+        <div class="review-list" id="reviews-list">
+          <article class="review-card">
+            <div class="review-header">
+              <span>Ong Dia</span>
+              <strong>5,0 ☆</strong>
+            </div>
+            <p>Cláudia foi pontual, cuidadosa e muito comprometida com a ação.</p>
+          </article>
+
+          <article class="review-card">
+            <div class="review-header">
+              <span>José</span>
+              <strong>4,5 ☆</strong>
+            </div>
+            <p>Trabalhou muito bem em equipe e ajudou além do esperado.</p>
+          </article>
+
+          <article class="review-card">
+            <div class="review-header">
+              <span>Lucas</span>
+              <strong>4,0 ☆</strong>
+            </div>
+            <p>Demonstrou empatia e organização durante toda a atividade.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="profile-footer">
+      <img src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <p>Plataforma de voluntários © 2026 | Todos os direitos reservados</p>
+    </footer>
+  </body>
+</html>
