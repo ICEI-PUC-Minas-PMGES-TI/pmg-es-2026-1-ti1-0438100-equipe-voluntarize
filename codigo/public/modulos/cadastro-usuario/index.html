@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Usuario Voluntario</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/cadastro-usuario.js" defer></script>
+</head>
+
+<body>
+  <main class="cadastro-page">
+    <button class="back-button" type="button" id="backButton" aria-label="Voltar">
+      <span aria-hidden="true">&#8617;</span>
+      Voltar
+    </button>
+
+    <section class="cadastro-shell" aria-labelledby="cadastroTitulo">
+      <aside class="illustration-panel" aria-hidden="true">
+        <img id="stepIllustration" src="assets/successful-person.svg" alt="">
+        <span class="decor decor-top">$</span>
+        <span class="decor decor-middle">&#9825;</span>
+        <span class="decor decor-bottom">&#9873;</span>
+      </aside>
+
+      <section class="cadastro-card">
+        <form class="cadastro-form" id="cadastroUsuarioForm" novalidate>
+          <div class="card-heading">
+            <span class="title-pill" id="cadastroTitulo">Cadastro</span>
+            <p id="stepIntro">Venha fazer parte dessa comunidade!</p>
+          </div>
+
+          <div class="form-step" data-step="0">
+            <div class="field-group">
+              <label for="nome">Nome completo</label>
+              <div class="input-shell">
+                <span aria-hidden="true">&#9786;</span>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" autocomplete="name" required>
+              </div>
+              <small class="field-error" id="erro-nome"></small>
+            </div>
+
+            <div class="field-group">
+              <label for="email">E-mail</label>
+              <div class="input-shell">
+                <span aria-hidden="true">&#9993;</span>
+                <input type="email" id="email" name="email" placeholder="Digite seu email" autocomplete="email" required>
+              </div>
+              <small class="field-error" id="erro-email"></small>
+            </div>
+
+            <div class="field-group">
+              <label for="senha">Senha</label>
+              <div class="input-shell">
+                <span aria-hidden="true">&#128274;</span>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" autocomplete="new-password" required>
+              </div>
+              <small class="field-error" id="erro-senha"></small>
+            </div>
+
+            <div class="field-group">
+              <label for="confirmarSenha">Confirmar senha</label>
+              <div class="input-shell">
+                <span aria-hidden="true">&#128274;</span>
+                <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirme sua senha" autocomplete="new-password" required>
+              </div>
+              <small class="field-error" id="erro-confirmarSenha"></small>
+            </div>
+          </div>
+
+          <div class="form-step" data-step="1" hidden>
+            <div class="field-group">
+              <label for="telefone">Telefone</label>
+              <div class="input-shell">
+                <span aria-hidden="true">&#9742;</span>
+                <input type="tel" id="telefone" name="telefone" placeholder="Digite seu telefone" autocomplete="tel" required>
+              </div>
+              <small class="field-error" id="erro-telefone"></small>
+            </div>
+
+            <div class="field-group">
+              <label for="cpf">CPF</label>
+              <div class="input-shell">
+                <span aria-hidden="true">&#9786;</span>
+                <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" inputmode="numeric" autocomplete="off" required>
+              </div>
+              <small class="field-error" id="erro-cpf"></small>
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label for="cidade">Cidade</label>
+                <div class="input-shell">
+                  <span aria-hidden="true">&#9673;</span>
+                  <input type="text" id="cidade" name="cidade" placeholder="Digite sua cidade" autocomplete="address-level2" required>
+                </div>
+                <small class="field-error" id="erro-cidade"></small>
+              </div>
+
+              <div class="field-group">
+                <label for="estado">Estado</label>
+                <div class="input-shell">
+                  <span aria-hidden="true">&#9873;</span>
+                  <select id="estado" name="estado" autocomplete="address-level1" required>
+                    <option value="">UF</option>
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AP">AP</option>
+                    <option value="AM">AM</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MT">MT</option>
+                    <option value="MS">MS</option>
+                    <option value="MG">MG</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PR">PR</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RN">RN</option>
+                    <option value="RS">RS</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="SC">SC</option>
+                    <option value="SP">SP</option>
+                    <option value="SE">SE</option>
+                    <option value="TO">TO</option>
+                  </select>
+                </div>
+                <small class="field-error" id="erro-estado"></small>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="areaInteresse">Area de interesse</label>
+              <div class="input-shell">
+                <span aria-hidden="true">&#9734;</span>
+                <select id="areaInteresse" name="areaInteresse" required>
+                  <option value="">Selecione uma area</option>
+                  <option value="educacao">Educacao</option>
+                  <option value="saude">Saude</option>
+                  <option value="meio-ambiente">Meio ambiente</option>
+                  <option value="assistencia-social">Assistencia social</option>
+                  <option value="eventos">Eventos</option>
+                  <option value="tecnologia">Tecnologia</option>
+                  <option value="outra">Outra</option>
+                </select>
+              </div>
+              <small class="field-error" id="erro-areaInteresse"></small>
+            </div>
+          </div>
+
+          <div class="form-step" data-step="2" hidden>
+            <div class="field-group">
+              <label for="historia">Conte um pouco mais sobre voce</label>
+              <div class="input-shell textarea-shell">
+                <span aria-hidden="true">&#9786;</span>
+                <textarea id="historia" name="historia" placeholder="Digite sua historia..." rows="6"></textarea>
+              </div>
+              <small class="helper-text">Essa informacao sera exibida no seu perfil de voluntario.</small>
+              <small class="field-error" id="erro-historia"></small>
+            </div>
+          </div>
+
+          <p class="form-message" id="formMessage" role="alert" aria-live="polite"></p>
+
+          <div class="form-actions">
+            <button class="secondary-button" type="button" id="prevStep">Voltar</button>
+            <button class="primary-button" type="button" id="nextStep">Proximo</button>
+            <button class="primary-button" type="submit" id="submitForm" hidden>Cadastrar</button>
+          </div>
+
+          <p class="login-link">Ja tem uma conta? <a href="../login/login.html">Entrar!</a></p>
+
+          <div class="step-dots" aria-label="Etapas do cadastro">
+            <span class="step-dot active" data-dot="0"></span>
+            <span class="step-dot" data-dot="1"></span>
+            <span class="step-dot" data-dot="2"></span>
+          </div>
+        </form>
+
+        <section class="success-panel" id="successPanel" hidden>
+          <img src="assets/successful-group.svg" alt="">
+          <h2>Cadastro realizado!</h2>
+          <p>Seu perfil de voluntario foi salvo com sucesso.</p>
+          <a class="primary-button" href="../login/login.html">Entrar</a>
+        </section>
+      </section>
+    </section>
+  </main>
+</body>
+
+</html>
