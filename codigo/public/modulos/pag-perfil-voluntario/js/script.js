@@ -7,8 +7,6 @@ const defaultProfile = {
     joined: "Usuária da Voluntarize desde Dez. 2020",
     rating: 4.5,
     followers: 7000,
-    about:
-      "Contrary to popular belief, o trabalho voluntário de Cláudia combina acolhimento, organização e presença constante em ações sociais. Ela atua em campanhas de arrecadação, apoio comunitário e atividades educativas para famílias em vulnerabilidade.",
   },
   actions: [
     {
@@ -144,7 +142,6 @@ function renderProfile(profile) {
   setText("#last-action", profile.volunteer.joined);
   setText("#volunteer-rating", formatRating(profile.volunteer.rating));
   setText("#volunteer-followers", formatFollowers(profile.volunteer.followers));
-  setText("#about-text", profile.volunteer.about);
   setText(
     "#about-title",
     `Conheça um pouco mais sobre ${profile.volunteer.name}`
