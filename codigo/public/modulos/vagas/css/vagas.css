@@ -1,0 +1,237 @@
+body {
+  background: var(--color-gray-100);
+}
+
+.vagas-search,
+.vagas-resultados {
+  padding: var(--space-4) var(--space-5);
+}
+
+.vagas-search-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  align-items: stretch;
+}
+
+.vagas-tags-box {
+  position: relative;
+}
+
+.vagas-tags-box-inner {
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: 90px;
+}
+
+.vagas-tags-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-black);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vagas-tags-selecionadas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+
+.vagas-tags-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-1);
+}
+
+.vagas-btn-add {
+  border-radius: var(--radius-pill) !important;
+  font-size: 0.75rem;
+}
+
+.vagas-tags-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  padding: var(--space-2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.vagas-tags-dropdown.aberto {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.vagas-tag-opcao {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  box-shadow: var(--shadow-xs);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.vagas-tag-opcao:hover {
+  background: var(--color-gray-200);
+  transform: translate(-1px, -1px);
+}
+
+.vagas-tag-opcao.selecionada {
+  background: var(--color-green);
+  cursor: default;
+  opacity: 0.6;
+}
+
+
+.vagas-hint-field {
+  cursor: default;
+  box-shadow: var(--shadow-sm);
+}
+
+.vagas-hint-text {
+  font-size: 0.85rem;
+  color: var(--color-black);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.vagas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.vaga-card {
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.vaga-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.vaga-card-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--color-gray-200);
+  border-bottom: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vaga-card-thumb i {
+  font-size: 2.5rem;
+  color: var(--color-gray-400);
+}
+
+.vaga-card-body {
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.vaga-card-titulo {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-black);
+  line-height: 1.3;
+}
+
+.vaga-card-ong {
+  font-size: 0.78rem;
+  color: var(--color-gray-400);
+  font-weight: 700;
+}
+
+.vaga-card-desc {
+  font-size: 0.78rem;
+  color: var(--color-black);
+  font-family: var(--font-alt);
+  line-height: 1.5;
+  margin-top: var(--space-1);
+}
+
+.vaga-card-cta {
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+.vaga-card-cta .btn {
+  width: 100%;
+}
+
+.vagas-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--space-5);
+  color: var(--color-white);
+  font-size: 0.9rem;
+}
+
+.vagas-paginacao .btn {
+  font-size: 0.75rem;
+}
+
+@media (max-width: 920px) {
+  .vagas-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .vagas-search-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vagas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vagas-search,
+  .vagas-resultados {
+    padding: var(--space-3);
+  }
+}
