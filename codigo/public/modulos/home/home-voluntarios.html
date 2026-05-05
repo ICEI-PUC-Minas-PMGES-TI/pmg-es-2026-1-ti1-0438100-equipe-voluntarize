@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voluntarize — Home Voluntário</title>
+  <link rel="stylesheet" href="../../design-system/css/globals.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+  <div class="container header-shell">
+    <header class="site-header">
+      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <nav class="site-nav" aria-label="Navegação">
+        <a href="#">Início</a>
+        <a href="#">Perfil</a>
+        <a href="#">Vagas</a>
+        <a href="#">Minhas Vagas</a>
+      </nav>
+      <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm avatar-border" aria-label="Perfil">
+        <i class="fa-regular fa-user"></i>
+      </button>
+    </header>
+  </div>
+
+  <main class="container section stack">
+    <section class="surface surface-green" style="position: relative">
+      <div style="
+            width: 500px;
+            position: absolute;
+            top: 0;
+            right: var(--space-5);
+          ">
+        <div class="divider-line divider-black divider-prism-sm prism-right" aria-hidden="true"></div>
+      </div>
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h1>Bom te ver, Voluntário !<br />É sempre bom vê-lo fazendo o bem!</h1>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <a href="#vagas" class="btn btn-secondary btn-pad-md">Ver minhas vagas</a>
+            <a href="#" class="btn btn-secondary btn-pad-md">Ver vagas disponíveis</a>
+          </div>
+        </div>
+        <div class="hero-illustration" aria-hidden="true">
+          <img src="../../assets/images/imgs-undraw/img-home-banner-bolinhas-pessoas.svg"
+            alt="Banner de boas-vindas" />
+        </div>
+      </div>
+      <div style="
+            width: 500px;
+            position: absolute;
+            bottom: 0;
+            left: var(--space-5);
+          ">
+        <div class="divider-line divider-black divider-prism-sm prism-left" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <div class="divider-label"><span>ONGs Populares</span></div>
+
+    <section class="section surface surface-white stack" style="position: relative">
+      <div class="surface surface-green rounded-sm p-4 mb-3 text-center text-sm text-bold">
+        <div style="
+            width: 150px;
+            position: absolute;
+            top: 7px;
+            right: 50px;
+          ">
+          <div class="divider-line divider-black divider-prism-sm prism-right" aria-hidden="true"></div>
+        </div>
+        <p class="text-md text-black mt-1 flex items-center justify-center gap-3">
+          <i class="fa-solid fa-fire text-lg"></i>
+          Conheça as organizações mais engajadas da plataforma e conecte-se com elas!
+        </p>
+      </div>
+      </div>
+
+      <div class="carousel-wrapper">
+        <button class="btn btn-secondary btn-icon-only btn-shadow-sm carousel-btn" id="prevBtn" aria-label="Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="carousel-track-container">
+          <div class="carousel-track pb-1" id="carouselTrack"></div>
+        </div>
+
+        <button class="btn btn-secondary btn-icon-only btn-shadow-sm carousel-btn" id="nextBtn" aria-label="Próximo">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <div class="divider-label"><span>Vagas Populares</span></div>
+
+    <section class="section surface surface-purple stack" style="position: relative">
+      <div class="surface surface-white rounded-sm p-4 mb-3 text-center text-sm text-bold">
+        <div style="
+            width: 150px;
+            position: absolute;
+            top: 7px;
+            right: 50px;
+          ">
+          <div class="divider-line divider-black divider-prism-sm prism-right" aria-hidden="true"></div>
+        </div>
+        <p class="text-md text-black mt-1 flex items-center justify-center gap-3">
+          <i class="fa-solid fa-fire text-lg"></i>
+          Confira algumas vagas que estão fazendo sucesso na plataforma!
+        </p>
+      </div>
+      </div>
+
+      <div class="carousel-wrapper">
+        <button class="btn btn-primary btn-icon-only btn-shadow-sm carousel-btn" id="altaPrevBtn" aria-label="Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="carousel-track-container">
+          <div class="carousel-track pb-1" id="altaTrack"></div>
+        </div>
+
+        <button class="btn btn-primary btn-icon-only btn-shadow-sm carousel-btn" id="altaNextBtn" aria-label="Próximo">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <div class="divider-label mb-3"><span>Vagas que você se inscreveu</span></div>
+
+    <section id="vagas" class="vagas-section surface surface-green">
+
+      <div class="vagas-grid">
+        <div class="vagas-carousel">
+          <div class="vagas-carousel-inner">
+            <button class="btn btn-secondary btn-icon-only btn-shadow-sm" id="vagasPrevBtn" aria-label="Anterior">
+              <i class="fa-solid fa-chevron-up"></i>
+            </button>
+            <div class="vagas-carousel-container">
+              <div class="vagas-carousel-track" id="vagasTrack"></div>
+            </div>
+            <button class="btn btn-secondary btn-icon-only btn-shadow-sm" id="vagasNextBtn" aria-label="Próximo">
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="vagas-illustration mb-4" aria-hidden="true">
+          <img src="../../assets/images/imgs-undraw/img-home-mulher-lupa-pessoas.svg"
+            alt="Ilustração de vagas em aberto" />
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 mt-4">
+        <button class="btn btn-outline btn-pad-sm pl-4 pr-4">
+          Buscar vagas
+        </button>
+        <button class="btn btn-outline btn-pad-sm pl-4 pr-4">Ver mais</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="container mb-4 mt-4">
+    <footer class="site-footer">
+      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <p class="text-sm">
+        Plataforma de voluntários @ 2026 | Todos os direitos reservados
+      </p>
+    </footer>
+  </div>
+
+  <script src="home.js"></script>
+</body>
+
+</html>
