@@ -203,7 +203,7 @@ async function init() {
           const action = actionMap[app.actionId];
           if (!action) return;
           vagasCarousel.track.appendChild(
-            renderVagaCard(action, ongMap[action.ongId] || '', 'voluntario', app.status === 'accepted')
+            renderVagaCard(action, ongMap[action.ongId] || '', 'voluntario', app.status === 'accepted' && !!app.confirmedAt)
           );
         });
     } else {
