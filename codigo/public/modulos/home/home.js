@@ -23,6 +23,15 @@ function getVisibleCount() {
 
 const isVoluntario = document.title.includes('Voluntário');
 
+if (!sessionStorage.getItem('usuarioCorrente')) {
+  const mock = isVoluntario
+    ? { id: 4, tipo: 'voluntario', nome: 'Rafael Santos' }
+    : { id: 2, tipo: 'ong', nome: 'Instituto Mãos Unidas' };
+  sessionStorage.setItem('usuarioCorrente', JSON.stringify(mock));
+}
+
+const usuarioCorrente = JSON.parse(sessionStorage.getItem('usuarioCorrente'));
+
 function initHorizontalCarousel(trackId, prevId, nextId, cardClass) {
   const track = document.getElementById(trackId);
   const prevBtn = document.getElementById(prevId);
@@ -187,10 +196,9 @@ async function init() {
   const vagasCarousel = initVerticalCarousel('vagasTrack', 'vagasPrevBtn', 'vagasNextBtn');
   if (vagasCarousel) {
     if (isVoluntario) {
-      const VOLUNTARIO_ID = 1;
       const actionMap = Object.fromEntries(db.actions.map(a => [a.id, a]));
       db.applications
-        .filter(app => app.volunteerId === VOLUNTARIO_ID)
+        .filter(app => app.volunteerId === usuarioCorrente.id)
         .forEach(app => {
           const action = actionMap[app.actionId];
           if (!action) return;
@@ -200,7 +208,7 @@ async function init() {
         });
     } else {
       db.actions
-        .filter(a => a.status === 'open')
+        .filter(a => a.status === 'open' && a.ongId === usuarioCorrente.id)
         .forEach(a => vagasCarousel.track.appendChild(renderVagaCard(a, ongMap[a.ongId] || '', 'ong')));
     }
     vagasCarousel.setHeight();
