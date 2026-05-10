@@ -1,28 +1,39 @@
+// Caminho "simulado" para o banco de dados local. Quando o servidor JSON Server estiver
+// rodando, trocar por 'http://localhost:3000' e ajustar as chamadas de fetch.
 const API = '../../db/db.json';
 
+// Logos usadas nos cards de ONG em ordem rotativa, já que o db não tem imagens.
+// Quando as ONGs tiverem logo própria, usar ong.logo no lugar.
 const ONG_LOGOS = [
   '../../assets/images/logo-ongs/logo-ong-acolheramor.png',
   '../../assets/images/logo-ongs/logo-ong-educanca.png',
   '../../assets/images/logo-ongs/logo-ong-ecoterra.png',
 ];
 
+// Formata número de seguidores: 1200 → "1k", 1500000 → "1.5M"
 function formatFollowers(n) {
   if (n >= 1000000) return (n / 1000000).toFixed(1).replace('.0', '') + 'M';
   if (n >= 1000) return (n / 1000).toFixed(0) + 'k';
   return n;
 }
 
+// Converte data ISO (yyyy-mm-dd) para o formato brasileiro (dd/mm/yyyy)
 function formatDate(iso) {
   const [y, m, d] = iso.split('-');
   return `${d}/${m}/${y}`;
 }
 
+// Quantidade de cards visíveis no carrossel horizontal por tamanho de tela
 function getVisibleCount() {
   return window.innerWidth <= 480 ? 1 : window.innerWidth <= 768 ? 2 : 3;
 }
 
+// Detecta qual home está ativa pelo título da página
 const isVoluntario = document.title.includes('Voluntário');
 
+// Sessão simulada — enquanto não há autenticação real, o usuário logado é
+// definido aqui. Troque o id para testar com outros usuários do db.json.
+// Quando a autenticação for implementada, deve-se remover esse bloco.
 if (!sessionStorage.getItem('usuarioCorrente')) {
   const mock = isVoluntario
     ? { id: 4, tipo: 'voluntario', nome: 'Rafael Santos' }
@@ -32,6 +43,9 @@ if (!sessionStorage.getItem('usuarioCorrente')) {
 
 const usuarioCorrente = JSON.parse(sessionStorage.getItem('usuarioCorrente'));
 
+// Inicializa um carrossel horizontal genérico.
+// Retorna { track, update } para que o chamador possa inserir cards e disparar
+// o primeiro update após popular o track.
 function initHorizontalCarousel(trackId, prevId, nextId, cardClass) {
   const track = document.getElementById(trackId);
   const prevBtn = document.getElementById(prevId);
@@ -63,6 +77,9 @@ function initHorizontalCarousel(trackId, prevId, nextId, cardClass) {
   return { track, update };
 }
 
+// Inicializa um carrossel vertical genérico, exibindo 2 cards por vez.
+// A altura do container é calculada dinamicamente com base no card real,
+// por isso setHeight() deve ser chamado após os cards serem inseridos no DOM.
 function initVerticalCarousel(trackId, prevId, nextId) {
   const track = document.getElementById(trackId);
   const prevBtn = document.getElementById(prevId);
@@ -102,6 +119,7 @@ function initVerticalCarousel(trackId, prevId, nextId) {
   return { track, setHeight, update };
 }
 
+// Card do carrossel de ONGs populares (usado nas duas homes)
 function renderOngCard(ong, index) {
   const logo = ONG_LOGOS[index % ONG_LOGOS.length];
   const div = document.createElement('div');
@@ -125,6 +143,7 @@ function renderOngCard(ong, index) {
   return div;
 }
 
+// Card do carrossel de vagas em alta — ordenadas por número de participantes
 function renderAltaCard(action, ongName) {
   const div = document.createElement('div');
   div.className = 'alta-card';
@@ -140,6 +159,13 @@ function renderAltaCard(action, ongName) {
   return div;
 }
 
+// Card de vaga com duas variantes de botões e badge opcional de aprovação.
+//
+// variant 'ong'        → botões "Ver Detalhes" + "Editar"  (home da ONG)
+// variant 'voluntario' → botões "Ver Detalhes" + "Ver ONG" (home do voluntário)
+//
+// A badge "Aprovado" só aparece quando a inscrição tem status 'accepted'
+// e confirmedAt preenchido — ou seja, foi aceita e confirmada pela ONG.
 function renderVagaCard(action, ongName, variant = 'ong', aprovado = false) {
   const inscritos = action.participants ? action.participants.length : 0;
   const div = document.createElement('div');
@@ -176,14 +202,18 @@ function renderVagaCard(action, ongName, variant = 'ong', aprovado = false) {
 async function init() {
   const res = await fetch(API);
   const db = await res.json();
+
+  // Mapa id → nome das ONGs para cruzar com actions e applications
   const ongMap = Object.fromEntries(db.ongs.map(o => [o.id, o.name]));
 
+  // Carrossel de ONGs populares — exibe todas as ONGs do banco
   const ongCarousel = initHorizontalCarousel('carouselTrack', 'prevBtn', 'nextBtn', 'ong-card');
   if (ongCarousel) {
     db.ongs.forEach((ong, i) => ongCarousel.track.appendChild(renderOngCard(ong, i)));
     ongCarousel.update();
   }
 
+  // Carrossel de vagas em alta — ações abertas ordenadas por mais participantes
   const altaCarousel = initHorizontalCarousel('altaTrack', 'altaPrevBtn', 'altaNextBtn', 'alta-card');
   if (altaCarousel) {
     db.actions
@@ -193,6 +223,9 @@ async function init() {
     altaCarousel.update();
   }
 
+  // Carrossel vertical de vagas — conteúdo varia por tipo de usuário:
+  // ONG       → suas próprias ações abertas
+  // Voluntário → ações em que se inscreveu, com badge se confirmado
   const vagasCarousel = initVerticalCarousel('vagasTrack', 'vagasPrevBtn', 'vagasNextBtn');
   if (vagasCarousel) {
     if (isVoluntario) {
