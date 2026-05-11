@@ -22,8 +22,8 @@ const introByStep = [
 
 const illustrationByStep = [
   "assets/successful-person.svg",
-  "assets/fingerprint-login.svg",
-  "assets/living.svg"
+  "assets/successful-person.svg",
+  "assets/successful-person.svg"
 ];
 
 const fieldsByStep = [

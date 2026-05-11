@@ -14,41 +14,41 @@ body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); 
 button, input, select, textarea { font: inherit; }
 [hidden] { display: none !important; }
 
-.cadastro-page { min-height: 100vh; padding: 28px 40px; }
+.cadastro-page { min-height: 100vh; padding: 24px 40px; }
 .back-button, .primary-button, .secondary-button, .title-pill {
   border: 1px solid var(--line);
   border-radius: 4px;
   color: var(--text);
 }
 .back-button {
-  min-width: 134px;
-  padding: 9px 20px;
+  min-width: 122px;
+  padding: 7px 18px;
   background: var(--purple);
   cursor: pointer;
 }
 
 .cadastro-shell {
-  width: min(1160px, 100%);
-  min-height: 650px;
-  margin: 34px auto 0;
+  width: min(900px, 100%);
+  min-height: 560px;
+  margin: 24px auto 0;
   display: grid;
-  grid-template-columns: 420px minmax(360px, 1fr);
+  grid-template-columns: 290px minmax(500px, 1fr);
   align-items: center;
-  gap: 40px;
+  gap: 20px;
 }
 
 .illustration-panel {
-  min-height: 540px;
+  min-height: 470px;
   display: grid;
   place-items: center;
 }
-.illustration-panel img { width: min(380px, 96%); max-height: 560px; }
+.illustration-panel img { width: min(430px, 145%); max-height: 540px; transform: translateY(-34px); }
 
 .cadastro-card {
-  width: min(600px, 100%);
-  min-height: 550px;
+  width: min(540px, 100%);
+  min-height: 470px;
   margin-left: auto;
-  padding: 38px 64px 24px;
+  padding: 24px 42px 16px;
   display: flex;
   align-items: center;
   background: #fff;
@@ -57,10 +57,10 @@ button, input, select, textarea { font: inherit; }
   box-shadow: 3px 3px 0 rgba(0, 0, 0, .72);
 }
 .cadastro-form, .success-panel { width: 100%; }
-.card-heading { margin-bottom: 22px; text-align: center; }
+.card-heading { margin-bottom: 14px; text-align: center; }
 .title-pill {
-  width: 220px;
-  min-height: 44px;
+  width: 200px;
+  min-height: 38px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -68,17 +68,17 @@ button, input, select, textarea { font: inherit; }
   background: #fff;
   box-shadow: 2px 2px 0 rgba(0, 0, 0, .38);
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
 }
-.card-heading p, .success-panel p { margin: 0; font-size: 14px; line-height: 1.5; }
-.form-step { min-height: 330px; }
+.card-heading p, .success-panel p { margin: 0; font-size: 12px; line-height: 1.5; }
+.form-step { min-height: 278px; }
 .field-row { display: grid; grid-template-columns: minmax(0, 1fr) 130px; gap: 16px; }
-.field-group { margin-bottom: 13px; }
-.field-group label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; }
+.field-group { margin-bottom: 8px; }
+.field-group label { display: block; margin-bottom: 4px; font-size: 11px; font-weight: 700; }
 
 .input-shell {
-  min-height: 50px;
+  min-height: 42px;
   display: flex;
   align-items: center;
   padding: 0 14px;
@@ -95,11 +95,11 @@ button, input, select, textarea { font: inherit; }
   outline: 0;
   background: transparent;
   color: var(--text);
-  font-size: 14px;
+  font-size: 12px;
 }
-.input-shell select { min-height: 48px; cursor: pointer; }
-.textarea-shell { min-height: 218px; align-items: flex-start; padding-top: 12px; }
-.textarea-shell textarea { min-height: 190px; resize: vertical; line-height: 1.4; }
+.input-shell select { min-height: 40px; cursor: pointer; }
+.textarea-shell { min-height: 178px; align-items: flex-start; padding-top: 12px; }
+.textarea-shell textarea { min-height: 150px; resize: vertical; line-height: 1.4; }
 
 .helper-text, .login-link { color: var(--muted); font-size: 11px; text-align: center; }
 .helper-text { display: block; width: min(290px, 100%); margin: 8px auto 0; font-size: 10px; line-height: 1.35; }
@@ -110,15 +110,15 @@ button, input, select, textarea { font: inherit; }
 
 .form-actions, .step-dots { display: flex; justify-content: center; gap: 12px; }
 .primary-button, .secondary-button {
-  min-height: 40px;
+  min-height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   cursor: pointer;
 }
-.primary-button { min-width: 220px; background: var(--green); box-shadow: 2px 2px 0 rgba(0, 0, 0, .62); }
-.secondary-button { min-width: 110px; background: transparent; border-color: transparent; }
+.primary-button { min-width: 198px; background: var(--green); box-shadow: 2px 2px 0 rgba(0, 0, 0, .62); }
+.secondary-button { min-width: 98px; background: transparent; border-color: transparent; }
 .login-link { margin: 10px 0 0; }
 .login-link a { color: var(--text); text-decoration: none; }
 .login-link a:hover, .secondary-button:hover { color: #7b4cb1; text-decoration: underline; }
@@ -135,7 +135,7 @@ button, input, select, textarea { font: inherit; }
   .cadastro-page { padding: 18px; }
   .cadastro-shell { min-height: auto; grid-template-columns: 1fr; gap: 12px; margin-top: 22px; }
   .illustration-panel { min-height: 240px; }
-  .illustration-panel img { width: min(260px, 82%); max-height: 240px; }
+  .illustration-panel img { width: min(260px, 82%); max-height: 240px; transform: none; }
   .cadastro-card { margin: 0 auto; padding: 26px 24px 18px; }
 }
 
