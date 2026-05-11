@@ -26,7 +26,6 @@ button, input, select, textarea { font: inherit; }
   background: var(--purple);
   cursor: pointer;
 }
-.back-button span { margin-right: 8px; }
 
 .cadastro-shell {
   width: min(1080px, 100%);
@@ -40,15 +39,10 @@ button, input, select, textarea { font: inherit; }
 
 .illustration-panel {
   min-height: 540px;
-  position: relative;
   display: grid;
   place-items: center;
 }
 .illustration-panel img { width: min(290px, 90%); max-height: 500px; }
-.decor { position: absolute; color: var(--purple); font-weight: 700; font-size: 18px; }
-.decor-top { top: 86px; left: 16px; }
-.decor-middle { top: 156px; right: 22px; }
-.decor-bottom { bottom: 118px; left: 74px; }
 
 .cadastro-card {
   width: min(600px, 100%);
@@ -87,7 +81,6 @@ button, input, select, textarea { font: inherit; }
   min-height: 50px;
   display: flex;
   align-items: center;
-  gap: 12px;
   padding: 0 14px;
   background: #fff;
   border: 1px solid var(--line);
@@ -95,7 +88,6 @@ button, input, select, textarea { font: inherit; }
   box-shadow: 2px 2px 0 rgba(0, 0, 0, .62);
 }
 .input-shell:focus-within, .back-button:focus-visible, .primary-button:focus-visible, .secondary-button:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
-.input-shell span { width: 18px; flex: 0 0 18px; color: #4d4d4d; text-align: center; }
 .input-shell input, .input-shell select, .input-shell textarea {
   width: 100%;
   min-width: 0;
@@ -144,7 +136,6 @@ button, input, select, textarea { font: inherit; }
   .cadastro-shell { min-height: auto; grid-template-columns: 1fr; gap: 12px; margin-top: 22px; }
   .illustration-panel { min-height: 180px; }
   .illustration-panel img { max-height: 180px; }
-  .decor { display: none; }
   .cadastro-card { margin: 0 auto; padding: 26px 24px 18px; }
 }
 
