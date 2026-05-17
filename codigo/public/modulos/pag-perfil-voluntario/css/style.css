@@ -1,37 +1,37 @@
 :root {
   --profile-border: 2px solid var(--color-black);
-  --profile-radius: 8px;
+  --profile-radius: 24px;
   --profile-green: var(--color-green);
   --profile-purple: var(--color-purple);
 }
 
 .volunteer-profile-page { min-height: 100vh; padding: 12px 16px 24px; background: var(--color-gray-100); }
 .volunteer-profile-page :is(h1, h2, h3, p) { letter-spacing: 0; text-transform: none; }
-.profile-topbar, .profile-shell, .profile-footer { width: min(100%, 1040px); margin-inline: auto; }
+.profile-topbar, .profile-shell, .profile-footer { width: min(100%, 1130px); margin-inline: auto; }
 
 .profile-topbar {
-  min-height: 58px;
+  min-height: 86px;
   display: grid;
-  grid-template-columns: minmax(120px, 180px) 1fr 44px;
+  grid-template-columns: minmax(170px, 220px) 1fr 54px;
   align-items: center;
-  gap: 16px;
-  padding: 8px 18px;
+  gap: 28px;
+  padding: 14px 36px;
   background: var(--color-white);
   border: var(--profile-border);
   border-radius: var(--profile-radius);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 4px 4px 0 0 var(--color-black);
 }
 
 .brand-link { display: inline-flex; align-items: center; }
-.brand-mark { width: 132px; height: auto; }
+.brand-mark { width: 166px; height: auto; }
 
 .profile-nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(12px, 3vw, 34px);
+  gap: clamp(24px, 4vw, 46px);
   flex-wrap: wrap;
-  font-size: 0.82rem;
+  font-size: clamp(1rem, 1.8vw, 1.35rem);
   font-weight: 700;
 }
 
@@ -44,8 +44,8 @@
 }
 
 .user-shortcut {
-  width: 42px;
-  height: 42px;
+  width: 54px;
+  height: 54px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -53,60 +53,83 @@
   border: var(--profile-border);
   border-radius: var(--radius-pill);
   background: var(--profile-purple);
-  box-shadow: var(--shadow-xs);
+  box-shadow: 3px 3px 0 0 var(--color-black);
 }
 
 .user-shortcut img { width: 30px; height: 30px; object-fit: contain; }
 
-.profile-shell { margin-top: 24px; }
+.profile-shell { margin-top: 34px; }
 
 .profile-hero {
-  min-height: 210px;
+  min-height: 244px;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) minmax(140px, auto);
+  grid-template-columns: 230px minmax(0, 1fr) 250px;
   align-items: center;
-  gap: clamp(20px, 5vw, 42px);
-  padding: 28px 34px;
+  gap: clamp(24px, 4vw, 54px);
+  padding: 34px 82px 28px 40px;
   background: var(--profile-green);
   border: var(--profile-border);
   border-radius: var(--profile-radius);
+  box-shadow: 4px 4px 0 0 var(--color-black);
+  overflow: visible;
 }
 
 .profile-avatar {
-  width: clamp(112px, 16vw, 168px);
+  width: clamp(170px, 19vw, 210px);
   aspect-ratio: 1;
   border: var(--profile-border);
   border-radius: 50%;
   background: var(--profile-purple);
   object-fit: contain;
+  justify-self: center;
+  transform: translateY(34px);
 }
 
-.profile-summary h1 { margin-bottom: 4px; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.05; }
-.profile-summary p { max-width: 42ch; font-size: clamp(0.72rem, 1.8vw, 0.92rem); font-weight: 700; line-height: 1.4; }
-.profile-stats { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+.profile-summary h1 { margin-bottom: 6px; font-size: clamp(2.25rem, 4vw, 3.1rem); line-height: 1.05; }
+.profile-summary p { max-width: 48ch; color: #8f8f8f; font-size: clamp(0.9rem, 1.55vw, 1.25rem); font-weight: 700; line-height: 1.25; }
+.profile-stats { width: 250px; display: flex; flex-direction: column; align-items: stretch; gap: 10px; justify-self: end; }
 
 .rating-pill, .followers-pill, .follow-button {
-  min-height: 34px;
+  min-height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;
+  padding: 8px 14px;
   border: var(--profile-border);
-  border-radius: 4px;
+  border-radius: 9px;
   background: var(--color-white);
-  box-shadow: var(--shadow-xs);
-  font-size: 0.85rem;
+  box-shadow: 3px 3px 0 0 var(--color-black);
+  font-size: 1.15rem;
   font-weight: 700;
   text-align: center;
 }
 
-.rating-pill img, .followers-pill img, .action-rating img, .review-rating img {
+.rating-pill {
+  width: 126px;
+  min-height: 66px;
+  align-self: flex-end;
+  gap: 8px;
+  font-size: 2rem;
+}
+
+.followers-pill { gap: 12px; }
+.follow-button { width: 212px; align-self: flex-end; background: var(--profile-purple); }
+
+.rating-pill img {
+  width: 36px;
+  height: 34px;
+}
+
+.followers-pill img {
+  width: 24px;
+  height: 24px;
+}
+
+.action-rating img, .review-rating img {
   width: 22px;
   height: 22px;
   object-fit: contain;
 }
-
-.follow-button { background: var(--profile-purple); }
 
 .section-divider {
   display: grid;
