@@ -62,15 +62,13 @@ function renderDropdown() {
 
     const opcao = ce('button', `vagas-tag-opcao${isSelecionada ? ' selecionada' : ''}`);
     opcao.type = 'button';
-    opcao.textContent = tag.name;
+
     if (isSelecionada) {
-      opcao.innerHTML += ' <i class="fa-solid fa-check"></i>';
+      opcao.innerHTML = `${tag.name} <i class="fa-solid fa-check"></i>`;
       opcao.setAttribute('aria-pressed', 'true');
     } else {
+      opcao.textContent = tag.name;
       opcao.setAttribute('aria-pressed', 'false');
-    }
-
-    if (!isSelecionada) {
       opcao.addEventListener('click', () => {
         STATE.tagsSelecionadas.push(tag.name);
         STATE.paginaAtual = 1;
@@ -122,7 +120,6 @@ function renderCardVaga(action, nomeOng) {
   const thumb = ce('div', 'vaga-card-thumb');
   thumb.innerHTML = '<i class="fa-regular fa-image"></i>';
 
-  const body = ce('div', 'vaga-card-body');
 
   const titulo = ce('h3', 'vaga-card-titulo');
   titulo.textContent = action.title;
@@ -130,24 +127,22 @@ function renderCardVaga(action, nomeOng) {
   const ong = ce('p', 'vaga-card-ong');
   ong.textContent = `Por: ${nomeOng}`;
 
-  const desc = ce('p', 'vaga-card-desc');
-  const textoDesc = action.description.length > 80
+  const descTexto = action.description.length > 80
     ? action.description.slice(0, 80) + '...'
     : action.description;
-  desc.textContent = textoDesc;
+  const desc = ce('p', 'vaga-card-desc');
+  desc.textContent = descTexto;
 
   const cta = ce('div', 'vaga-card-cta');
-  const btn = ce('button', 'btn btn-primary');
+  const btn = ce('button', 'btn btn-primary btn-pad-sm');
   btn.textContent = 'Ver Detalhes';
   cta.appendChild(btn);
 
-  body.appendChild(titulo);
-  body.appendChild(ong);
-  body.appendChild(desc);
-  body.appendChild(cta);
-
   card.appendChild(thumb);
-  card.appendChild(body);
+  card.appendChild(titulo);
+  card.appendChild(ong);
+  card.appendChild(desc);
+  card.appendChild(cta);
 
   return card;
 }
@@ -158,7 +153,7 @@ function atualizarPaginacao(lista) {
 
   qs('#btnPaginaPrev').disabled = STATE.paginaAtual <= 1;
   qs('#btnPaginaNext').disabled = STATE.paginaAtual >= totalPag;
-  qs('#btnVerMais').disabled = STATE.paginaAtual >= totalPag;
+  qs('#btnVerMais').disabled    = STATE.paginaAtual >= totalPag;
 }
 
 function renderLista(lista) {
@@ -166,7 +161,7 @@ function renderLista(lista) {
   cont.innerHTML = '';
 
   const inicio = (STATE.paginaAtual - 1) * STATE.porPagina;
-  const slice = lista.slice(inicio, inicio + STATE.porPagina);
+  const slice  = lista.slice(inicio, inicio + STATE.porPagina);
 
   if (!slice.length) {
     const p = ce('p', 'vagas-empty');
@@ -182,17 +177,25 @@ function renderLista(lista) {
 }
 
 function getListaFiltrada() {
-  const titulo = normalizar(qs('#filtroTitulo').value);
-  const local = normalizar(qs('#filtroLocal').value);
+  const titulo     = normalizar(qs('#filtroTitulo').value);
+  const local      = normalizar(qs('#filtroLocal').value);
   const tagsAtivas = STATE.tagsSelecionadas.map(normalizar);
+
+  const ongMap = Object.fromEntries(STATE.ongs.map(o => [o.id, o.name]));
 
   let filtradas = STATE.actions.filter(a => a.status === 'open');
 
   if (titulo) {
-    filtradas = filtradas.filter(a => normalizar(a.title).includes(titulo));
+    filtradas = filtradas.filter(a => {
+      const nomeAcao = normalizar(a.title);
+      const nomeOng  = normalizar(ongMap[a.ongId] || '');
+      return nomeAcao.includes(titulo) || nomeOng.includes(titulo);
+    });
   }
   if (local) {
-    filtradas = filtradas.filter(a => normalizar(a.location).includes(local));
+    filtradas = filtradas.filter(a =>
+      normalizar(a.location).includes(local)
+    );
   }
   if (tagsAtivas.length) {
     filtradas = filtradas.filter(a => {
@@ -212,9 +215,9 @@ function aplicarFiltros() {
 
 function limparFiltros() {
   qs('#filtroTitulo').value = '';
-  qs('#filtroLocal').value = '';
-  STATE.tagsSelecionadas = [];
-  STATE.paginaAtual = 1;
+  qs('#filtroLocal').value  = '';
+  STATE.tagsSelecionadas    = [];
+  STATE.paginaAtual         = 1;
   atualizarTagsUI();
   renderDropdown();
   fecharDropdown();
@@ -250,7 +253,10 @@ function initEventos() {
   qs('#btnLimpar').addEventListener('click', limparFiltros);
 
   qs('#btnPaginaPrev').addEventListener('click', () => {
-    if (STATE.paginaAtual > 1) { STATE.paginaAtual--; aplicarFiltros(); }
+    if (STATE.paginaAtual > 1) {
+      STATE.paginaAtual--;
+      aplicarFiltros();
+    }
   });
 
   qs('#btnPaginaNext').addEventListener('click', () => {
@@ -266,11 +272,11 @@ function initEventos() {
 
 async function carregarDb() {
   const res = await fetch(API);
-  const db = await res.json();
+  const db  = await res.json();
 
   STATE.actions = db.actions;
-  STATE.ongs = db.ongs;
-  STATE.tags = db.tags;
+  STATE.ongs    = db.ongs;
+  STATE.tags    = db.tags;
 
   renderDropdown();
   aplicarFiltros();
