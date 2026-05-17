@@ -342,7 +342,15 @@
   white-space: nowrap;
 }
 
-.review-author { min-width: 0; justify-content: flex-start; gap: 13px; padding-left: 5px; padding-right: 20px; }
+.review-author {
+  min-width: 0;
+  justify-content: flex-start;
+  gap: 13px;
+  padding-left: 5px;
+  padding-right: 20px;
+  color: inherit;
+  text-decoration: none;
+}
 .review-author-name { min-width: 0; white-space: nowrap; }
 .review-rating {
   min-width: 116px;
@@ -387,11 +395,15 @@
   .profile-avatar { width: 170px; transform: none; }
   .profile-stats { width: 100%; grid-column: 1 / -1; flex-flow: row wrap; }
   .rating-pill, .followers-pill, .follow-button { flex: 1 1 150px; align-self: stretch; }
-  .about-panel, .review-list, .actions-panel { grid-template-columns: 1fr; }
+  .about-panel, .review-list { grid-template-columns: 1fr; }
+  .actions-panel { grid-template-columns: 1fr 1fr; gap: 16px 18px; }
   .action-list { grid-template-columns: minmax(0, 365px); }
+  .actions-panel .action-list { grid-column: 1 / -1; grid-row: 1; }
+  .actions-panel .carousel-control { grid-row: 2; }
+  .actions-panel .carousel-control:first-of-type { justify-self: end; }
+  .actions-panel .carousel-control:last-of-type { justify-self: start; }
   .actions-panel, .reviews-panel { min-height: auto; }
   .about-illustration { max-height: 260px; }
-  .carousel-control { display: none; }
 }
 
 @media (max-width: 620px) {
