@@ -4,7 +4,7 @@ const defaultProfile = {
   volunteer: {
     name: "Cláudia",
     since: "Voluntária desde Ago. de 2020",
-    joined: "Usuária da Voluntarize desde Dez. 2020",
+    joined: "Usuária da Voluntarize desde Dez. 2026",
     rating: 4.5,
     followers: 7000,
   },
@@ -13,15 +13,13 @@ const defaultProfile = {
       title: "Ação do Dia 15",
       rating: 4.8,
       description:
-        "Distribuição de alimentos e organização de kits para comunidades carentes.",
-      image: "./img/profile-illustration.png",
+        "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested...",
     },
     {
       title: "Ação do Dia 15",
       rating: 4.8,
       description:
-        "Apoio no acolhimento de famílias e registro dos participantes da ação.",
-      image: "./img/profile-illustration.png",
+        "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested...",
     },
   ],
   reviews: [
@@ -29,19 +27,19 @@ const defaultProfile = {
       author: "Ong Dia",
       rating: 5,
       comment:
-        "Cláudia foi pontual, cuidadosa e muito comprometida com a ação.",
+        "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below...",
     },
     {
       author: "José",
       rating: 4.5,
       comment:
-        "Trabalhou muito bem em equipe e ajudou além do esperado.",
+        "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below...",
     },
     {
       author: "Lucas",
       rating: 4,
       comment:
-        "Demonstrou empatia, organização e disposição durante toda a atividade.",
+        "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below...",
     },
   ],
 };
@@ -55,7 +53,16 @@ function loadProfile() {
   }
 
   try {
-    return JSON.parse(savedProfile);
+    const parsedProfile = JSON.parse(savedProfile);
+
+    return {
+      volunteer: {
+        ...defaultProfile.volunteer,
+        ...parsedProfile.volunteer,
+      },
+      actions: parsedProfile.actions || defaultProfile.actions,
+      reviews: parsedProfile.reviews || defaultProfile.reviews,
+    };
   } catch (error) {
     localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(defaultProfile));
     return defaultProfile;
@@ -63,15 +70,13 @@ function loadProfile() {
 }
 
 function formatRating(rating) {
-  return `${Number(rating).toFixed(1).replace(".", ",")} ☆`;
+  return Number(rating).toFixed(1).replace(".", ",");
 }
 
 function formatFollowers(followers) {
-  if (followers >= 1000) {
-    return `${Math.floor(followers / 1000)}K Seguidores`;
-  }
-
-  return `${followers} Seguidores`;
+  return followers >= 1000
+    ? `${Math.floor(followers / 1000)}K Seguidores`
+    : `${followers} Seguidores`;
 }
 
 function setText(selector, value) {
@@ -82,33 +87,42 @@ function setText(selector, value) {
   }
 }
 
+function createIcon(src, alt = "", className = "") {
+  const icon = document.createElement("img");
+  icon.src = src;
+  icon.alt = alt;
+  icon.className = className;
+  return icon;
+}
+
+function createRatingBadge(rating, className) {
+  const badge = document.createElement("span");
+  const value = document.createElement("span");
+
+  badge.className = className;
+  value.textContent = formatRating(rating);
+  badge.append(value, createIcon("./assets/rating-star.png"));
+
+  return badge;
+}
+
 function createActionCard(action) {
   const card = document.createElement("article");
-  card.className = "action-card";
-
   const media = document.createElement("div");
-  media.className = "action-media";
-
-  const image = document.createElement("img");
-  image.src = action.image;
-  image.alt = `Imagem da ${action.title}`;
-
-  const rating = document.createElement("span");
-  rating.className = "action-rating";
-  rating.textContent = formatRating(action.rating);
-
+  const image = createIcon("./assets/historico-acao.png", `Imagem da ${action.title}`);
   const title = document.createElement("h3");
-  title.textContent = action.title;
-
   const description = document.createElement("p");
-  description.textContent = action.description;
-
   const details = document.createElement("a");
+
+  card.className = "action-card";
+  media.className = "action-media";
+  title.textContent = action.title;
+  description.textContent = action.description;
   details.className = "details-button";
   details.href = "#";
-  details.textContent = "Ver detalhes";
+  details.textContent = "Ver Detalhes";
 
-  media.append(image, rating);
+  media.append(image, createRatingBadge(action.rating, "action-rating"));
   card.append(media, title, description, details);
 
   return card;
@@ -116,21 +130,26 @@ function createActionCard(action) {
 
 function createReviewCard(review) {
   const card = document.createElement("article");
-  card.className = "review-card";
-
   const header = document.createElement("div");
-  header.className = "review-header";
-
   const author = document.createElement("span");
-  author.textContent = review.author;
-
-  const rating = document.createElement("strong");
-  rating.textContent = formatRating(review.rating);
-
+  const icon = document.createElement("span");
+  const authorName = document.createElement("span");
   const comment = document.createElement("p");
+
+  card.className = "review-card";
+  header.className = "review-header";
+  author.className = "review-author";
+  icon.className = "review-icon";
+  authorName.className = "review-author-name";
+  authorName.textContent = review.author;
   comment.textContent = review.comment;
 
-  header.append(author, rating);
+  icon.append(
+    createIcon("./assets/avaliacoes-user-bg.png", "", "review-icon-bg"),
+    createIcon("./assets/avaliacoes-user.png", "", "review-icon-user")
+  );
+  author.append(icon, authorName);
+  header.append(author, createRatingBadge(review.rating, "review-rating"));
   card.append(header, comment);
 
   return card;
@@ -140,12 +159,9 @@ function renderProfile(profile) {
   setText("#volunteer-name", profile.volunteer.name);
   setText("#volunteer-since", profile.volunteer.since);
   setText("#last-action", profile.volunteer.joined);
-  setText("#volunteer-rating", formatRating(profile.volunteer.rating));
-  setText("#volunteer-followers", formatFollowers(profile.volunteer.followers));
-  setText(
-    "#about-title",
-    `Conheça um pouco mais sobre ${profile.volunteer.name}`
-  );
+  setText("#volunteer-rating-value", formatRating(profile.volunteer.rating));
+  setText("#volunteer-followers-value", formatFollowers(profile.volunteer.followers));
+  setText("#about-title", `Conheça um pouco mais sobre ${profile.volunteer.name}`);
   setText(
     "#reviews-title",
     `Veja o que outros usuários disseram sobre trabalhar com ${profile.volunteer.name}`

@@ -25,15 +25,18 @@
         <a href="#">Minhas Candidaturas</a>
       </nav>
 
-      <a class="user-shortcut" href="#" aria-label="Abrir perfil"></a>
+      <a class="user-shortcut" href="#" aria-label="Abrir perfil">
+        <img src="./assets/header-user-icon.png" alt="" />
+      </a>
     </header>
 
     <main class="profile-shell">
       <section class="profile-hero" aria-labelledby="volunteer-name">
-        <div class="profile-avatar" aria-hidden="true">
-          <div class="avatar-head"></div>
-          <div class="avatar-body"></div>
-        </div>
+        <img
+          class="profile-avatar"
+          src="./assets/perfil-user-grande.png"
+          alt="Perfil de Cláudia"
+        />
 
         <div class="profile-summary">
           <h1 id="volunteer-name">Cláudia</h1>
@@ -42,8 +45,14 @@
         </div>
 
         <div class="profile-stats" aria-label="Resumo da voluntária">
-          <span id="volunteer-rating" class="stat-pill">4,5 ☆</span>
-          <span id="volunteer-followers" class="stat-pill">7K Seguidores</span>
+          <span id="volunteer-rating" class="rating-pill">
+            <span id="volunteer-rating-value">4,5</span>
+            <img src="./assets/rating-star.png" alt="" />
+          </span>
+          <span id="volunteer-followers" class="followers-pill">
+            <img src="./assets/seguidores-icon.png" alt="" />
+            <span id="volunteer-followers-value">7K Seguidores</span>
+          </span>
           <a class="follow-button" href="#">Seguindo</a>
         </div>
       </section>
@@ -85,22 +94,28 @@
         <div class="action-list" id="actions-list">
           <article class="action-card">
             <div class="action-media">
-              <img src="./img/profile-illustration.png" alt="Voluntária na ação" />
-              <span class="action-rating">4,8 ☆</span>
+              <img src="./assets/historico-acao.png" alt="Voluntários na ação" />
+              <span class="action-rating">
+                <span>4,8</span>
+                <img src="./assets/rating-star.png" alt="" />
+              </span>
             </div>
             <h3>Ação do Dia 15</h3>
             <p>Distribuição de alimentos para comunidades carentes.</p>
-            <a class="details-button" href="#">Ver detalhes</a>
+            <a class="details-button" href="#">Ver Detalhes</a>
           </article>
 
           <article class="action-card">
             <div class="action-media">
-              <img src="./img/profile-illustration.png" alt="Voluntária na ação" />
-              <span class="action-rating">4,8 ☆</span>
+              <img src="./assets/historico-acao.png" alt="Voluntários na ação" />
+              <span class="action-rating">
+                <span>4,8</span>
+                <img src="./assets/rating-star.png" alt="" />
+              </span>
             </div>
             <h3>Ação do Dia 15</h3>
             <p>Organização de kits de apoio e acolhimento comunitário.</p>
-            <a class="details-button" href="#">Ver detalhes</a>
+            <a class="details-button" href="#">Ver Detalhes</a>
           </article>
         </div>
 
@@ -113,31 +128,58 @@
 
       <section class="reviews-panel" aria-labelledby="reviews-title">
         <div class="reviews-callout">
-          <span aria-hidden="true">♡</span>
+          <img src="./assets/avaliacoes-check.png" alt="" />
           <h2 id="reviews-title">Veja o que outros usuários disseram sobre trabalhar com Cláudia</h2>
         </div>
 
         <div class="review-list" id="reviews-list">
           <article class="review-card">
             <div class="review-header">
-              <span>Ong Dia</span>
-              <strong>5,0 ☆</strong>
+              <span class="review-author">
+                <span class="review-icon">
+                  <img class="review-icon-bg" src="./assets/avaliacoes-user-bg.png" alt="" />
+                  <img class="review-icon-user" src="./assets/avaliacoes-user.png" alt="" />
+                </span>
+                Ong Dia
+              </span>
+              <strong class="review-rating">
+                <span>5,0</span>
+                <img src="./assets/rating-star.png" alt="" />
+              </strong>
             </div>
             <p>Cláudia foi pontual, cuidadosa e muito comprometida com a ação.</p>
           </article>
 
           <article class="review-card">
             <div class="review-header">
-              <span>José</span>
-              <strong>4,5 ☆</strong>
+              <span class="review-author">
+                <span class="review-icon">
+                  <img class="review-icon-bg" src="./assets/avaliacoes-user-bg.png" alt="" />
+                  <img class="review-icon-user" src="./assets/avaliacoes-user.png" alt="" />
+                </span>
+                José
+              </span>
+              <strong class="review-rating">
+                <span>4,5</span>
+                <img src="./assets/rating-star.png" alt="" />
+              </strong>
             </div>
             <p>Trabalhou muito bem em equipe e ajudou além do esperado.</p>
           </article>
 
           <article class="review-card">
             <div class="review-header">
-              <span>Lucas</span>
-              <strong>4,0 ☆</strong>
+              <span class="review-author">
+                <span class="review-icon">
+                  <img class="review-icon-bg" src="./assets/avaliacoes-user-bg.png" alt="" />
+                  <img class="review-icon-user" src="./assets/avaliacoes-user.png" alt="" />
+                </span>
+                Lucas
+              </span>
+              <strong class="review-rating">
+                <span>4,0</span>
+                <img src="./assets/rating-star.png" alt="" />
+              </strong>
             </div>
             <p>Demonstrou empatia e organização durante toda a atividade.</p>
           </article>

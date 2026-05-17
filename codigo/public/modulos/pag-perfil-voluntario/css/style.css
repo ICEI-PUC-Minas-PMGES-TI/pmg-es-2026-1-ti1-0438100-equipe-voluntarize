@@ -46,7 +46,6 @@
 .user-shortcut {
   width: 42px;
   height: 42px;
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -55,20 +54,9 @@
   border-radius: var(--radius-pill);
   background: var(--profile-purple);
   box-shadow: var(--shadow-xs);
-  font-size: 1rem;
-  line-height: 1;
 }
 
-.user-shortcut::before, .user-shortcut::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 2px solid var(--color-black);
-}
-
-.user-shortcut::before { width: 11px; height: 11px; top: 8px; border-radius: 50%; }
-.user-shortcut::after { width: 25px; height: 15px; bottom: 8px; border-bottom: 0; border-radius: 999px 999px 0 0; }
+.user-shortcut img { width: 30px; height: 30px; object-fit: contain; }
 
 .profile-shell { margin-top: 24px; }
 
@@ -87,23 +75,17 @@
 .profile-avatar {
   width: clamp(112px, 16vw, 168px);
   aspect-ratio: 1;
-  position: relative;
-  display: grid;
-  place-items: center;
   border: var(--profile-border);
   border-radius: 50%;
   background: var(--profile-purple);
+  object-fit: contain;
 }
-
-.avatar-head, .avatar-body { position: absolute; border: 2px solid var(--color-black); }
-.avatar-head { width: 28%; aspect-ratio: 1; top: 24%; border-radius: 50%; }
-.avatar-body { width: 58%; height: 34%; bottom: 16%; border-bottom: 0; border-radius: 999px 999px 0 0; }
 
 .profile-summary h1 { margin-bottom: 4px; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.05; }
 .profile-summary p { max-width: 42ch; font-size: clamp(0.72rem, 1.8vw, 0.92rem); font-weight: 700; line-height: 1.4; }
 .profile-stats { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
 
-.stat-pill, .follow-button {
+.rating-pill, .followers-pill, .follow-button {
   min-height: 34px;
   display: inline-flex;
   align-items: center;
@@ -116,6 +98,12 @@
   font-size: 0.85rem;
   font-weight: 700;
   text-align: center;
+}
+
+.rating-pill img, .followers-pill img, .action-rating img, .review-rating img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
 }
 
 .follow-button { background: var(--profile-purple); }
@@ -219,6 +207,10 @@
   position: absolute;
   top: -2px;
   right: -2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   padding: 8px 10px;
   border: var(--profile-border);
   border-radius: 4px;
@@ -261,12 +253,13 @@
   border-radius: 4px;
 }
 
+.reviews-callout img { width: 24px; height: 24px; object-fit: contain; }
 .reviews-callout h2 { font-size: clamp(0.72rem, 1.5vw, 0.9rem); line-height: 1.4; }
 .review-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 26px; }
 .review-card { min-height: 178px; display: grid; gap: 18px; padding: 14px; background: var(--color-white); border: var(--profile-border); border-radius: 4px; box-shadow: var(--shadow-xs); }
 .review-header { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
 
-.review-header :is(span, strong) {
+.review-author, .review-rating {
   min-height: 30px;
   display: inline-flex;
   align-items: center;
@@ -280,7 +273,12 @@
   text-align: center;
 }
 
-.review-header strong { background: var(--profile-purple); }
+.review-author { justify-content: flex-start; gap: 8px; padding-left: 6px; }
+.review-rating { background: var(--profile-purple); gap: 6px; }
+.review-icon { width: 28px; height: 28px; position: relative; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.review-icon-bg, .review-icon-user { position: absolute; object-fit: contain; }
+.review-icon-bg { width: 28px; height: 28px; }
+.review-icon-user { width: 20px; height: 20px; }
 
 .profile-footer {
   min-height: 56px;
@@ -305,7 +303,7 @@
   .profile-nav { grid-column: 1 / -1; order: 3; }
   .profile-hero { grid-template-columns: auto 1fr; gap: 20px; }
   .profile-stats { grid-column: 1 / -1; flex-flow: row wrap; }
-  .stat-pill, .follow-button { flex: 1 1 130px; }
+  .rating-pill, .followers-pill, .follow-button { flex: 1 1 130px; }
   .about-panel, .review-list, .actions-panel { grid-template-columns: 1fr; }
   .about-illustration { max-height: 260px; }
   .carousel-control { display: none; }
