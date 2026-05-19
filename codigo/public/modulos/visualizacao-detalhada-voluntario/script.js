@@ -2,11 +2,17 @@
   const STORAGE_KEY = "voluntarize:visualizacao-detalhada-voluntario";
   const ACTION_KEY = "voluntarize:visualizacao-detalhada-voluntario:acao";
   const INDEX_KEY = "voluntarize:visualizacao-detalhada-voluntario:indice";
+  const ASSETS = {
+    action: "./assets/action-people.svg",
+    star: "./assets/star.svg",
+    reviewUser: "./assets/review-user.svg"
+  };
 
   const sampleVolunteer = {
+    versao: 3,
     nome: "Cl\u00e1udia",
-    voluntariaDesde: "ago. de 2020",
-    usuariaDesde: "dez. de 2020",
+    voluntariaDesde: "Ago. de 2020",
+    usuariaDesde: "Dez. 2026",
     nota: 4.5,
     seguidores: 7000,
     seguindo: true,
@@ -25,22 +31,22 @@
       },
       {
         id: 16,
-        titulo: "A\u00e7\u00e3o do Dia 16",
+        titulo: "A\u00e7\u00e3o do Dia 15",
         nota: 4.8,
         descricao:
           "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested..."
       },
       {
         id: 17,
-        titulo: "A\u00e7\u00e3o do Dia 17",
-        nota: 4.7,
+        titulo: "A\u00e7\u00e3o do Dia 15",
+        nota: 4.8,
         descricao:
-          "Apoio na organiza\u00e7\u00e3o de kits, recep\u00e7\u00e3o dos participantes e suporte durante a atividade."
+          "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested..."
       }
     ],
     avaliacoes: [
       {
-        autor: "ONG Dia",
+        autor: "Ong Dia",
         nota: 5.0,
         texto:
           "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below..."
@@ -88,7 +94,14 @@
     }
 
     try {
-      return JSON.parse(savedVolunteer);
+      const parsedVolunteer = JSON.parse(savedVolunteer);
+
+      if (parsedVolunteer.versao !== sampleVolunteer.versao) {
+        saveVolunteer(sampleVolunteer);
+        return clone(sampleVolunteer);
+      }
+
+      return parsedVolunteer;
     } catch (error) {
       saveVolunteer(sampleVolunteer);
       return clone(sampleVolunteer);
@@ -128,6 +141,19 @@
 
     parent.appendChild(child);
     return child;
+  }
+
+  function appendIcon(parent, src, className) {
+    const icon = document.createElement("img");
+    icon.src = src;
+    icon.alt = "";
+
+    if (className) {
+      icon.className = className;
+    }
+
+    parent.appendChild(icon);
+    return icon;
   }
 
   function renderProfile() {
@@ -188,11 +214,10 @@
     image.className = "action-image";
     image.setAttribute("aria-hidden", "true");
 
-    appendText(image, `${formatRating(action.nota)} \u2606`, "span", "action-rating");
+    appendIcon(image, ASSETS.action, "action-picture");
 
-    const person = document.createElement("span");
-    person.className = "action-person";
-    image.appendChild(person);
+    const rating = appendText(image, formatRating(action.nota), "span", "action-rating");
+    appendIcon(rating, ASSETS.star);
 
     card.appendChild(image);
     appendText(card, action.titulo, "h3", "action-title");
@@ -222,13 +247,24 @@
 
       const topline = document.createElement("div");
       topline.className = "review-topline";
-      appendText(topline, review.autor, "h3", "review-author");
-      appendText(topline, `${formatRating(review.nota)} \u2606`, "p", "review-score");
+
+      const author = appendText(topline, review.autor, "h3", "review-author");
+      author.prepend(createIcon(ASSETS.reviewUser));
+
+      const score = appendText(topline, formatRating(review.nota), "p", "review-score");
+      appendIcon(score, ASSETS.star);
 
       card.appendChild(topline);
-      appendText(card, review.texto, "p", "text-xs font-alt");
+      appendText(card, review.texto, "p", "review-text text-xs font-alt");
       elements.reviewsList.appendChild(card);
     });
+  }
+
+  function createIcon(src) {
+    const icon = document.createElement("img");
+    icon.src = src;
+    icon.alt = "";
+    return icon;
   }
 
   function moveActions(direction) {
