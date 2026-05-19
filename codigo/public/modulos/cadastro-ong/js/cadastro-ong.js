@@ -14,8 +14,21 @@ const stepIntro = document.getElementById("stepIntro");
 const stepIllustration = document.getElementById("stepIllustration");
 const steps = Array.from(document.querySelectorAll(".form-step"));
 const dots = Array.from(document.querySelectorAll(".dot"));
+const choiceButtons = Array.from(document.querySelectorAll("[data-register-type]"));
 
 let currentStep = 0;
+let selectedRegisterType = "ongs";
+
+const registerRoutes = {
+  ongs: {
+    jsonKey: "ongs",
+    url: "./index.html"
+  },
+  volunteers: {
+    jsonKey: "volunteers",
+    url: "../cadastro-usuario/index.html"
+  }
+};
 
 const introByStep = [
   "Venha fazer parte dessa comunidade!",
@@ -244,6 +257,29 @@ function showRegister() {
   updateStep();
 }
 
+function selectRegisterType(type) {
+  selectedRegisterType = type;
+
+  choiceButtons.forEach((button) => {
+    const selected = button.dataset.registerType === type;
+    button.classList.toggle("selected", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+}
+
+function startSelectedRegister() {
+  const route = registerRoutes[selectedRegisterType];
+
+  if (!route) return;
+
+  if (route.jsonKey === "volunteers") {
+    window.location.href = route.url;
+    return;
+  }
+
+  showRegister();
+}
+
 function updateStep() {
   steps.forEach((step, index) => {
     step.hidden = index !== currentStep;
@@ -322,17 +358,13 @@ function handleSubmit(event) {
   setMessage("", "success");
 }
 
-startButton.addEventListener("click", showRegister);
+startButton.addEventListener("click", startSelectedRegister);
 
-document.getElementById("selectOng").addEventListener("click", () => {
-  document.getElementById("selectOng").classList.add("selected");
-  document.getElementById("selectVolunteer").classList.remove("selected");
+choiceButtons.forEach((button) => {
+  button.addEventListener("click", () => selectRegisterType(button.dataset.registerType));
 });
 
-document.getElementById("selectVolunteer").addEventListener("click", () => {
-  document.getElementById("selectVolunteer").classList.add("selected");
-  document.getElementById("selectOng").classList.remove("selected");
-});
+selectRegisterType(selectedRegisterType);
 
 backButton.addEventListener("click", () => {
   if (!registerScreen.hidden && currentStep > 0) {
