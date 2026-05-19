@@ -1,9 +1,12 @@
 const STORAGE_KEY = "tiaw_usuarios_voluntarios";
 
+const choiceScreen = document.getElementById("choiceScreen");
+const registerScreen = document.getElementById("registerScreen");
 const form = document.getElementById("cadastroUsuarioForm");
 const successPanel = document.getElementById("successPanel");
 const formMessage = document.getElementById("formMessage");
 const backButton = document.getElementById("backButton");
+const startButton = document.getElementById("startRegister");
 const prevButton = document.getElementById("prevStep");
 const nextButton = document.getElementById("nextStep");
 const submitButton = document.getElementById("submitForm");
@@ -11,8 +14,21 @@ const stepIntro = document.getElementById("stepIntro");
 const stepIllustration = document.getElementById("stepIllustration");
 const steps = Array.from(document.querySelectorAll(".form-step"));
 const dots = Array.from(document.querySelectorAll(".step-dot"));
+const choiceButtons = Array.from(document.querySelectorAll("[data-register-type]"));
 
 let currentStep = 0;
+let selectedRegisterType = "volunteers";
+
+const registerRoutes = {
+  ongs: {
+    jsonKey: "ongs",
+    url: "../cadastro-ong/index.html"
+  },
+  volunteers: {
+    jsonKey: "volunteers",
+    url: "./index.html"
+  }
+};
 
 const introByStep = [
   "Venha fazer parte dessa comunidade!",
@@ -253,6 +269,35 @@ function validateAllSteps() {
   return steps.every((step, index) => validateStep(index));
 }
 
+function showRegister() {
+  choiceScreen.hidden = true;
+  registerScreen.hidden = false;
+  updateStep();
+}
+
+function selectRegisterType(type) {
+  selectedRegisterType = type;
+
+  choiceButtons.forEach((button) => {
+    const selected = button.dataset.registerType === type;
+    button.classList.toggle("selected", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+}
+
+function startSelectedRegister() {
+  const route = registerRoutes[selectedRegisterType];
+
+  if (!route) return;
+
+  if (route.jsonKey === "ongs") {
+    window.location.href = route.url;
+    return;
+  }
+
+  showRegister();
+}
+
 function updateStep() {
   steps.forEach((step, index) => {
     step.hidden = index !== currentStep;
@@ -324,6 +369,12 @@ function handleSubmit(event) {
 }
 
 backButton.addEventListener("click", () => {
+  if (!registerScreen.hidden && currentStep === 0) {
+    registerScreen.hidden = true;
+    choiceScreen.hidden = false;
+    return;
+  }
+
   if (currentStep > 0) {
     goToStep(currentStep - 1);
     return;
@@ -335,6 +386,12 @@ backButton.addEventListener("click", () => {
   }
 
   window.location.href = "../login/login.html";
+});
+
+startButton.addEventListener("click", startSelectedRegister);
+
+choiceButtons.forEach((button) => {
+  button.addEventListener("click", () => selectRegisterType(button.dataset.registerType));
 });
 
 prevButton.addEventListener("click", () => {
@@ -368,4 +425,4 @@ Array.from(form.elements).forEach((field) => {
   });
 });
 
-updateStep();
+selectRegisterType(selectedRegisterType);

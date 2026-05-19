@@ -15,7 +15,27 @@
       Voltar
     </button>
 
-    <section class="cadastro-shell" aria-labelledby="cadastroTitulo">
+    <section class="choice-card" id="choiceScreen" aria-labelledby="choiceTitle">
+      <span class="title-pill" id="choiceTitle">Cadastrar</span>
+      <p>Selecione o tipo de cadastro que mais se adequa a voce:</p>
+
+      <div class="choice-options">
+        <button class="choice-option" type="button" data-register-type="ongs" aria-pressed="false">
+          <img src="assets/successful-group.svg" alt="">
+          <span>ONG</span>
+        </button>
+
+        <button class="choice-option selected" type="button" data-register-type="volunteers" aria-pressed="true">
+          <img src="assets/successful-person.svg" alt="">
+          <span>Voluntario</span>
+        </button>
+      </div>
+
+      <button class="primary-button" type="button" id="startRegister">Prosseguir</button>
+      <p class="login-link">Ja tem uma conta? <a href="../login/login.html">Entrar!</a></p>
+    </section>
+
+    <section class="cadastro-shell" id="registerScreen" aria-labelledby="cadastroTitulo" hidden>
       <aside class="illustration-panel" aria-hidden="true">
         <img id="stepIllustration" src="assets/successful-person.svg" alt="">
       </aside>

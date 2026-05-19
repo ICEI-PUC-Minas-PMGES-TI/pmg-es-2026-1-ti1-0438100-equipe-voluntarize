@@ -27,6 +27,36 @@ button, input, select, textarea { font: inherit; }
   cursor: pointer;
 }
 
+.choice-card {
+  width: min(760px, 100%);
+  margin: 46px auto 0;
+  padding: 34px 28px 22px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .72);
+}
+.choice-card > p { margin: 0 0 24px; font-size: 12px; }
+.choice-options {
+  display: flex;
+  justify-content: center;
+  gap: 34px;
+  margin-bottom: 28px;
+}
+.choice-option {
+  width: 118px;
+  padding: 8px 8px 6px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, .55);
+  cursor: pointer;
+}
+.choice-option.selected { border-color: #8d55ca; outline: 2px solid var(--purple); }
+.choice-option img { width: 78px; height: 78px; object-fit: contain; }
+.choice-option span { display: block; padding: 3px; background: var(--purple); font-size: 11px; }
+
 .cadastro-shell {
   width: min(900px, 100%);
   min-height: 560px;
@@ -141,6 +171,8 @@ button, input, select, textarea { font: inherit; }
 
 @media (max-width: 520px) {
   .cadastro-page { padding: 14px; }
+  .choice-options { gap: 14px; }
+  .choice-option { width: 108px; }
   .cadastro-card { min-height: auto; padding: 22px 16px 16px; border-radius: 12px; }
   .title-pill, .primary-button, .secondary-button { width: 100%; min-width: 0; }
   .form-step { min-height: auto; }
