@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // =========================================
-    // BOTÃO SEGUIR
-    // =========================================
     const btnSeguir = document.querySelector('.btn-seguir');
 
     if (btnSeguir) {
@@ -62,9 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    // =========================================
-    // BOTÕES VER DETALHES
-    // =========================================
+
     const botoesDetalhes = document.querySelectorAll('.btn-ver-detalhes');
 
     botoesDetalhes.forEach(botao => {
@@ -81,9 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
-    // =========================================
-    // MENU ATIVO
-    // =========================================
+
     const navLinks = document.querySelectorAll('.main-nav nav a');
 
     navLinks.forEach(link => {
