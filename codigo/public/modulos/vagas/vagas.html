@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buscar Vagas – Visão Voluntários</title>
+
+  <link rel="stylesheet" href="../../design-system/css/globals.css" />
+  <link rel="stylesheet" href="./css/vagas.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+  <div class="container header-shell">
+    <header class="site-header">
+      <img class="brand-logo" src="./../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <nav class="site-nav" aria-label="Navegação principal">
+        <a href="#">Início</a>
+        <a href="#">Perfil</a>
+        <a href="#" class="text-green">Vagas</a>
+        <a href="#">Minhas Candidaturas</a>
+      </nav>
+      <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário">
+        <i class="fa-regular fa-user"></i>
+      </button>
+    </header>
+  </div>
+
+  <main class="container section stack gap-4">
+
+    <div class="stack gap-2">
+      <div class="divider-line divider-black prism-both"></div>
+      <h1 class="text-center text-2xl text-bold text-uppercase">Buscar Vagas</h1>
+      <div class="divider-line divider-black prism-both"></div>
+    </div>
+
+    <section class="surface surface-purple vagas-search">
+      <div class="stack gap-3">
+
+        <div class="vagas-search-grid">
+
+          <div class="stack gap-2">
+            <div class="field">
+              <span class="field-icon" aria-hidden="true">
+                <i class="fa-solid fa-list-ul"></i>
+              </span>
+              <input
+                id="filtroTitulo"
+                class="field-input"
+                type="text"
+                placeholder="Digite o título de uma ação..."
+              />
+            </div>
+
+            <div class="field">
+              <span class="field-icon" aria-hidden="true">
+                <i class="fa-solid fa-location-dot"></i>
+              </span>
+              <input
+                id="filtroLocal"
+                class="field-input"
+                type="text"
+                placeholder="Digite uma localização"
+              />
+            </div>
+          </div>
+
+          <div class="vagas-tags-box">
+            <div class="vagas-tags-box-inner">
+              <span class="vagas-tags-label">
+                <i class="fa-solid fa-tag"></i>
+                Selecione tags de interesse:
+              </span>
+
+              <div id="tagsSelecionadas" class="vagas-tags-selecionadas"></div>
+
+              <div class="vagas-tags-footer">
+                <button id="btnAddTag" class="btn btn-secondary btn-pad-xs vagas-btn-add" aria-label="Adicionar tag" aria-expanded="false">
+                  Adicionar <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <div id="tagsDropdown" class="vagas-tags-dropdown" aria-hidden="true">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button id="btnLimpar" class="btn btn-primary btn-pad-sm text-xs">
+            Limpar
+          </button>
+          <button id="btnBuscar" class="btn btn-primary btn-pad-sm text-xs">
+            Buscar
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="surface surface-purple vagas-resultados">
+      <header class="stack gap-2 mb-4">
+        <div class="divider-line divider-black prism-both"></div>
+        <h2 class="text-center text-lg text-bold text-uppercase">Resultados</h2>
+        <div class="divider-line divider-black prism-both"></div>
+
+        <div class="field vagas-hint-field">
+          <span class="field-icon" aria-hidden="true">
+            <i class="fa-regular fa-lightbulb"></i>
+          </span>
+          <span class="field-input vagas-hint-text">
+            Veja as vagas que mais combinam com o que você busca
+          </span>
+        </div>
+      </header>
+
+      <div id="listaVagas" class="vagas-grid"></div>
+
+      <footer class="vagas-paginacao flex justify-end items-center gap-2 mt-4">
+        <button id="btnVerMais" class="btn btn-outline btn-pad-xs text-xs">
+          Ver mais
+        </button>
+        <button id="btnPaginaPrev" class="btn btn-outline btn-pad-xs text-xs">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button id="btnPaginaNext" class="btn btn-outline btn-pad-xs text-xs">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </footer>
+    </section>
+
+  </main>
+
+  <div class="container mb-4">
+    <footer class="site-footer">
+      <img class="brand-logo" src="./../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <p class="text-sm">Plataforma de voluntários @ 2026</p>
+    </footer>
+  </div>
+
+  <script src="./js/vagas.js"></script>
+</body>
+</html>
