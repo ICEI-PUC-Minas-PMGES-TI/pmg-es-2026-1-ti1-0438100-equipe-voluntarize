@@ -12,7 +12,6 @@
       "phone": "(31) 91234-5678",
       "profilePicture": "",
       "rating": 4.5,
-      "followers": 7000,
       "createdAt": "2020-08-10",
       "deletedAt": null
     },
@@ -28,7 +27,6 @@
       "phone": "(31) 99876-5432",
       "profilePicture": "",
       "rating": 4.2,
-      "followers": 59,
       "createdAt": "2022-01-01",
       "deletedAt": null
     },
@@ -44,7 +42,6 @@
       "phone": "(31) 98765-1234",
       "profilePicture": "",
       "rating": 4.8,
-      "followers": 320,
       "createdAt": "2021-06-15",
       "deletedAt": null
     },
@@ -60,7 +57,6 @@
       "phone": "(31) 97654-3210",
       "profilePicture": "",
       "rating": 3.9,
-      "followers": 15,
       "createdAt": "2023-03-10",
       "deletedAt": null
     },
@@ -76,7 +72,6 @@
       "phone": "(31) 96543-2109",
       "profilePicture": "",
       "rating": 5.0,
-      "followers": 1200,
       "createdAt": "2019-11-20",
       "deletedAt": null
     },
@@ -92,7 +87,6 @@
       "phone": "(31) 95432-1098",
       "profilePicture": "",
       "rating": 4.3,
-      "followers": 88,
       "createdAt": "2022-08-05",
       "deletedAt": null
     },
@@ -108,7 +102,6 @@
       "phone": "(31) 94321-0987",
       "profilePicture": "",
       "rating": 4.0,
-      "followers": 42,
       "createdAt": "2024-02-14",
       "deletedAt": null
     }
@@ -129,7 +122,6 @@
       "website": "https://www.diafeliz.org",
       "logo": "",
       "rating": 4.8,
-      "followers": 200000,
       "createdAt": "2025-08-01",
       "deletedAt": null
     },
@@ -147,7 +139,6 @@
       "website": "https://www.maosunidas.org.br",
       "logo": "",
       "rating": 4.6,
-      "followers": 85000,
       "createdAt": "2024-01-10",
       "deletedAt": null
     },
@@ -165,7 +156,6 @@
       "website": "",
       "logo": "",
       "rating": 4.9,
-      "followers": 42000,
       "createdAt": "2024-05-22",
       "deletedAt": null
     },
@@ -183,7 +173,6 @@
       "website": "https://www.verdevivo.eco.br",
       "logo": "",
       "rating": 4.4,
-      "followers": 31000,
       "createdAt": "2025-02-18",
       "deletedAt": null
     },
@@ -201,7 +190,6 @@
       "website": "https://www.saudeparatodos.org",
       "logo": "",
       "rating": 4.7,
-      "followers": 67000,
       "createdAt": "2024-09-30",
       "deletedAt": null
     }
@@ -221,6 +209,7 @@
       "status": "open",
       "endDate": "2026-08-12",
       "image": "",
+      "checkInCode": "CF-1A2B3C",
       "createdAt": "2026-07-20",
       "deletedAt": null
     },
@@ -237,6 +226,7 @@
       "status": "open",
       "endDate": "2026-09-01",
       "image": "",
+      "checkInCode": "CF-2B3C4D",
       "createdAt": "2026-08-01",
       "deletedAt": null
     },
@@ -253,6 +243,7 @@
       "status": "open",
       "endDate": "2026-08-20",
       "image": "",
+      "checkInCode": "CF-3C4D5E",
       "createdAt": "2026-07-25",
       "deletedAt": null
     },
@@ -269,6 +260,7 @@
       "status": "open",
       "endDate": "2026-09-17",
       "image": "",
+      "checkInCode": "CF-4D5E6F",
       "createdAt": "2026-08-10",
       "deletedAt": null
     },
@@ -285,6 +277,7 @@
       "status": "completed",
       "endDate": "2026-07-07",
       "image": "",
+      "checkInCode": "CF-5E6F7G",
       "createdAt": "2026-06-15",
       "deletedAt": null
     },
@@ -301,6 +294,7 @@
       "status": "open",
       "endDate": "2026-09-28",
       "image": "",
+      "checkInCode": "CF-6F7G8H",
       "createdAt": "2026-08-20",
       "deletedAt": null
     },
@@ -317,6 +311,7 @@
       "status": "completed",
       "endDate": "2026-06-28",
       "image": "",
+      "checkInCode": "CF-7G8H9J",
       "createdAt": "2026-06-01",
       "deletedAt": null
     }
@@ -606,6 +601,70 @@
       "comment": "Mariana é uma voluntária exemplar, sempre disposta a ajudar.",
       "createdAt": "2026-07-04",
       "deletedAt": null
+    }
+  ],
+
+  "follows": [
+    {
+      "id": 1,
+      "followerType": "volunteer",
+      "followerId": 1,
+      "targetType": "ong",
+      "targetId": 1,
+      "createdAt": "2026-05-10"
+    },
+    {
+      "id": 2,
+      "followerType": "volunteer",
+      "followerId": 1,
+      "targetType": "ong",
+      "targetId": 2,
+      "createdAt": "2026-05-14"
+    },
+    {
+      "id": 3,
+      "followerType": "volunteer",
+      "followerId": 2,
+      "targetType": "ong",
+      "targetId": 1,
+      "createdAt": "2026-06-02"
+    },
+    {
+      "id": 4,
+      "followerType": "volunteer",
+      "followerId": 3,
+      "targetType": "ong",
+      "targetId": 3,
+      "createdAt": "2026-06-12"
+    },
+    {
+      "id": 5,
+      "followerType": "ong",
+      "followerId": 1,
+      "targetType": "volunteer",
+      "targetId": 1,
+      "createdAt": "2026-07-03"
+    }
+  ],
+
+  "favorites": [
+    {
+      "id": 1,
+      "volunteerId": 1,
+      "actionId": 2,
+      "createdAt": "2026-05-18"
+    },
+    {
+      "id": 2,
+      "volunteerId": 1,
+      "actionId": 6,
+      "createdAt": "2026-05-20"
+    },
+    {
+      "id": 3,
+      "volunteerId": 2,
+      "actionId": 1,
+      "createdAt": "2026-06-01"
     }
   ],
 

@@ -20,6 +20,8 @@ O servidor sobe em `http://localhost:3000` e expõe os seguintes endpoints:
 | `GET /ongs` | Lista todas as ONGs |
 | `GET /actions` | Lista todas as ações |
 | `GET /applications` | Lista todas as inscrições |
+| `GET /follows` | Lista as relações de seguidores |
+| `GET /favorites` | Lista as vagas salvas |
 | `GET /reviews` | Lista todas as avaliações |
 | `GET /tags` | Lista todas as tags |
 
@@ -56,7 +58,6 @@ Voluntários cadastrados na plataforma.
 | `phone` | string | Telefone de contato |
 | `profilePicture` | string (url) | URL da foto de perfil |
 | `rating` | number | Média das avaliações recebidas pelas ONGs |
-| `followers` | number | Quantidade de seguidores na plataforma |
 | `createdAt` | string (date) | Data de criação da conta |
 | `deletedAt` | string (date) \| null | Data de exclusão lógica. `null` se a conta estiver ativa |
 
@@ -80,7 +81,6 @@ ONGs e instituições cadastradas na plataforma.
 | `website` | string (url) | Site institucional |
 | `logo` | string (url) | URL do logotipo |
 | `rating` | number | Média das avaliações recebidas pelos voluntários |
-| `followers` | number | Quantidade de seguidores na plataforma |
 | `createdAt` | string (date) | Data de criação da conta |
 | `deletedAt` | string (date) \| null | Data de exclusão lógica. `null` se a conta estiver ativa |
 
@@ -103,6 +103,7 @@ Ações e vagas publicadas pelas ONGs.
 | `status` | string | `open`, `closed`, `completed` ou `cancelled` |
 | `endDate` | string (date) | Data limite para inscrições |
 | `image` | string (url) | Imagem de capa exibida no card |
+| `checkInCode` | string | Código usado para confirmar presença na ação |
 | `createdAt` | string (date) | Data de publicação |
 | `deletedAt` | string (date) \| null | Data de exclusão lógica. `null` se a ação estiver ativa |
 
@@ -116,10 +117,36 @@ Inscrições de voluntários em ações. Conecta `volunteers` e `actions`.
 | `id` | number | Identificador único |
 | `volunteerId` | number | ID do voluntário inscrito |
 | `actionId` | number | ID da ação |
-| `status` | string | `pending`, `accepted` ou `rejected` |
+| `status` | string | `pending`, `accepted`, `rejected` ou `canceled` |
 | `appliedAt` | string (date) | Data da inscrição |
 | `confirmedAt` | string (date) \| null | Data de confirmação de presença. `null` se não confirmada |
 | `attended` | boolean | Se o voluntário compareceu à ação |
+
+---
+
+### `follows`
+Relações de seguimento entre voluntários e ONGs.
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `id` | number | Identificador único |
+| `followerType` | string | Tipo de quem segue: `volunteer` ou `ong` |
+| `followerId` | number | ID de quem segue |
+| `targetType` | string | Tipo de quem é seguido: `volunteer` ou `ong` |
+| `targetId` | number | ID de quem é seguido |
+| `createdAt` | string (date) | Data em que o vínculo foi criado |
+
+---
+
+### `favorites`
+Vagas salvas pelos voluntários para consulta posterior.
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `id` | number | Identificador único |
+| `volunteerId` | number | ID do voluntário |
+| `actionId` | number | ID da ação salva |
+| `createdAt` | string (date) | Data em que a vaga foi favoritada |
 
 ---
 
