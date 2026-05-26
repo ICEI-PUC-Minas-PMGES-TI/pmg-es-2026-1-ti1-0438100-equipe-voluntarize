@@ -1,4 +1,5 @@
 const API = '../../db/db.json';
+const { buildUrlWithId } = window.VoluntarizePageData || {};
 
 const STATE = {
   actions: [],
@@ -135,7 +136,14 @@ function renderCardVaga(action, nomeOng) {
 
   const cta = ce('div', 'vaga-card-cta');
   const btn = ce('button', 'btn btn-primary btn-pad-sm');
+  const detailsUrl = buildUrlWithId
+    ? buildUrlWithId('../detalhes-vagas/detalhes.html', action.id)
+    : '../detalhes-vagas/detalhes.html';
   btn.textContent = 'Ver Detalhes';
+  btn.type = 'button';
+  btn.addEventListener('click', () => {
+    window.location.href = detailsUrl;
+  });
   cta.appendChild(btn);
 
   card.appendChild(thumb);

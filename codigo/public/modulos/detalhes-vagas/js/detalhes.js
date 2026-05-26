@@ -1,5 +1,6 @@
 (function () {
   const API = '../../db/db.json';
+  const { fetchJson, findById, readIdFromUrl, buildUrlWithId } = window.VoluntarizePageData || {};
 
   const find = (selector) => document.querySelector(selector);
 
@@ -11,52 +12,20 @@
     }
   };
 
-  const getUrlParts = () => {
-    return window.location.pathname.split("/").filter(Boolean);
-  };
-
-  const getLegacyUrl = () => {
-    const url = new URL(window.location.href);
-    const parts = getUrlParts();
-    const lastPart = parts[parts.length - 1];
-
-    if (/^\d+$/.test(lastPart)) {
-      parts.pop();
-      url.pathname = `/${parts.join("/")}`;
+  const getActionIdFromUrl = () => {
+    if (!readIdFromUrl) {
+      return null;
     }
 
-    url.search = "";
-    url.hash = "";
-    return url.toString();
-  };
-
-  // const getActionIdFromUrl = () => {
-  //   const parts = getUrlParts();
-  //   const lastPart = parts[parts.length - 1];
-
-  //   if (/^\d+$/.test(lastPart)) {
-  //     return Number(lastPart);
-  //   }
-
-  //   const params = new URLSearchParams(window.location.search);
-  //   const rawId = params.get("id") || params.get("acaoId") || params.get("vagaId");
-  //   const actionId = Number(rawId);
-
-  //   return Number.isInteger(actionId) && actionId > 0 ? actionId : 1;
-  // };
-
-  const redirectToLegacyUrl = () => {
-    const legacyUrl = getLegacyUrl();
-
-    if (legacyUrl !== window.location.href) {
-      window.location.replace(legacyUrl);
-    }
+    return readIdFromUrl({
+      paramNames: ["id", "acaoId", "vagaId"],
+      defaultValue: null
+    });
   };
 
   const getPageData = (database) => {
-    //const actionId = getActionIdFromUrl();
-    const actionId = localStorage.getItem("actionId")
-    const action = database.actions.find((item) => item.id === parseInt(actionId));
+    const actionId = getActionIdFromUrl();
+    const action = findById ? findById(database.actions, actionId) : null;
 
     if (!action) {
       return null;
@@ -169,32 +138,49 @@
 
     renderTags(action.tags);
     renderParticipants(participants);
+
+    // configurar botão 'Ver perfil da ONG' para redirecionar usando o helper
+    try {
+      const organizerBtn = find('.organizer-profile');
+      if (organizerBtn) {
+        const profileUrl = buildUrlWithId
+          ? buildUrlWithId('../visualizacao-detalhada-voluntario/index.html', ong.id)
+          : `../visualizacao-detalhada-voluntario/index.html?id=${ong.id}`;
+
+        organizerBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = profileUrl;
+        });
+      }
+    } catch (err) {
+      // não bloquear renderização se helper ausente
+      // console.warn('Não foi possível configurar botão de perfil:', err);
+    }
   };
 
   const loadDetails = async () => {
     try {
-      const response = await fetch(API);
-
-      if (!response.ok) {
-        console.error("Não foi possível carregar o db.json.", e);
+      if (!fetchJson) {
+        throw new Error("Utilitário de página não carregado.");
       }
 
-      const database = await response.json();
+      const database = await fetchJson(API);
       renderDetails(database);
     } catch (error) {
-      redirectToLegacyUrl();
+      console.error("Não foi possível carregar o db.json.", error);
+      elements.name.textContent = "Vaga não encontrada";
+      elements.meta.textContent = "Verifique o identificador informado na URL.";
+      elements.rating.textContent = "-";
+      elements.followers.textContent = "0";
+      elements.followButton.disabled = true;
+      elements.storyTitle.textContent = "Sem dados disponíveis";
+      elements.story.textContent = "Não foi possível localizar a vaga solicitada.";
+      elements.actionsList.textContent = "";
+      elements.reviewsList.textContent = "";
     }
   };
 
   loadDetails();
-
-  async function carregarDb() {
-    const res = await fetch(API);
-    const db  = await res.json();
-  }
-  document.addEventListener('DOMContentLoaded', () => {
-    carregarDb().catch(err => console.error('Erro ao carregar db.json:', err));
-  });
 
 })();
 

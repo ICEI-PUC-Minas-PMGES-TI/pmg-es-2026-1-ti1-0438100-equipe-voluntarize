@@ -1,6 +1,7 @@
 // Caminho "simulado" para o banco de dados local. Quando o servidor JSON Server estiver
 // rodando, trocar por 'http://localhost:3000' e ajustar as chamadas de fetch.
 const API = '../../db/db.json';
+const { buildUrlWithId } = window.VoluntarizePageData || {};
 
 // Logos usadas nos cards de ONG em ordem rotativa, já que o db não tem imagens.
 // Quando as ONGs tiverem logo própria, usar ong.logo no lugar.
@@ -125,6 +126,10 @@ function renderOngCard(ong, index) {
   const div = document.createElement('div');
   div.className = 'ong-card surface';
   div.style.position = 'relative';
+  const profileUrl = buildUrlWithId
+    ? buildUrlWithId('../visualizacao-detalhada-voluntario/index.html', ong.id)
+    : `../visualizacao-detalhada-voluntario/index.html?id=${ong.id}`;
+
   div.innerHTML = `
     <div style="width:100px;position:absolute;top:0;right:var(--space-4)">
       <div class="divider-line divider-black divider-prism-sm prism-right" aria-hidden="true"></div>
@@ -134,7 +139,7 @@ function renderOngCard(ong, index) {
     <p class="text-md text-muted mt-1">★ ${ong.rating.toFixed(1).replace('.', ',')} &nbsp;|&nbsp; ${formatFollowers(ong.followers)} seguidores</p>
     <div class="stack mt-4 gap-1 w-full">
       <button class="btn btn-primary btn-pad-sm w-full">Seguir</button>
-      <button class="btn btn-secondary btn-pad-sm w-full">Ver Perfil</button>
+      <a class="btn btn-secondary btn-pad-sm w-full" href="${profileUrl}">Ver Perfil</a>
     </div>
     <div style="width:100px;position:absolute;bottom:0;left:var(--space-4)">
       <div class="divider-line divider-black divider-prism-sm prism-left" aria-hidden="true"></div>
@@ -147,6 +152,9 @@ function renderOngCard(ong, index) {
 function renderAltaCard(action, ongName) {
   const div = document.createElement('div');
   div.className = 'alta-card';
+  const detailsUrl = buildUrlWithId
+    ? buildUrlWithId('../detalhes-vagas/detalhes.html', action.id)
+    : `../detalhes-vagas/detalhes.html?id=${action.id}`;
   div.innerHTML = `
     <div class="alta-card-thumb">
       <i class="fa-solid fa-calendar-days"></i>
@@ -154,7 +162,7 @@ function renderAltaCard(action, ongName) {
     <h3 class="text-md text-bold">${action.title}</h3>
     <p class="text-sm text-muted">Por: ${ongName}</p>
     <p class="text-sm font-alt text-muted">${action.description}</p>
-    <button class="btn btn-primary btn-pad-sm w-full mt-1">Ver Detalhes</button>
+    <a class="btn btn-primary btn-pad-sm w-full mt-1" href="${detailsUrl}">Ver Detalhes</a>
   `;
   return div;
 }
@@ -172,11 +180,14 @@ function renderVagaCard(action, ongName, variant = 'ong', aprovado = false) {
   div.className = 'vaga-card surface surface-white';
 
   const badge = aprovado ? `<div class="vaga-badge-aprovado">Aprovado</div>` : '';
+  const detailsUrl = buildUrlWithId
+    ? buildUrlWithId('../detalhes-vagas/detalhes.html', action.id)
+    : `../detalhes-vagas/detalhes.html?id=${action.id}`;
 
   const botoes = variant === 'ong'
-    ? `<button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Ver Detalhes</button>
+    ? `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
        <button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Editar</button>`
-    : `<button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Ver Detalhes</button>
+    : `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
        <button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Ver ONG</button>`;
 
   div.innerHTML = `
