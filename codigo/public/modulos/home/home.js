@@ -127,8 +127,8 @@ function renderOngCard(ong, index) {
   div.className = 'ong-card surface';
   div.style.position = 'relative';
   const profileUrl = buildUrlWithId
-    ? buildUrlWithId('../visualizacao-detalhada-voluntario/index.html', ong.id)
-    : `../visualizacao-detalhada-voluntario/index.html?id=${ong.id}`;
+    ? buildUrlWithId('../visualizacao-detalhada-ong/index.html', ong.id)
+    : `../visualizacao-detalhada-ong/index.html?id=${ong.id}`;
 
   div.innerHTML = `
     <div style="width:100px;position:absolute;top:0;right:var(--space-4)">
@@ -183,12 +183,17 @@ function renderVagaCard(action, ongName, variant = 'ong', aprovado = false) {
   const detailsUrl = buildUrlWithId
     ? buildUrlWithId('../detalhes-vagas/detalhes.html', action.id)
     : `../detalhes-vagas/detalhes.html?id=${action.id}`;
+  const ongProfileUrl = action.ongId
+    ? (buildUrlWithId
+        ? buildUrlWithId('../visualizacao-detalhada-ong/index.html', action.ongId)
+        : `../visualizacao-detalhada-ong/index.html?id=${action.ongId}`)
+    : '#';
 
   const botoes = variant === 'ong'
     ? `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
        <button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Editar</button>`
     : `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
-       <button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Ver ONG</button>`;
+       <a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${ongProfileUrl}">Ver ONG</a>`;
 
   div.innerHTML = `
     ${badge}

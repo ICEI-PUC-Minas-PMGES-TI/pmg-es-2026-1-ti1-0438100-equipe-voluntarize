@@ -144,8 +144,8 @@
       const organizerBtn = find('.organizer-profile');
       if (organizerBtn) {
         const profileUrl = buildUrlWithId
-          ? buildUrlWithId('../visualizacao-detalhada-voluntario/index.html', ong.id)
-          : `../visualizacao-detalhada-voluntario/index.html?id=${ong.id}`;
+          ? buildUrlWithId('../visualizacao-detalhada-ong/index.html', ong.id)
+          : `../visualizacao-detalhada-ong/index.html?id=${ong.id}`;
 
         organizerBtn.addEventListener('click', (e) => {
           e.preventDefault();
