@@ -1,0 +1,129 @@
+
+    @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&family=Oxygen+Mono:wght@400;700&display=swap');
+ 
+    body {
+      font-family: var(--font-main);
+      color: var(--color-black);
+      background: var(--color-gray-100);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: var(--space-4);
+    }
+  
+    .page {
+      max-width: var(--container-max);
+      margin-inline: auto;
+    }
+ 
+    .back-btn {
+      margin-bottom: var(--space-3);
+    }
+ 
+    .review-card {
+      background: var(--color-white);
+      border: var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow-md);
+      padding: var(--space-5);
+      margin-bottom: 100px;
+    }
+ 
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: var(--space-5);
+      align-items: center;
+    }
+ 
+  
+    .illustration-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 360px;
+    }
+ 
+    .illustration-wrapper img {
+      max-width: 280px;
+      width: 100%;
+      height: auto;
+    }
+ 
+    
+    .review-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+      text-align: center;
+    }
+ 
+    .review-title-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      background: var(--color-white);
+      border: var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-main);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.95rem;
+    }
+ 
+    .review-description {
+      font-family: var(--font-main);
+      font-size: 0.95rem;
+      max-width: 460px;
+      line-height: 1.5;
+    }
+ 
+    /*  QR CODE  */
+
+    .qr-wrapper {
+      padding: var(--space-3);
+      background: var(--color-white);
+      border-radius: var(--radius-sm);
+    }
+ 
+    .qr-wrapper img {
+      width: 220px;
+      height: 220px;
+    }
+ 
+    .conclude-btn {
+      min-width: 220px;
+    }
+ 
+   
+    @media (max-width: 840px) {
+      .review-grid {
+        grid-template-columns: 1fr;
+      }
+ 
+      .illustration-wrapper {
+        min-height: 240px;
+      }
+ 
+      .illustration-wrapper img {
+        max-width: 200px;
+      }
+ 
+      .review-card {
+        padding: var(--space-4);
+      }
+ 
+      .qr-wrapper img {
+        width: 180px;
+        height: 180px;
+      }
+ 
+      .site-footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  
