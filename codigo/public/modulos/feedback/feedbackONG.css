@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&family=Oxygen+Mono:wght@400;700&display=swap');
 body {
   padding: var(--space-4);
 }
@@ -11,7 +12,7 @@ body {
   margin-bottom: var(--space-3);
 }
 
-/* Principal */
+
 .review-card {
   background: var(--color-white);
   border: var(--border);
@@ -28,7 +29,7 @@ body {
   align-items: center;
 }
 
-/* celular */
+
 .phone-illustration {
   display: flex;
   justify-content: center;
