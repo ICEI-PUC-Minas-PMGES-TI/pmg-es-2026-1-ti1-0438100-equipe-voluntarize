@@ -1,5 +1,7 @@
 (function () {
-  const API = '../../db/db.json';
+  const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
+  
+function api(path) { return (API_BASE ? API_BASE : '') + path; }
 
   const find = (selector) => document.querySelector(selector);
 
@@ -173,13 +175,19 @@
 
   const loadDetails = async () => {
     try {
-      const response = await fetch(API);
+      const [resActions, resOngs, resVolunteers] = await Promise.all([
+        fetch(api('/actions')),
+        fetch(api('/ongs')),
+        fetch(api('/volunteers'))
+      ]);
 
-      if (!response.ok) {
-        console.error("Não foi possível carregar o db.json.", e);
-      }
+      const [actions, ongs, volunteers] = await Promise.all([
+        resActions.json(),
+        resOngs.json(),
+        resVolunteers.json()
+      ]);
 
-      const database = await response.json();
+      const database = { actions, ongs, volunteers };
       renderDetails(database);
     } catch (error) {
       redirectToLegacyUrl();
@@ -189,8 +197,20 @@
   loadDetails();
 
   async function carregarDb() {
-    const res = await fetch(API);
-    const db  = await res.json();
+    const [resActions, resOngs, resVolunteers] = await Promise.all([
+      fetch(api('/actions')),
+      fetch(api('/ongs')),
+      fetch(api('/volunteers'))
+    ]);
+
+    const [actions, ongs, volunteers] = await Promise.all([
+      resActions.json(),
+      resOngs.json(),
+      resVolunteers.json()
+    ]);
+
+    const db = { actions, ongs, volunteers };
+    return db;
   }
   document.addEventListener('DOMContentLoaded', () => {
     carregarDb().catch(err => console.error('Erro ao carregar db.json:', err));
