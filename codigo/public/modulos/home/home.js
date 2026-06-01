@@ -143,7 +143,7 @@ function renderOngCard(ong, index) {
   return div;
 }
 
-// Card do carrossel de vagas em alta — ordenadas por número de participantes
+// Card do carrossel de vagas em alta — ordenadas por número de visualizações
 function renderAltaCard(action, ongName) {
   const div = document.createElement('div');
   div.className = 'alta-card';
@@ -157,6 +157,10 @@ function renderAltaCard(action, ongName) {
     <button class="btn btn-primary btn-pad-sm w-full mt-1">Ver Detalhes</button>
   `;
   return div;
+}
+
+function getActionViews(action) {
+  return Number.isFinite(action.views) ? action.views : 0;
 }
 
 // Card de vaga com duas variantes de botões e badge opcional de aprovação.
@@ -213,12 +217,12 @@ async function init() {
     ongCarousel.update();
   }
 
-  // Carrossel de vagas em alta — ações abertas ordenadas por mais participantes
+  // Carrossel de vagas em alta — ações abertas ordenadas por mais visualizações (views)
   const altaCarousel = initHorizontalCarousel('altaTrack', 'altaPrevBtn', 'altaNextBtn', 'alta-card');
   if (altaCarousel) {
     db.actions
       .filter(a => a.status === 'open')
-      .sort((a, b) => b.participants.length - a.participants.length)
+      .sort((a, b) => getActionViews(b) - getActionViews(a))
       .forEach(a => altaCarousel.track.appendChild(renderAltaCard(a, ongMap[a.ongId] || '')));
     altaCarousel.update();
   }
