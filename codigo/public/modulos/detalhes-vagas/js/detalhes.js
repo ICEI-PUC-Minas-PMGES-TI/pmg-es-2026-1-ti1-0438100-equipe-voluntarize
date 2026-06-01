@@ -87,6 +87,16 @@
     return String(followers);
   };
 
+  const countActionViews = (action) => {
+    const storageKey = `voluntarize:action-views:${action.id}`;
+    const baseViews = Number.isFinite(action.views) ? action.views : 0;
+    const savedViews = Number(localStorage.getItem(storageKey));
+    const nextViews = Number.isFinite(savedViews) ? savedViews + 1 : baseViews + 1;
+
+    localStorage.setItem(storageKey, String(nextViews));
+    return nextViews;
+  };
+
   const createAvatar = () => {
     const avatar = document.createElement("span");
     avatar.className = "icon-token icon-purple entity-avatar";
@@ -166,6 +176,7 @@
     setText("[data-ong-responsible]", ong.responsibleName);
     setText("[data-ong-rating]", formatRating(ong.rating));
     setText("[data-ong-followers]", formatFollowers(ong.followers));
+    setText("[data-action-views]", countActionViews(action));
 
     renderTags(action.tags);
     renderParticipants(participants);
