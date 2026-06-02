@@ -1,7 +1,7 @@
-// Caminho "simulado" para o banco de dados local. Quando o servidor JSON Server estiver
-// rodando, trocar por 'http://localhost:3000' e ajustar as chamadas de fetch.
-const API = '../../db/db.json';
-const { buildUrlWithId } = window.VoluntarizePageData || {};
+// API base configurável via env
+const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
+
+function api(path) { return (API_BASE ? API_BASE : '') + path; }
 
 // Logos usadas nos cards de ONG em ordem rotativa, já que o db não tem imagens.
 // Quando as ONGs tiverem logo própria, usar ong.logo no lugar.
@@ -216,52 +216,69 @@ function renderVagaCard(action, ongName, variant = 'ong', aprovado = false) {
 }
 
 async function init() {
-  const res = await fetch(API);
-  const db = await res.json();
+  try {
+    const [resOngs, resActions, resApplications, resVolunteers] = await Promise.all([
+      fetch(api('/ongs')),
+      fetch(api('/actions')),
+      fetch(api('/applications')),
+      fetch(api('/volunteers'))
+    ]);
 
-  // Mapa id → nome das ONGs para cruzar com actions e applications
-  const ongMap = Object.fromEntries(db.ongs.map(o => [o.id, o.name]));
+    const [ongs, actions, applications, volunteers] = await Promise.all([
+      resOngs.json(),
+      resActions.json(),
+      resApplications.json(),
+      resVolunteers.json()
+    ]);
 
-  // Carrossel de ONGs populares — exibe todas as ONGs do banco
-  const ongCarousel = initHorizontalCarousel('carouselTrack', 'prevBtn', 'nextBtn', 'ong-card');
-  if (ongCarousel) {
-    db.ongs.forEach((ong, i) => ongCarousel.track.appendChild(renderOngCard(ong, i)));
-    ongCarousel.update();
-  }
+    const db = { ongs, actions, applications, volunteers };
 
-  // Carrossel de vagas em alta — ações abertas ordenadas por mais participantes
-  const altaCarousel = initHorizontalCarousel('altaTrack', 'altaPrevBtn', 'altaNextBtn', 'alta-card');
-  if (altaCarousel) {
-    db.actions
-      .filter(a => a.status === 'open')
-      .sort((a, b) => b.participants.length - a.participants.length)
-      .forEach(a => altaCarousel.track.appendChild(renderAltaCard(a, ongMap[a.ongId] || '')));
-    altaCarousel.update();
-  }
+    // Mapa id → nome das ONGs para cruzar com actions e applications
+    const ongMap = Object.fromEntries(db.ongs.map(o => [o.id, o.name]));
 
-  // Carrossel vertical de vagas — conteúdo varia por tipo de usuário:
-  // ONG       → suas próprias ações abertas
-  // Voluntário → ações em que se inscreveu, com badge se confirmado
-  const vagasCarousel = initVerticalCarousel('vagasTrack', 'vagasPrevBtn', 'vagasNextBtn');
-  if (vagasCarousel) {
-    if (isVoluntario) {
-      const actionMap = Object.fromEntries(db.actions.map(a => [a.id, a]));
-      db.applications
-        .filter(app => app.volunteerId === usuarioCorrente.id)
-        .forEach(app => {
-          const action = actionMap[app.actionId];
-          if (!action) return;
-          vagasCarousel.track.appendChild(
-            renderVagaCard(action, ongMap[action.ongId] || '', 'voluntario', app.status === 'accepted' && !!app.confirmedAt)
-          );
-        });
-    } else {
-      db.actions
-        .filter(a => a.status === 'open' && a.ongId === usuarioCorrente.id)
-        .forEach(a => vagasCarousel.track.appendChild(renderVagaCard(a, ongMap[a.ongId] || '', 'ong')));
+    // Carrossel de ONGs populares — exibe todas as ONGs do banco
+    const ongCarousel = initHorizontalCarousel('carouselTrack', 'prevBtn', 'nextBtn', 'ong-card');
+    if (ongCarousel) {
+      db.ongs.forEach((ong, i) => ongCarousel.track.appendChild(renderOngCard(ong, i)));
+      ongCarousel.update();
     }
-    vagasCarousel.setHeight();
-    vagasCarousel.update();
+
+    // Carrossel de vagas em alta — ações abertas ordenadas por mais participantes
+    const altaCarousel = initHorizontalCarousel('altaTrack', 'altaPrevBtn', 'altaNextBtn', 'alta-card');
+    if (altaCarousel) {
+      db.actions
+        .filter(a => a.status === 'open')
+        .sort((a, b) => b.participants.length - a.participants.length)
+        .forEach(a => altaCarousel.track.appendChild(renderAltaCard(a, ongMap[a.ongId] || '')));
+      altaCarousel.update();
+    }
+
+    // Carrossel vertical de vagas — conteúdo varia por tipo de usuário:
+    // ONG       → suas próprias ações abertas
+    // Voluntário → ações em que se inscreveu, com badge se confirmado
+    const vagasCarousel = initVerticalCarousel('vagasTrack', 'vagasPrevBtn', 'vagasNextBtn');
+    if (vagasCarousel) {
+      if (isVoluntario) {
+        const actionMap = Object.fromEntries(db.actions.map(a => [a.id, a]));
+        db.applications
+          .filter(app => app.volunteerId === usuarioCorrente.id)
+          .forEach(app => {
+            const action = actionMap[app.actionId];
+            if (!action) return;
+            vagasCarousel.track.appendChild(
+              renderVagaCard(action, ongMap[action.ongId] || '', 'voluntario', app.status === 'accepted' && !!app.confirmedAt)
+            );
+          });
+      } else {
+        db.actions
+          .filter(a => a.status === 'open' && a.ongId === usuarioCorrente.id)
+          .forEach(a => vagasCarousel.track.appendChild(renderVagaCard(a, ongMap[a.ongId] || '', 'ong')));
+      }
+      vagasCarousel.setHeight();
+      vagasCarousel.update();
+    }
+  } catch (err) {
+    console.error('Erro ao inicializar home:', err);
   }
 }
 
