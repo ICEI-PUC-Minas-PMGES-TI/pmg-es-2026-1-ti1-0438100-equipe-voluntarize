@@ -14,7 +14,7 @@ body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); 
 button, input, select, textarea { font: inherit; }
 [hidden] { display: none !important; }
 
-.cadastro-page { min-height: 100vh; padding: 30px 48px; }
+.cadastro-page { min-height: 100vh; padding: 34px 54px; }
 .back-button, .primary-button, .secondary-button, .title-pill {
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -28,25 +28,25 @@ button, input, select, textarea { font: inherit; }
 }
 
 .choice-card {
-  width: min(860px, 100%);
-  margin: 56px auto 0;
-  padding: 42px 36px 28px;
+  width: min(930px, 100%);
+  margin: 62px auto 0;
+  padding: 48px 44px 32px;
   text-align: center;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 16px;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, .72);
 }
-.choice-card > p { margin: 0 0 30px; font-size: 14px; }
+.choice-card > p { margin: 0 0 34px; font-size: 15px; }
 .choice-options {
   display: flex;
   justify-content: center;
-  gap: 44px;
-  margin-bottom: 34px;
+  gap: 52px;
+  margin-bottom: 40px;
 }
 .choice-option {
-  width: 150px;
-  padding: 12px 12px 10px;
+  width: 172px;
+  padding: 14px 14px 12px;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -54,31 +54,31 @@ button, input, select, textarea { font: inherit; }
   cursor: pointer;
 }
 .choice-option.selected { border-color: #8d55ca; outline: 2px solid var(--purple); }
-.choice-option img { width: 98px; height: 98px; object-fit: contain; margin: 0 auto 8px; }
-.choice-option span { display: block; padding: 5px; background: var(--purple); font-size: 13px; }
+.choice-option img { width: 116px; height: 116px; object-fit: contain; margin: 0 auto 10px; }
+.choice-option span { display: block; padding: 6px; background: var(--purple); font-size: 14px; }
 
 .cadastro-shell {
-  width: min(1080px, 100%);
-  min-height: 650px;
-  margin: 30px auto 0;
+  width: min(1180px, 100%);
+  min-height: 700px;
+  margin: 36px auto 0;
   display: grid;
-  grid-template-columns: 360px minmax(580px, 1fr);
+  grid-template-columns: 400px minmax(650px, 1fr);
   align-items: center;
-  gap: 32px;
+  gap: 38px;
 }
 
 .illustration-panel {
-  min-height: 560px;
+  min-height: 620px;
   display: grid;
   place-items: center;
 }
-.illustration-panel img { width: min(500px, 145%); max-height: 620px; transform: translateY(-28px); }
+.illustration-panel img { width: min(560px, 145%); max-height: 680px; transform: translateY(-24px); }
 
 .cadastro-card {
-  width: min(630px, 100%);
-  min-height: 560px;
+  width: min(720px, 100%);
+  min-height: 620px;
   margin-left: auto;
-  padding: 32px 56px 24px;
+  padding: 40px 68px 30px;
   display: flex;
   align-items: center;
   background: #fff;
@@ -87,10 +87,10 @@ button, input, select, textarea { font: inherit; }
   box-shadow: 3px 3px 0 rgba(0, 0, 0, .72);
 }
 .cadastro-form, .success-panel { width: 100%; }
-.card-heading { margin-bottom: 18px; text-align: center; }
+.card-heading { margin-bottom: 22px; text-align: center; }
 .title-pill {
-  width: 240px;
-  min-height: 44px;
+  width: 260px;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -98,20 +98,20 @@ button, input, select, textarea { font: inherit; }
   background: #fff;
   box-shadow: 2px 2px 0 rgba(0, 0, 0, .38);
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
 }
-.card-heading p, .success-panel p { margin: 0; font-size: 14px; line-height: 1.5; }
-.form-step { min-height: 340px; }
+.card-heading p, .success-panel p { margin: 0; font-size: 15px; line-height: 1.5; }
+.form-step { min-height: 370px; }
 .field-row { display: grid; grid-template-columns: minmax(0, 1fr) 130px; gap: 16px; }
-.field-group { margin-bottom: 12px; }
-.field-group label { display: block; margin-bottom: 5px; font-size: 12px; font-weight: 700; }
+.field-group { margin-bottom: 14px; }
+.field-group label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; }
 
 .input-shell {
-  min-height: 50px;
+  min-height: 56px;
   display: flex;
   align-items: center;
-  padding: 0 14px;
+  padding: 0 18px;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 5px;
@@ -125,43 +125,43 @@ button, input, select, textarea { font: inherit; }
   outline: 0;
   background: transparent;
   color: var(--text);
-  font-size: 14px;
+  font-size: 15px;
 }
-.input-shell select { min-height: 48px; cursor: pointer; }
-.textarea-shell { min-height: 210px; align-items: flex-start; padding-top: 14px; }
-.textarea-shell textarea { min-height: 180px; resize: vertical; line-height: 1.4; }
+.input-shell select { min-height: 54px; cursor: pointer; }
+.textarea-shell { min-height: 240px; align-items: flex-start; padding-top: 16px; }
+.textarea-shell textarea { min-height: 208px; resize: vertical; line-height: 1.4; }
 
-.helper-text, .login-link { color: var(--muted); font-size: 11px; text-align: center; }
-.helper-text { display: block; width: min(290px, 100%); margin: 8px auto 0; font-size: 10px; line-height: 1.35; }
-.field-error { min-height: 17px; display: block; margin-top: 5px; color: var(--error); font-size: 12px; line-height: 1.25; }
-.form-message { min-height: 20px; margin: 0 0 10px; text-align: center; font-size: 13px; }
+.helper-text, .login-link { color: var(--muted); font-size: 12px; text-align: center; }
+.helper-text { display: block; width: min(380px, 100%); margin: 10px auto 0; font-size: 11px; line-height: 1.35; }
+.field-error { min-height: 18px; display: block; margin-top: 5px; color: var(--error); font-size: 12px; line-height: 1.25; }
+.form-message { min-height: 22px; margin: 0 0 12px; text-align: center; font-size: 14px; }
 .form-message.error { color: var(--error); }
 .form-message.success { color: var(--success); }
 
 .form-actions, .step-dots { display: flex; justify-content: center; gap: 12px; }
 .primary-button, .secondary-button {
-  min-height: 42px;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   cursor: pointer;
 }
-.primary-button { min-width: 220px; background: var(--green); box-shadow: 2px 2px 0 rgba(0, 0, 0, .62); }
-.secondary-button { min-width: 110px; background: transparent; border-color: transparent; }
-.login-link { margin: 12px 0 0; }
+.primary-button { min-width: 248px; background: var(--green); box-shadow: 2px 2px 0 rgba(0, 0, 0, .62); }
+.secondary-button { min-width: 124px; background: transparent; border-color: transparent; }
+.login-link { margin: 14px 0 0; }
 .login-link a { color: var(--text); text-decoration: none; }
 .login-link a:hover, .secondary-button:hover { color: #7b4cb1; text-decoration: underline; }
-.step-dots { min-height: 20px; align-items: center; gap: 7px; margin-top: 8px; }
+.step-dots { min-height: 22px; align-items: center; gap: 8px; margin-top: 10px; }
 .step-dot { width: 9px; height: 9px; border: 1px solid var(--line); border-radius: 50%; background: var(--bg); }
 .step-dot.active { background: var(--purple); }
 
 .success-panel { text-align: center; }
-.success-panel img { width: min(270px, 72%); margin-bottom: 24px; }
-.success-panel h2 { margin: 0 0 14px; font-size: 24px; }
-.success-panel p { max-width: 320px; margin: 0 auto 22px; color: var(--muted); }
+.success-panel img { width: min(310px, 74%); margin-bottom: 28px; }
+.success-panel h2 { margin: 0 0 16px; font-size: 26px; }
+.success-panel p { max-width: 380px; margin: 0 auto 26px; color: var(--muted); }
 
-@media (max-width: 920px) {
+@media (max-width: 980px) {
   .cadastro-page { padding: 18px; }
   .cadastro-shell { min-height: auto; grid-template-columns: 1fr; gap: 12px; margin-top: 22px; }
   .illustration-panel { min-height: 240px; }
