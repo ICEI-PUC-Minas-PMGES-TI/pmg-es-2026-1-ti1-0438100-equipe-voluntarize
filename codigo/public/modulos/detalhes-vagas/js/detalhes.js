@@ -1,7 +1,5 @@
 (function () {
-  const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
-  
-function api(path) { return (API_BASE ? API_BASE : '') + path; }
+  const API = '../../db/db.json';
 
   const find = (selector) => document.querySelector(selector);
 
@@ -13,20 +11,52 @@ function api(path) { return (API_BASE ? API_BASE : '') + path; }
     }
   };
 
-  const getActionIdFromUrl = () => {
-    if (!readIdFromUrl) {
-      return null;
+  const getUrlParts = () => {
+    return window.location.pathname.split("/").filter(Boolean);
+  };
+
+  const getLegacyUrl = () => {
+    const url = new URL(window.location.href);
+    const parts = getUrlParts();
+    const lastPart = parts[parts.length - 1];
+
+    if (/^\d+$/.test(lastPart)) {
+      parts.pop();
+      url.pathname = `/${parts.join("/")}`;
     }
 
-    return readIdFromUrl({
-      paramNames: ["id", "acaoId", "vagaId"],
-      defaultValue: null
-    });
+    url.search = "";
+    url.hash = "";
+    return url.toString();
+  };
+
+  // const getActionIdFromUrl = () => {
+  //   const parts = getUrlParts();
+  //   const lastPart = parts[parts.length - 1];
+
+  //   if (/^\d+$/.test(lastPart)) {
+  //     return Number(lastPart);
+  //   }
+
+  //   const params = new URLSearchParams(window.location.search);
+  //   const rawId = params.get("id") || params.get("acaoId") || params.get("vagaId");
+  //   const actionId = Number(rawId);
+
+  //   return Number.isInteger(actionId) && actionId > 0 ? actionId : 1;
+  // };
+
+  const redirectToLegacyUrl = () => {
+    const legacyUrl = getLegacyUrl();
+
+    if (legacyUrl !== window.location.href) {
+      window.location.replace(legacyUrl);
+    }
   };
 
   const getPageData = (database) => {
-    const actionId = getActionIdFromUrl();
-    const action = findById ? findById(database.actions, actionId) : null;
+    //const actionId = getActionIdFromUrl();
+    const actionId = localStorage.getItem("actionId")
+    const action = database.actions.find((item) => item.id === parseInt(actionId));
 
     if (!action) {
       return null;
@@ -139,73 +169,28 @@ function api(path) { return (API_BASE ? API_BASE : '') + path; }
 
     renderTags(action.tags);
     renderParticipants(participants);
-
-    // configurar botão 'Ver perfil da ONG' para redirecionar usando o helper
-    try {
-      const organizerBtn = find('.organizer-profile');
-      if (organizerBtn) {
-        const profileUrl = buildUrlWithId
-          ? buildUrlWithId('../visualizacao-detalhada-ong/index.html', ong.id)
-          : `../visualizacao-detalhada-ong/index.html?id=${ong.id}`;
-
-        organizerBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          window.location.href = profileUrl;
-        });
-      }
-    } catch (err) {
-      // não bloquear renderização se helper ausente
-      // console.warn('Não foi possível configurar botão de perfil:', err);
-    }
   };
 
   const loadDetails = async () => {
     try {
-      const [resActions, resOngs, resVolunteers] = await Promise.all([
-        fetch(api('/actions')),
-        fetch(api('/ongs')),
-        fetch(api('/volunteers'))
-      ]);
+      const response = await fetch(API);
 
-      const [actions, ongs, volunteers] = await Promise.all([
-        resActions.json(),
-        resOngs.json(),
-        resVolunteers.json()
-      ]);
+      if (!response.ok) {
+        console.error("Não foi possível carregar o db.json.", e);
+      }
 
-      const database = { actions, ongs, volunteers };
+      const database = await response.json();
       renderDetails(database);
     } catch (error) {
-      console.error("Não foi possível carregar o db.json.", error);
-      elements.name.textContent = "Vaga não encontrada";
-      elements.meta.textContent = "Verifique o identificador informado na URL.";
-      elements.rating.textContent = "-";
-      elements.followers.textContent = "0";
-      elements.followButton.disabled = true;
-      elements.storyTitle.textContent = "Sem dados disponíveis";
-      elements.story.textContent = "Não foi possível localizar a vaga solicitada.";
-      elements.actionsList.textContent = "";
-      elements.reviewsList.textContent = "";
+      redirectToLegacyUrl();
     }
   };
 
   loadDetails();
 
   async function carregarDb() {
-    const [resActions, resOngs, resVolunteers] = await Promise.all([
-      fetch(api('/actions')),
-      fetch(api('/ongs')),
-      fetch(api('/volunteers'))
-    ]);
-
-    const [actions, ongs, volunteers] = await Promise.all([
-      resActions.json(),
-      resOngs.json(),
-      resVolunteers.json()
-    ]);
-
-    const db = { actions, ongs, volunteers };
-    return db;
+    const res = await fetch(API);
+    const db  = await res.json();
   }
   document.addEventListener('DOMContentLoaded', () => {
     carregarDb().catch(err => console.error('Erro ao carregar db.json:', err));

@@ -1,7 +1,6 @@
-// API base configurável via env
-const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
-
-function api(path) { return (API_BASE ? API_BASE : '') + path; }
+// Caminho "simulado" para o banco de dados local. Quando o servidor JSON Server estiver
+// rodando, trocar por 'http://localhost:3000' e ajustar as chamadas de fetch.
+const API = '../../db/db.json';
 
 // Logos usadas nos cards de ONG em ordem rotativa, já que o db não tem imagens.
 // Quando as ONGs tiverem logo própria, usar ong.logo no lugar.
@@ -126,10 +125,6 @@ function renderOngCard(ong, index) {
   const div = document.createElement('div');
   div.className = 'ong-card surface';
   div.style.position = 'relative';
-  const profileUrl = buildUrlWithId
-    ? buildUrlWithId('../visualizacao-detalhada-ong/index.html', ong.id)
-    : `../visualizacao-detalhada-ong/index.html?id=${ong.id}`;
-
   div.innerHTML = `
     <div style="width:100px;position:absolute;top:0;right:var(--space-4)">
       <div class="divider-line divider-black divider-prism-sm prism-right" aria-hidden="true"></div>
@@ -139,7 +134,7 @@ function renderOngCard(ong, index) {
     <p class="text-md text-muted mt-1">★ ${ong.rating.toFixed(1).replace('.', ',')} &nbsp;|&nbsp; ${formatFollowers(ong.followers)} seguidores</p>
     <div class="stack mt-4 gap-1 w-full">
       <button class="btn btn-primary btn-pad-sm w-full">Seguir</button>
-      <a class="btn btn-secondary btn-pad-sm w-full" href="${profileUrl}">Ver Perfil</a>
+      <button class="btn btn-secondary btn-pad-sm w-full">Ver Perfil</button>
     </div>
     <div style="width:100px;position:absolute;bottom:0;left:var(--space-4)">
       <div class="divider-line divider-black divider-prism-sm prism-left" aria-hidden="true"></div>
@@ -152,9 +147,6 @@ function renderOngCard(ong, index) {
 function renderAltaCard(action, ongName) {
   const div = document.createElement('div');
   div.className = 'alta-card';
-  const detailsUrl = buildUrlWithId
-    ? buildUrlWithId('../detalhes-vagas/detalhes.html', action.id)
-    : `../detalhes-vagas/detalhes.html?id=${action.id}`;
   div.innerHTML = `
     <div class="alta-card-thumb">
       <i class="fa-solid fa-calendar-days"></i>
@@ -162,7 +154,7 @@ function renderAltaCard(action, ongName) {
     <h3 class="text-md text-bold">${action.title}</h3>
     <p class="text-sm text-muted">Por: ${ongName}</p>
     <p class="text-sm font-alt text-muted">${action.description}</p>
-    <a class="btn btn-primary btn-pad-sm w-full mt-1" href="${detailsUrl}">Ver Detalhes</a>
+    <button class="btn btn-primary btn-pad-sm w-full mt-1">Ver Detalhes</button>
   `;
   return div;
 }
@@ -180,20 +172,12 @@ function renderVagaCard(action, ongName, variant = 'ong', aprovado = false) {
   div.className = 'vaga-card surface surface-white';
 
   const badge = aprovado ? `<div class="vaga-badge-aprovado">Aprovado</div>` : '';
-  const detailsUrl = buildUrlWithId
-    ? buildUrlWithId('../detalhes-vagas/detalhes.html', action.id)
-    : `../detalhes-vagas/detalhes.html?id=${action.id}`;
-  const ongProfileUrl = action.ongId
-    ? (buildUrlWithId
-        ? buildUrlWithId('../visualizacao-detalhada-ong/index.html', action.ongId)
-        : `../visualizacao-detalhada-ong/index.html?id=${action.ongId}`)
-    : '#';
 
   const botoes = variant === 'ong'
-    ? `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
+    ? `<button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Ver Detalhes</button>
        <button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Editar</button>`
-    : `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
-       <a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${ongProfileUrl}">Ver ONG</a>`;
+    : `<button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Ver Detalhes</button>
+       <button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Ver ONG</button>`;
 
   div.innerHTML = `
     ${badge}
@@ -216,69 +200,52 @@ function renderVagaCard(action, ongName, variant = 'ong', aprovado = false) {
 }
 
 async function init() {
-  try {
-    const [resOngs, resActions, resApplications, resVolunteers] = await Promise.all([
-      fetch(api('/ongs')),
-      fetch(api('/actions')),
-      fetch(api('/applications')),
-      fetch(api('/volunteers'))
-    ]);
+  const res = await fetch(API);
+  const db = await res.json();
 
-    const [ongs, actions, applications, volunteers] = await Promise.all([
-      resOngs.json(),
-      resActions.json(),
-      resApplications.json(),
-      resVolunteers.json()
-    ]);
+  // Mapa id → nome das ONGs para cruzar com actions e applications
+  const ongMap = Object.fromEntries(db.ongs.map(o => [o.id, o.name]));
 
-    const db = { ongs, actions, applications, volunteers };
+  // Carrossel de ONGs populares — exibe todas as ONGs do banco
+  const ongCarousel = initHorizontalCarousel('carouselTrack', 'prevBtn', 'nextBtn', 'ong-card');
+  if (ongCarousel) {
+    db.ongs.forEach((ong, i) => ongCarousel.track.appendChild(renderOngCard(ong, i)));
+    ongCarousel.update();
+  }
 
-    // Mapa id → nome das ONGs para cruzar com actions e applications
-    const ongMap = Object.fromEntries(db.ongs.map(o => [o.id, o.name]));
+  // Carrossel de vagas em alta — ações abertas ordenadas por mais participantes
+  const altaCarousel = initHorizontalCarousel('altaTrack', 'altaPrevBtn', 'altaNextBtn', 'alta-card');
+  if (altaCarousel) {
+    db.actions
+      .filter(a => a.status === 'open')
+      .sort((a, b) => b.participants.length - a.participants.length)
+      .forEach(a => altaCarousel.track.appendChild(renderAltaCard(a, ongMap[a.ongId] || '')));
+    altaCarousel.update();
+  }
 
-    // Carrossel de ONGs populares — exibe todas as ONGs do banco
-    const ongCarousel = initHorizontalCarousel('carouselTrack', 'prevBtn', 'nextBtn', 'ong-card');
-    if (ongCarousel) {
-      db.ongs.forEach((ong, i) => ongCarousel.track.appendChild(renderOngCard(ong, i)));
-      ongCarousel.update();
-    }
-
-    // Carrossel de vagas em alta — ações abertas ordenadas por mais participantes
-    const altaCarousel = initHorizontalCarousel('altaTrack', 'altaPrevBtn', 'altaNextBtn', 'alta-card');
-    if (altaCarousel) {
+  // Carrossel vertical de vagas — conteúdo varia por tipo de usuário:
+  // ONG       → suas próprias ações abertas
+  // Voluntário → ações em que se inscreveu, com badge se confirmado
+  const vagasCarousel = initVerticalCarousel('vagasTrack', 'vagasPrevBtn', 'vagasNextBtn');
+  if (vagasCarousel) {
+    if (isVoluntario) {
+      const actionMap = Object.fromEntries(db.actions.map(a => [a.id, a]));
+      db.applications
+        .filter(app => app.volunteerId === usuarioCorrente.id)
+        .forEach(app => {
+          const action = actionMap[app.actionId];
+          if (!action) return;
+          vagasCarousel.track.appendChild(
+            renderVagaCard(action, ongMap[action.ongId] || '', 'voluntario', app.status === 'accepted' && !!app.confirmedAt)
+          );
+        });
+    } else {
       db.actions
-        .filter(a => a.status === 'open')
-        .sort((a, b) => b.participants.length - a.participants.length)
-        .forEach(a => altaCarousel.track.appendChild(renderAltaCard(a, ongMap[a.ongId] || '')));
-      altaCarousel.update();
+        .filter(a => a.status === 'open' && a.ongId === usuarioCorrente.id)
+        .forEach(a => vagasCarousel.track.appendChild(renderVagaCard(a, ongMap[a.ongId] || '', 'ong')));
     }
-
-    // Carrossel vertical de vagas — conteúdo varia por tipo de usuário:
-    // ONG       → suas próprias ações abertas
-    // Voluntário → ações em que se inscreveu, com badge se confirmado
-    const vagasCarousel = initVerticalCarousel('vagasTrack', 'vagasPrevBtn', 'vagasNextBtn');
-    if (vagasCarousel) {
-      if (isVoluntario) {
-        const actionMap = Object.fromEntries(db.actions.map(a => [a.id, a]));
-        db.applications
-          .filter(app => app.volunteerId === usuarioCorrente.id)
-          .forEach(app => {
-            const action = actionMap[app.actionId];
-            if (!action) return;
-            vagasCarousel.track.appendChild(
-              renderVagaCard(action, ongMap[action.ongId] || '', 'voluntario', app.status === 'accepted' && !!app.confirmedAt)
-            );
-          });
-      } else {
-        db.actions
-          .filter(a => a.status === 'open' && a.ongId === usuarioCorrente.id)
-          .forEach(a => vagasCarousel.track.appendChild(renderVagaCard(a, ongMap[a.ongId] || '', 'ong')));
-      }
-      vagasCarousel.setHeight();
-      vagasCarousel.update();
-    }
-  } catch (err) {
-    console.error('Erro ao inicializar home:', err);
+    vagasCarousel.setHeight();
+    vagasCarousel.update();
   }
 }
 
