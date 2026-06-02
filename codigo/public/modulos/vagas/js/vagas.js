@@ -1,4 +1,5 @@
-const API = '../../db/db.json';
+const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
+function api(path) { return (API_BASE ? API_BASE : '') + path; }
 
 const STATE = {
   actions: [],
@@ -135,7 +136,12 @@ function renderCardVaga(action, nomeOng) {
 
   const cta = ce('div', 'vaga-card-cta');
   const btn = ce('button', 'btn btn-primary btn-pad-sm');
+  const detailsUrl = '../detalhes-vagas/detalhes.html';
   btn.textContent = 'Ver Detalhes';
+  btn.type = 'button';
+  btn.addEventListener('click', () => {
+    window.location.href = detailsUrl;
+  });
   cta.appendChild(btn);
 
   card.appendChild(thumb);
@@ -271,12 +277,21 @@ function initEventos() {
 }
 
 async function carregarDb() {
-  const res = await fetch(API);
-  const db  = await res.json();
+  const [resActions, resOngs, resTags] = await Promise.all([
+    fetch(api('/actions')),
+    fetch(api('/ongs')),
+    fetch(api('/tags'))
+  ]);
 
-  STATE.actions = db.actions;
-  STATE.ongs    = db.ongs;
-  STATE.tags    = db.tags;
+  const [actions, ongs, tags] = await Promise.all([
+    resActions.json(),
+    resOngs.json(),
+    resTags.json()
+  ]);
+
+  STATE.actions = actions;
+  STATE.ongs    = ongs;
+  STATE.tags    = tags;
 
   renderDropdown();
   aplicarFiltros();
