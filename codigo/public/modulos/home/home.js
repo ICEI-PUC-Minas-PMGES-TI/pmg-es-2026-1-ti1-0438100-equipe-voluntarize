@@ -144,6 +144,12 @@ function renderOngCard(ong, index) {
 }
 
 // Card do carrossel de vagas em alta — ordenadas por número de visualizações
+
+function getOngViews(ongId, actions) {
+  return actions
+    .filter(action => action.ongId === ongId)
+    .reduce((total, action) => total + (Number.isFinite(action.views) ? action.views : 0), 0);
+}
 function renderAltaCard(action, ongName) {
   const div = document.createElement('div');
   div.className = 'alta-card';
@@ -213,7 +219,10 @@ async function init() {
   // Carrossel de ONGs populares — exibe todas as ONGs do banco
   const ongCarousel = initHorizontalCarousel('carouselTrack', 'prevBtn', 'nextBtn', 'ong-card');
   if (ongCarousel) {
-    db.ongs.forEach((ong, i) => ongCarousel.track.appendChild(renderOngCard(ong, i)));
+    db.ongs
+      .slice()
+      .sort((a, b) => getOngViews(b.id, db.actions) - getOngViews(a.id, db.actions))
+      .forEach((ong, i) => ongCarousel.track.appendChild(renderOngCard(ong, i)));
     ongCarousel.update();
   }
 
