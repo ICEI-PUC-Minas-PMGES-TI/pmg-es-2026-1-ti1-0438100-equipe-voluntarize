@@ -3,7 +3,9 @@
   const STAR_EMPTY = '../../assets/images/imgs-feedback/star-regular-full.svg';
 
   // ===== Caminho para o banco de dados =====
-  const API = '../../db/db.json';
+  const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
+  
+  function api(path) { return (API_BASE ? API_BASE : '') + path; }
 
   // ===== Banco com persistência em localStorage + fetch do db.json =====
   const STORAGE_KEY = 'reviews-ong'; 
@@ -13,18 +15,16 @@
   // Carrega reviews do localStorage ou do banco de dados
   async function loadreviews() {
       try {
-        // Sempre tenta carregar do db.json primeiro
-        const res = await fetch(API);
-        const db = await res.json();
-        reviews = db.reviews || [];
-        save(); // Atualiza localStorage com dados do db.json
+        const res = await fetch(api('/reviews'));
+        reviews = await res.json();
+        save(); // Atualiza localStorage com dados do servidor
       } catch (e) {
         // Se falhar, usa o que está no localStorage
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           reviews = JSON.parse(saved);
         } else {
-          console.warn('Erro ao carregar db.json e localStorage vazio:', e);
+          console.warn('Erro ao carregar reviews e localStorage vazio:', e);
           reviews = [];
         }
       }
