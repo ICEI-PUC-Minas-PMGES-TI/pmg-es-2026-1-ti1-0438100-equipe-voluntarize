@@ -27,8 +27,8 @@
             <a href="#">Minhas Candidaturas</a>
           </nav>
 
-          <button class="header-avatar" type="button" aria-label="Abrir perfil">
-            <img src="./assets/header-user.svg" alt="" />
+          <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário" onclick="redirectToProfile()">
+            <i class="fa-regular fa-user"></i>
           </button>
         </header>
       </div>
@@ -36,7 +36,7 @@
       <main class="container section volunteer-main">
         <section class="surface surface-green profile-hero" aria-labelledby="volunteer-name">
           <div class="profile-avatar" aria-hidden="true">
-            <img src="./assets/profile-user.svg" alt="" />
+            <img src="../../assets/images/profile-user.svg" alt="" />
           </div>
 
           <div class="profile-copy">
@@ -47,10 +47,10 @@
           <aside class="profile-actions" aria-label="Resumo do volunt&aacute;rio">
             <p class="rating-badge">
               <span id="volunteer-rating"></span>
-              <img src="./assets/star.svg" alt="" />
+              <img src="../../assets/images/star.svg" alt="" />
             </p>
             <p class="tag tag-white tag-static tag-xs followers-badge">
-              <img src="./assets/follower-icon.svg" alt="" />
+              <img src="../../assets/images/follower-icon.svg" alt="" />
               <span id="volunteer-followers"></span>
               <span>Seguidores</span>
             </p>
@@ -76,7 +76,7 @@
 
           <img
             class="story-illustration"
-            src="./assets/story-person.svg"
+            src="../../assets/images/story-person.svg"
             alt=""
             aria-hidden="true"
           />
@@ -118,7 +118,7 @@
 
         <section class="reviews-panel" aria-label="Avalia&ccedil;&otilde;es">
           <p class="surface surface-xs review-heading">
-            <img src="./assets/review-icon.svg" alt="" />
+            <img src="../../assets/images/review-icon.svg" alt="" />
             Veja o que outros usu&aacute;rios disseram sobre trabalhar com
             <span id="review-volunteer-name"></span>
           </p>
@@ -140,5 +140,6 @@
         </footer>
       </div>
     </div>
+    <script src="../../assets/js/profile-redirect.js"></script>
   </body>
 </html>

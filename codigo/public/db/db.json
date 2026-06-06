@@ -1,8 +1,8 @@
 {
   "volunteers": [
     {
-      "id": 1,
-      "name": "Cláudia Mendes",
+      "id": "1",
+      "name": "Cláudia Mendes hahahah",
       "email": "claudia.mendes@email.com",
       "password": "123456",
       "cpf": "123.456.789-00",
@@ -16,7 +16,7 @@
       "deletedAt": null
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Lucas Ferreira",
       "email": "lucas.ferreira@email.com",
       "password": "123456",
@@ -31,7 +31,7 @@
       "deletedAt": null
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Fernanda Oliveira",
       "email": "fernanda.oliveira@email.com",
       "password": "123456",
@@ -46,7 +46,7 @@
       "deletedAt": null
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Rafael Santos",
       "email": "rafael.santos@email.com",
       "password": "123456",
@@ -61,7 +61,7 @@
       "deletedAt": null
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Mariana Costa",
       "email": "mariana.costa@email.com",
       "password": "123456",
@@ -71,12 +71,12 @@
       "bio": "Professora aposentada, dedico meu tempo livre ao ensino de adultos.",
       "phone": "(31) 96543-2109",
       "profilePicture": "",
-      "rating": 5.0,
+      "rating": 5,
       "createdAt": "2019-11-20",
       "deletedAt": null
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Bruno Almeida",
       "email": "bruno.almeida@email.com",
       "password": "123456",
@@ -91,7 +91,7 @@
       "deletedAt": null
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Juliana Rocha",
       "email": "juliana.rocha@email.com",
       "password": "123456",
@@ -101,15 +101,14 @@
       "bio": "Universitária apaixonada por causas ambientais e sociais.",
       "phone": "(31) 94321-0987",
       "profilePicture": "",
-      "rating": 4.0,
+      "rating": 4,
       "createdAt": "2024-02-14",
       "deletedAt": null
     }
   ],
-
   "ongs": [
     {
-      "id": 1,
+      "id": "1",
       "name": "ONG Dia Feliz",
       "email": "contato@diafeliz.org",
       "password": "123456",
@@ -126,7 +125,7 @@
       "deletedAt": null
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Instituto Mãos Unidas",
       "email": "contato@maosunidas.org.br",
       "password": "123456",
@@ -143,7 +142,7 @@
       "deletedAt": null
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Lar dos Idosos São Francisco",
       "email": "contato@larsaofrancisco.org",
       "password": "123456",
@@ -160,7 +159,7 @@
       "deletedAt": null
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Verde Vivo",
       "email": "contato@verdevivo.eco.br",
       "password": "123456",
@@ -177,7 +176,7 @@
       "deletedAt": null
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Saúde Para Todos",
       "email": "contato@saudeparatodos.org",
       "password": "123456",
@@ -194,17 +193,23 @@
       "deletedAt": null
     }
   ],
-
   "actions": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Distribuição de Cestas Básicas",
       "description": "Distribuição de cestas básicas para famílias em situação de vulnerabilidade no bairro Jardim Felicidade.",
       "location": "Rua das Flores, 215 - Jardim Felicidade, Belo Horizonte, MG",
       "date": "2026-08-15",
       "ongId": 1,
-      "tags": ["Alimentação", "Comunidade"],
-      "participants": [1, 2, 5],
+      "tags": [
+        "Alimentação",
+        "Comunidade"
+      ],
+      "participants": [
+        1,
+        2,
+        5
+      ],
       "vacancies": 20,
       "status": "open",
       "endDate": "2026-08-12",
@@ -214,14 +219,21 @@
       "deletedAt": null
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Aulas de Reforço Escolar",
       "description": "Aulas de reforço em matemática e português para crianças do ensino fundamental de comunidades carentes.",
       "location": "Av. Afonso Pena, 1500 - Centro, Belo Horizonte, MG",
       "date": "2026-09-05",
       "ongId": 2,
-      "tags": ["Educação", "Crianças"],
-      "participants": [3, 5, 7],
+      "tags": [
+        "Educação",
+        "Crianças"
+      ],
+      "participants": [
+        3,
+        5,
+        7
+      ],
       "vacancies": 10,
       "status": "open",
       "endDate": "2026-09-01",
@@ -231,14 +243,20 @@
       "deletedAt": null
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Visita e Recreação com Idosos",
       "description": "Tarde de jogos, música e conversa com os idosos do lar. Traga alegria e companhia!",
       "location": "Rua São Francisco, 88 - Santa Efigênia, Belo Horizonte, MG",
       "date": "2026-08-22",
       "ongId": 3,
-      "tags": ["Idosos"],
-      "participants": [1, 4, 6],
+      "tags": [
+        "Idosos"
+      ],
+      "participants": [
+        1,
+        4,
+        6
+      ],
       "vacancies": 15,
       "status": "open",
       "endDate": "2026-08-20",
@@ -248,14 +266,19 @@
       "deletedAt": null
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Mutirão de Reflorestamento",
       "description": "Plantio de mudas nativas em área degradada às margens do Ribeirão Arrudas.",
       "location": "Parque das Mangabeiras - Belo Horizonte, MG",
       "date": "2026-09-20",
       "ongId": 4,
-      "tags": ["Meio Ambiente"],
-      "participants": [2, 7],
+      "tags": [
+        "Meio Ambiente"
+      ],
+      "participants": [
+        2,
+        7
+      ],
       "vacancies": 30,
       "status": "open",
       "endDate": "2026-09-17",
@@ -265,14 +288,20 @@
       "deletedAt": null
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "Mutirão de Saúde Comunitária",
       "description": "Atendimento médico, aferição de pressão, glicemia e orientações de saúde para a comunidade.",
       "location": "Praça da Liberdade - Belo Horizonte, MG",
       "date": "2026-07-10",
       "ongId": 5,
-      "tags": ["Saúde"],
-      "participants": [3, 4, 6],
+      "tags": [
+        "Saúde"
+      ],
+      "participants": [
+        3,
+        4,
+        6
+      ],
       "vacancies": 25,
       "status": "completed",
       "endDate": "2026-07-07",
@@ -282,13 +311,16 @@
       "deletedAt": null
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "Oficina de Capacitação em Informática",
       "description": "Curso básico de informática para jovens e adultos que buscam recolocação no mercado de trabalho.",
       "location": "Rua Tupis, 45 - Centro, Belo Horizonte, MG",
       "date": "2026-10-01",
       "ongId": 2,
-      "tags": ["Capacitação Profissional", "Educação"],
+      "tags": [
+        "Capacitação Profissional",
+        "Educação"
+      ],
       "participants": [],
       "vacancies": 20,
       "status": "open",
@@ -299,14 +331,22 @@
       "deletedAt": null
     },
     {
-      "id": 7,
+      "id": "7",
       "title": "Campanha de Doação de Agasalhos",
       "description": "Arrecadação e distribuição de agasalhos para moradores em situação de rua durante o inverno.",
       "location": "Viaduto Santa Tereza - Belo Horizonte, MG",
       "date": "2026-07-01",
       "ongId": 1,
-      "tags": ["Moradores de Rua"],
-      "participants": [1, 2, 3, 5, 6],
+      "tags": [
+        "Moradores de Rua"
+      ],
+      "participants": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
       "vacancies": 40,
       "status": "completed",
       "endDate": "2026-06-28",
@@ -316,10 +356,9 @@
       "deletedAt": null
     }
   ],
-
   "applications": [
     {
-      "id": 1,
+      "id": "1",
       "volunteerId": 1,
       "actionId": 1,
       "status": "accepted",
@@ -328,7 +367,7 @@
       "attended": true
     },
     {
-      "id": 2,
+      "id": "2",
       "volunteerId": 2,
       "actionId": 1,
       "status": "accepted",
@@ -337,7 +376,7 @@
       "attended": false
     },
     {
-      "id": 3,
+      "id": "3",
       "volunteerId": 5,
       "actionId": 1,
       "status": "pending",
@@ -346,7 +385,7 @@
       "attended": false
     },
     {
-      "id": 4,
+      "id": "4",
       "volunteerId": 3,
       "actionId": 2,
       "status": "accepted",
@@ -355,7 +394,7 @@
       "attended": false
     },
     {
-      "id": 5,
+      "id": "5",
       "volunteerId": 5,
       "actionId": 2,
       "status": "accepted",
@@ -364,7 +403,7 @@
       "attended": false
     },
     {
-      "id": 6,
+      "id": "6",
       "volunteerId": 7,
       "actionId": 2,
       "status": "pending",
@@ -373,7 +412,7 @@
       "attended": false
     },
     {
-      "id": 7,
+      "id": "7",
       "volunteerId": 1,
       "actionId": 3,
       "status": "accepted",
@@ -382,7 +421,7 @@
       "attended": false
     },
     {
-      "id": 8,
+      "id": "8",
       "volunteerId": 4,
       "actionId": 3,
       "status": "accepted",
@@ -391,7 +430,7 @@
       "attended": false
     },
     {
-      "id": 9,
+      "id": "9",
       "volunteerId": 6,
       "actionId": 3,
       "status": "rejected",
@@ -400,7 +439,7 @@
       "attended": false
     },
     {
-      "id": 10,
+      "id": "10",
       "volunteerId": 2,
       "actionId": 4,
       "status": "accepted",
@@ -409,7 +448,7 @@
       "attended": false
     },
     {
-      "id": 11,
+      "id": "11",
       "volunteerId": 7,
       "actionId": 4,
       "status": "pending",
@@ -418,7 +457,7 @@
       "attended": false
     },
     {
-      "id": 12,
+      "id": "12",
       "volunteerId": 3,
       "actionId": 5,
       "status": "accepted",
@@ -427,7 +466,7 @@
       "attended": true
     },
     {
-      "id": 13,
+      "id": "13",
       "volunteerId": 4,
       "actionId": 5,
       "status": "accepted",
@@ -436,7 +475,7 @@
       "attended": true
     },
     {
-      "id": 14,
+      "id": "14",
       "volunteerId": 6,
       "actionId": 5,
       "status": "accepted",
@@ -445,7 +484,7 @@
       "attended": false
     },
     {
-      "id": 15,
+      "id": "15",
       "volunteerId": 1,
       "actionId": 7,
       "status": "accepted",
@@ -454,7 +493,7 @@
       "attended": true
     },
     {
-      "id": 16,
+      "id": "16",
       "volunteerId": 2,
       "actionId": 7,
       "status": "accepted",
@@ -463,7 +502,7 @@
       "attended": true
     },
     {
-      "id": 17,
+      "id": "17",
       "volunteerId": 3,
       "actionId": 7,
       "status": "accepted",
@@ -472,7 +511,7 @@
       "attended": true
     },
     {
-      "id": 18,
+      "id": "18",
       "volunteerId": 5,
       "actionId": 7,
       "status": "accepted",
@@ -481,7 +520,7 @@
       "attended": true
     },
     {
-      "id": 19,
+      "id": "19",
       "volunteerId": 6,
       "actionId": 7,
       "status": "accepted",
@@ -490,10 +529,9 @@
       "attended": true
     }
   ],
-
   "reviews": [
     {
-      "id": 1,
+      "id": "1",
       "authorId": 1,
       "targetType": "ong",
       "targetId": 1,
@@ -504,7 +542,7 @@
       "deletedAt": null
     },
     {
-      "id": 2,
+      "id": "2",
       "authorId": 2,
       "targetType": "ong",
       "targetId": 1,
@@ -515,7 +553,7 @@
       "deletedAt": null
     },
     {
-      "id": 3,
+      "id": "3",
       "authorId": 3,
       "targetType": "ong",
       "targetId": 1,
@@ -526,7 +564,7 @@
       "deletedAt": null
     },
     {
-      "id": 4,
+      "id": "4",
       "authorId": 3,
       "targetType": "ong",
       "targetId": 5,
@@ -537,7 +575,7 @@
       "deletedAt": null
     },
     {
-      "id": 5,
+      "id": "5",
       "authorId": 4,
       "targetType": "ong",
       "targetId": 5,
@@ -548,7 +586,7 @@
       "deletedAt": null
     },
     {
-      "id": 6,
+      "id": "6",
       "authorId": 1,
       "targetType": "volunteer",
       "targetId": 2,
@@ -559,7 +597,7 @@
       "deletedAt": null
     },
     {
-      "id": 7,
+      "id": "7",
       "authorId": 1,
       "targetType": "volunteer",
       "targetId": 3,
@@ -570,7 +608,7 @@
       "deletedAt": null
     },
     {
-      "id": 8,
+      "id": "8",
       "authorId": 5,
       "targetType": "volunteer",
       "targetId": 3,
@@ -581,7 +619,7 @@
       "deletedAt": null
     },
     {
-      "id": 9,
+      "id": "9",
       "authorId": 5,
       "targetType": "volunteer",
       "targetId": 4,
@@ -592,7 +630,7 @@
       "deletedAt": null
     },
     {
-      "id": 10,
+      "id": "10",
       "authorId": 1,
       "targetType": "volunteer",
       "targetId": 5,
@@ -603,10 +641,9 @@
       "deletedAt": null
     }
   ],
-
   "follows": [
     {
-      "id": 1,
+      "id": "1",
       "followerType": "volunteer",
       "followerId": 1,
       "targetType": "ong",
@@ -614,7 +651,7 @@
       "createdAt": "2026-05-10"
     },
     {
-      "id": 2,
+      "id": "2",
       "followerType": "volunteer",
       "followerId": 1,
       "targetType": "ong",
@@ -622,7 +659,7 @@
       "createdAt": "2026-05-14"
     },
     {
-      "id": 3,
+      "id": "3",
       "followerType": "volunteer",
       "followerId": 2,
       "targetType": "ong",
@@ -630,7 +667,7 @@
       "createdAt": "2026-06-02"
     },
     {
-      "id": 4,
+      "id": "4",
       "followerType": "volunteer",
       "followerId": 3,
       "targetType": "ong",
@@ -638,7 +675,7 @@
       "createdAt": "2026-06-12"
     },
     {
-      "id": 5,
+      "id": "5",
       "followerType": "ong",
       "followerId": 1,
       "targetType": "volunteer",
@@ -646,38 +683,67 @@
       "createdAt": "2026-07-03"
     }
   ],
-
   "favorites": [
     {
-      "id": 1,
+      "id": "1",
       "volunteerId": 1,
       "actionId": 2,
       "createdAt": "2026-05-18"
     },
     {
-      "id": 2,
+      "id": "2",
       "volunteerId": 1,
       "actionId": 6,
       "createdAt": "2026-05-20"
     },
     {
-      "id": 3,
+      "id": "3",
       "volunteerId": 2,
       "actionId": 1,
       "createdAt": "2026-06-01"
     }
   ],
-
   "tags": [
-    { "id": 1, "name": "Alimentação" },
-    { "id": 2, "name": "Idosos" },
-    { "id": 3, "name": "Educação" },
-    { "id": 4, "name": "Saúde" },
-    { "id": 5, "name": "Meio Ambiente" },
-    { "id": 6, "name": "Crianças" },
-    { "id": 7, "name": "Animais" },
-    { "id": 8, "name": "Moradores de Rua" },
-    { "id": 9, "name": "Capacitação Profissional" },
-    { "id": 10, "name": "Esporte e Lazer" }
-  ]
+    {
+      "id": "1",
+      "name": "Alimentação"
+    },
+    {
+      "id": "2",
+      "name": "Idosos"
+    },
+    {
+      "id": "3",
+      "name": "Educação"
+    },
+    {
+      "id": "4",
+      "name": "Saúde"
+    },
+    {
+      "id": "5",
+      "name": "Meio Ambiente"
+    },
+    {
+      "id": "6",
+      "name": "Crianças"
+    },
+    {
+      "id": "7",
+      "name": "Animais"
+    },
+    {
+      "id": "8",
+      "name": "Moradores de Rua"
+    },
+    {
+      "id": "9",
+      "name": "Capacitação Profissional"
+    },
+    {
+      "id": "10",
+      "name": "Esporte e Lazer"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

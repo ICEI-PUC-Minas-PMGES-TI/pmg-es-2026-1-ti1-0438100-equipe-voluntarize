@@ -4,9 +4,9 @@
   const DEFAULT_PROFILE_ID = "claudia";
   const DATA_VERSION = 5;
   const ASSETS = {
-    action: "./assets/action-people.svg",
-    star: "./assets/star.svg",
-    reviewUser: "./assets/review-user.svg"
+    action: "../../assets/action-people.svg",
+    star: "../../assets/star.svg",
+    reviewUser: "../../assets/review-user.svg"
   };
 
   const initialState = {
