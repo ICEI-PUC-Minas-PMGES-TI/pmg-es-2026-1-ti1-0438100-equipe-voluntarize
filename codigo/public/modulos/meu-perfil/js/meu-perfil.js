@@ -435,7 +435,7 @@ async function salvarAcao(e) {
 }
 
 function showError(msg) {
-  qs('#profile-name').textContent = 'Erro';
+  qs('#profile-name').textContent = 'Perfil não encontrado';
   qs('#profile-bio').textContent  = msg;
 }
 
