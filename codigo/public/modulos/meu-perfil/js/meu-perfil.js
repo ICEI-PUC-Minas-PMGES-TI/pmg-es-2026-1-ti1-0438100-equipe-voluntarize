@@ -348,10 +348,10 @@ function updateButtonsVisibility(isLogged) {
 
   if (!btnLogado || !btnDeslogado) return;
 
-  btnLogado.style.display = isLogged ? 'block' : 'none';
-  profileInfoCount.style.display = isLogged ? 'block' : 'none';
-  profileInfoPhoto.style.display = isLogged ? 'block' : 'none';
-  btnDeslogado.style.display = isLogged ? 'none' : 'block';
+  btnLogado.style.display = isLogged ? 'flex' : 'none';
+  profileInfoCount.style.display = isLogged ? 'flex' : 'none';
+  profileInfoPhoto.style.display = isLogged ? 'flex' : 'none';
+  btnDeslogado.style.display = isLogged ? 'none' : 'flex';
 }
 
 function redirectTo(path) {
