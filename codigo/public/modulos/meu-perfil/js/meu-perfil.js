@@ -251,6 +251,8 @@ async function confirmarInativacao() {
       deletedAt: new Date().toISOString().split('T')[0],
     });
     localStorage.removeItem('usuarioLogado');
+    localStorage.removeItem('usuarioLogado');
+    updateButtonsVisibility(false);
     showToast('Conta inativada. Redirecionando...');
     setTimeout(() => {
       window.location.href = '../../index.html';
@@ -336,6 +338,24 @@ async function encerrarAcao(acao) {
     showToast('Erro ao encerrar ação.');
     console.error(err);
   }
+}
+
+function updateButtonsVisibility(isLogged) {
+  const btnLogado = qs('#buttons-action-profile');
+  const profileInfoCount = qs('#profile-infos-count');
+  const profileInfoPhoto = qs('#profile-infos-photo');
+  const btnDeslogado = qs('#buttons-action-profile-deslog');
+
+  if (!btnLogado || !btnDeslogado) return;
+
+  btnLogado.style.display = isLogged ? 'block' : 'none';
+  profileInfoCount.style.display = isLogged ? 'block' : 'none';
+  profileInfoPhoto.style.display = isLogged ? 'block' : 'none';
+  btnDeslogado.style.display = isLogged ? 'none' : 'block';
+}
+
+function redirectTo(path) {
+  location.href = path;
 }
 
 function buildAcaoForm(acao = null) {
@@ -437,6 +457,7 @@ async function salvarAcao(e) {
 function showError(msg) {
   qs('#profile-name').textContent = 'Perfil não encontrado';
   qs('#profile-bio').textContent  = msg;
+  updateButtonsVisibility(false);
 }
 
 
@@ -445,6 +466,7 @@ async function init() {
 
   if (!session || session.id === undefined) {
     showError('Nenhum usuário logado. Faça login para ver seu perfil.');
+    qs('#btn-login').addEventListener('click', () => {redirectTo('./../login/login.html')});
     return;
   }
 
@@ -458,7 +480,7 @@ async function init() {
 
     STATE.user = user;
     STATE.tags = tags;
-
+    updateButtonsVisibility(true);
     renderPerfil(user, session.type);
 
     if (session.type === 1) {
@@ -486,11 +508,11 @@ async function init() {
   qs('#btn-cancelar-modal').addEventListener('click', closeModalEdicao);
   qs('#form-edicao').addEventListener('submit', salvarEdicao);
 
-  qs('#btn-inativar').addEventListener('click', openModalInativar);
+  qs('#btn-inativar').addEventListener('click', openModalInativar);  
   qs('#btn-cancelar-inativar').addEventListener('click', closeModalInativar);
   qs('#btn-confirmar-inativar').addEventListener('click', confirmarInativacao);
 
-  qs('#btn-nova-acao')?.addEventListener('click', () => openModalAcao(null));
+  qs('#btn-nova-acao')?.addEventListener('click', () => {redirectTo('./../cadastro-vagas/criar-acao.html')});
   qs('#btn-fechar-modal-acao').addEventListener('click', closeModalAcao);
   qs('#btn-cancelar-modal-acao').addEventListener('click', closeModalAcao);
   qs('#form-acao').addEventListener('submit', salvarAcao);
