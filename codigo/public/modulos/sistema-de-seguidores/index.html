@@ -36,7 +36,6 @@
     <main class="container followers-main">
       <section class="followers-intro" aria-labelledby="page-title">
         <div class="intro-copy">
-          <span class="tag tag-purple tag-static tag-xs">Issue #31</span>
           <h1 id="page-title">Sistema de seguidores</h1>
           <p>Gerencie conexões entre ONGs e voluntários.</p>
         </div>
@@ -102,7 +101,7 @@
           </span>
           <div>
             <strong id="highlight-total">0</strong>
-            <span>seguidores da ONG selecionada</span>
+            <span id="highlight-label">seguidores da ONG selecionada</span>
           </div>
         </article>
       </section>
@@ -114,24 +113,11 @@
               <span class="panel-icon panel-icon-purple">
                 <img src="./assets/follower-icon.svg" alt="" />
               </span>
-              <h2 id="list-title">Seguidores recentes</h2>
+              <h2 id="list-title">Seguidores</h2>
             </div>
             <span class="panel-count" id="list-count">0 itens</span>
           </div>
           <div class="cards-list" id="main-list" aria-live="polite"></div>
-        </article>
-
-        <article class="surface followers-panel" aria-labelledby="following-title">
-          <div class="panel-heading">
-            <div class="heading-title">
-              <span class="panel-icon panel-icon-green">
-                <img src="./assets/follower-icon.svg" alt="" />
-              </span>
-              <h2 id="following-title">ONGs seguidas</h2>
-            </div>
-            <span class="panel-count" id="following-count">0 ONGs</span>
-          </div>
-          <div class="cards-list compact-list" id="following-list" aria-live="polite"></div>
         </article>
       </section>
 

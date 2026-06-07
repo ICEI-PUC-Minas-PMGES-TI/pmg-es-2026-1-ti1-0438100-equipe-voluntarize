@@ -78,13 +78,12 @@
     listTitle: document.getElementById("list-title"),
     listCount: document.getElementById("list-count"),
     mainList: document.getElementById("main-list"),
-    followingList: document.getElementById("following-list"),
-    followingCount: document.getElementById("following-count"),
     selectedTitle: document.getElementById("selected-title"),
     connectionsTitle: document.getElementById("connections-title"),
     selectedCard: document.getElementById("selected-card"),
     selectedFollowers: document.getElementById("selected-followers"),
     selectedCount: document.getElementById("selected-count"),
+    highlightLabel: document.getElementById("highlight-label"),
     followersTotal: document.getElementById("followers-total"),
     followingTotal: document.getElementById("following-total"),
     highlightTotal: document.getElementById("highlight-total"),
@@ -92,10 +91,10 @@
   };
 
   const tabTitles = {
-    seguidores: "Seguidores recentes",
-    seguindo: "Quem o usuário segue",
-    ongs: "ONGs cadastradas",
-    voluntarios: "Voluntários cadastrados"
+    seguidores: "Seguidores",
+    seguindo: "Seguindo",
+    ongs: "ONGs",
+    voluntarios: "Voluntários"
   };
 
   async function loadDb() {
@@ -302,7 +301,12 @@
   }
 
   function createButton(label, variant, onClick) {
-    const button = createElement("button", `action-button ${variant || ""}`.trim(), label);
+    const buttonClasses = {
+      secondary: "btn btn-primary btn-pad-xs btn-shadow-sm btn-border-thin",
+      outline: "btn btn-outline btn-pad-xs btn-shadow-sm btn-border-thin",
+      default: "btn btn-secondary btn-pad-xs btn-shadow-sm btn-border-thin"
+    };
+    const button = createElement("button", buttonClasses[variant || "default"], label);
     button.type = "button";
     button.addEventListener("click", onClick);
     return button;
@@ -395,21 +399,6 @@
     });
   }
 
-  function renderFollowingList() {
-    const items = getFilteredItems(getCurrentUserFollowingOngs());
-    elements.followingList.textContent = "";
-    elements.followingCount.textContent = `${items.length} ${items.length === 1 ? "ONG" : "ONGs"}`;
-
-    if (!items.length) {
-      renderEmpty(elements.followingList, "Nenhuma ONG seguida encontrada.", false);
-      return;
-    }
-
-    items.forEach((item) => {
-      elements.followingList.appendChild(createEntityCard(item));
-    });
-  }
-
   function renderSelected() {
     let selectedEntity = getEntity(state.selected.type, state.selected.id);
 
@@ -423,6 +412,8 @@
     elements.selectedTitle.textContent = state.selected.type === "ong" ? "ONG selecionada" : "Voluntário selecionado";
     elements.connectionsTitle.textContent =
       state.selected.type === "ong" ? "Seguidores desta ONG" : "Conexões deste voluntário";
+    elements.highlightLabel.textContent =
+      state.selected.type === "ong" ? "seguidores da ONG selecionada" : "conexões do voluntário selecionado";
 
     const followers = getFollowersOf(state.selected.type, state.selected.id).map((follow) =>
       toEntityItem(follow.followerType, follow.followerId, follow)
@@ -463,7 +454,6 @@
     renderTabs();
     renderSummary();
     renderMainList();
-    renderFollowingList();
     renderSelected();
   }
 
@@ -514,7 +504,6 @@
     elements.search.addEventListener("input", (event) => {
       state.search = event.target.value;
       renderMainList();
-      renderFollowingList();
     });
   }
 
