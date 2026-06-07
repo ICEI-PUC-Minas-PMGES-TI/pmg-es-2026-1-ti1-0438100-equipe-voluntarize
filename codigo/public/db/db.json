@@ -211,6 +211,7 @@
         5
       ],
       "vacancies": 20,
+      "views": 42,
       "status": "open",
       "endDate": "2026-08-12",
       "image": "",
@@ -235,6 +236,7 @@
         7
       ],
       "vacancies": 10,
+      "views": 37,
       "status": "open",
       "endDate": "2026-09-01",
       "image": "",
@@ -258,6 +260,7 @@
         6
       ],
       "vacancies": 15,
+      "views": 52,
       "status": "open",
       "endDate": "2026-08-20",
       "image": "",
@@ -280,6 +283,7 @@
         7
       ],
       "vacancies": 30,
+      "views": 21,
       "status": "open",
       "endDate": "2026-09-17",
       "image": "",
@@ -303,6 +307,7 @@
         6
       ],
       "vacancies": 25,
+      "views": 12,
       "status": "completed",
       "endDate": "2026-07-07",
       "image": "",
@@ -323,6 +328,7 @@
       ],
       "participants": [],
       "vacancies": 20,
+      "views": 15,
       "status": "open",
       "endDate": "2026-09-28",
       "image": "",
@@ -348,6 +354,7 @@
         6
       ],
       "vacancies": 40,
+      "views": 9,
       "status": "completed",
       "endDate": "2026-06-28",
       "image": "",

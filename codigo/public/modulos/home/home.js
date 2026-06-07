@@ -1,7 +1,7 @@
 // API base configurável via env
-const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
+const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : 'http://localhost:3000';
 
-function api(path) { return (API_BASE ? API_BASE : '') + path; }
+function api(path) { return API_BASE + path; }
 
 // Logos usadas nos cards de ONG em ordem rotativa, já que o db não tem imagens.
 // Quando as ONGs tiverem logo própria, usar ong.logo no lugar.
@@ -126,9 +126,7 @@ function renderOngCard(ong, index) {
   const div = document.createElement('div');
   div.className = 'ong-card surface';
   div.style.position = 'relative';
-  const profileUrl = buildUrlWithId
-    ? buildUrlWithId('../visualizacao-detalhada-ong/index.html', ong.id)
-    : `../visualizacao-detalhada-ong/index.html?id=${ong.id}`;
+  const profileUrl = `../visualizacao-detalhada-ong/index.html?id=${ong.id}`;
 
   div.innerHTML = `
     <div style="width:100px;position:absolute;top:0;right:var(--space-4)">
@@ -148,13 +146,17 @@ function renderOngCard(ong, index) {
   return div;
 }
 
-// Card do carrossel de vagas em alta — ordenadas por número de participantes
+// Card do carrossel de vagas em alta — ordenadas por número de visualizações
+
+function getOngViews(ongId, actions) {
+  return actions
+    .filter(action => action.ongId === ongId)
+    .reduce((total, action) => total + (Number.isFinite(action.views) ? action.views : 0), 0);
+}
 function renderAltaCard(action, ongName) {
   const div = document.createElement('div');
   div.className = 'alta-card';
-  const detailsUrl = buildUrlWithId
-    ? buildUrlWithId('../detalhes-vagas/detalhes.html', action.id)
-    : `../detalhes-vagas/detalhes.html?id=${action.id}`;
+  const detailsUrl = `../detalhes-vagas/detalhes.html?id=${action.id}`;
   div.innerHTML = `
     <div class="alta-card-thumb">
       <i class="fa-solid fa-calendar-days"></i>
@@ -165,6 +167,10 @@ function renderAltaCard(action, ongName) {
     <a class="btn btn-primary btn-pad-sm w-full mt-1" href="${detailsUrl}">Ver Detalhes</a>
   `;
   return div;
+}
+
+function getActionViews(action) {
+  return Number.isFinite(action.views) ? action.views : 0;
 }
 
 // Card de vaga com duas variantes de botões e badge opcional de aprovação.
@@ -180,14 +186,8 @@ function renderVagaCard(action, ongName, variant = 'ong', aprovado = false) {
   div.className = 'vaga-card surface surface-white';
 
   const badge = aprovado ? `<div class="vaga-badge-aprovado">Aprovado</div>` : '';
-  const detailsUrl = buildUrlWithId
-    ? buildUrlWithId('../detalhes-vagas/detalhes.html', action.id)
-    : `../detalhes-vagas/detalhes.html?id=${action.id}`;
-  const ongProfileUrl = action.ongId
-    ? (buildUrlWithId
-        ? buildUrlWithId('../visualizacao-detalhada-ong/index.html', action.ongId)
-        : `../visualizacao-detalhada-ong/index.html?id=${action.ongId}`)
-    : '#';
+  const detailsUrl = `../detalhes-vagas/detalhes.html?id=${action.id}`;
+  const ongProfileUrl = action.ongId ? `../visualizacao-detalhada-ong/index.html?id=${action.ongId}` : '#';
 
   const botoes = variant === 'ong'
     ? `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
@@ -231,27 +231,27 @@ async function init() {
       resVolunteers.json()
     ]);
 
-    const db = { ongs, actions, applications, volunteers };
+    const ongMap = Object.fromEntries(ongs.map(o => [o.id, o.name]));
 
-    // Mapa id → nome das ONGs para cruzar com actions e applications
-    const ongMap = Object.fromEntries(db.ongs.map(o => [o.id, o.name]));
+  // Carrossel de ONGs populares — exibe todas as ONGs do banco
+  const ongCarousel = initHorizontalCarousel('carouselTrack', 'prevBtn', 'nextBtn', 'ong-card');
+  if (ongCarousel) {
+    ongs
+      .slice()
+      .sort((a, b) => getOngViews(b.id, actions) - getOngViews(a.id, actions))
+      .forEach((ong, i) => ongCarousel.track.appendChild(renderOngCard(ong, i)));
+    ongCarousel.update();
+  }
 
-    // Carrossel de ONGs populares — exibe todas as ONGs do banco
-    const ongCarousel = initHorizontalCarousel('carouselTrack', 'prevBtn', 'nextBtn', 'ong-card');
-    if (ongCarousel) {
-      db.ongs.forEach((ong, i) => ongCarousel.track.appendChild(renderOngCard(ong, i)));
-      ongCarousel.update();
-    }
-
-    // Carrossel de vagas em alta — ações abertas ordenadas por mais participantes
-    const altaCarousel = initHorizontalCarousel('altaTrack', 'altaPrevBtn', 'altaNextBtn', 'alta-card');
-    if (altaCarousel) {
-      db.actions
-        .filter(a => a.status === 'open')
-        .sort((a, b) => b.participants.length - a.participants.length)
-        .forEach(a => altaCarousel.track.appendChild(renderAltaCard(a, ongMap[a.ongId] || '')));
-      altaCarousel.update();
-    }
+  // Carrossel de vagas em alta — ações abertas ordenadas por mais visualizações (views)
+  const altaCarousel = initHorizontalCarousel('altaTrack', 'altaPrevBtn', 'altaNextBtn', 'alta-card');
+  if (altaCarousel) {
+    actions
+      .filter(a => a.status === 'open')
+      .sort((a, b) => getActionViews(b) - getActionViews(a))
+      .forEach(a => altaCarousel.track.appendChild(renderAltaCard(a, ongMap[a.ongId] || '')));
+    altaCarousel.update();
+  }
 
     // Carrossel vertical de vagas — conteúdo varia por tipo de usuário:
     // ONG       → suas próprias ações abertas
@@ -259,8 +259,8 @@ async function init() {
     const vagasCarousel = initVerticalCarousel('vagasTrack', 'vagasPrevBtn', 'vagasNextBtn');
     if (vagasCarousel) {
       if (isVoluntario) {
-        const actionMap = Object.fromEntries(db.actions.map(a => [a.id, a]));
-        db.applications
+        const actionMap = Object.fromEntries(actions.map(a => [a.id, a]));
+        applications
           .filter(app => app.volunteerId === usuarioCorrente.id)
           .forEach(app => {
             const action = actionMap[app.actionId];
@@ -270,7 +270,7 @@ async function init() {
             );
           });
       } else {
-        db.actions
+        actions
           .filter(a => a.status === 'open' && a.ongId === usuarioCorrente.id)
           .forEach(a => vagasCarousel.track.appendChild(renderVagaCard(a, ongMap[a.ongId] || '', 'ong')));
       }
