@@ -14,6 +14,25 @@
   const formatRating = (r) => Number(r).toFixed(1).replace('.', ',');
   const formatFollowers = (n) => n >= 1000 ? `${Math.round(n / 1000)}K` : String(n);
 
+  const incrementViews = async (action) => {
+    const currentViews = Number.isFinite(action.views) ? action.views : 0;
+
+    const response = await fetch(`${API}/actions/${action.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ views: currentViews + 1 })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Não foi possível atualizar as visualizações da ação ${action.id}.`);
+    }
+
+    const updatedAction = await response.json();
+    return Number.isFinite(updatedAction.views) ? updatedAction.views : currentViews + 1;
+  };
+
   const renderTags = (tags) => {
     const container = find('[data-action-tags]');
     if (!container) return;
@@ -94,10 +113,17 @@
       setText('[data-ong-responsible]', ong.responsibleName);
       setText('[data-ong-rating]', formatRating(ong.rating));
       setText('[data-ong-followers]', formatFollowers(ong.followers || 0));
-      setText('[data-action-views]', (action.views || 0) + 1);
 
       renderTags(action.tags || []);
       renderParticipants(participants);
+
+      try {
+        const nextViews = await incrementViews(action);
+        setText('[data-action-views]', nextViews);
+      } catch (viewError) {
+        console.error('Erro ao contabilizar visualização:', viewError);
+        setText('[data-action-views]', (Number.isFinite(action.views) ? action.views : 0) + 1);
+      }
 
       const organizerBtn = find('.organizer-profile');
       if (organizerBtn) {
