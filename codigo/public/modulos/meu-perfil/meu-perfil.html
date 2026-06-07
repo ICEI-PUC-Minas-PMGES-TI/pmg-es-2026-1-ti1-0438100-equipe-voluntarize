@@ -28,27 +28,35 @@
     <main class="container section">
 
       <section class="surface surface-green surface-lg profile-hero">
-        <div class="profile-avatar" aria-hidden="true">
-          <i class="fa-regular fa-user"></i>
+        <div class="flex justify-between items-center flex-wrap gap-4">
+          <div class="flex items-center gap-3">
+            <span class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-hidden="true" style="width: 100px; height: 100px;">
+              <i class="fa-regular fa-user" style="font-size: 45px"></i>
+            </span>
+    
+            <div class="profile-copy">
+              <h1 id="profile-name"></h1>
+              <p class="text-sm" id="profile-meta"></p>
+              <p class="text-sm" id="profile-type-badge"></p>
+            </div>
+          </div>
+
+          <div class="stack items-end gap-2">
+            <aside class="profile-actions flex flex-col gap-2" style="align-items: end">
+              <p class="rating-badge tag tag-white tag-static tag-xs tag-white" style="width: fit-content;">
+                <span id="profile-rating"></span>
+                <i class="fa-regular fa-star"></i>
+              </p>
+              <p class="tag tag-white tag-static tag-xs followers-badge">
+                <i class="fa-solid fa-user-group"></i>
+                <span id="profile-followers"></span>
+                <span>Seguidores</span>
+              </p>
+            </aside>
+          </div>
+  
         </div>
 
-        <div class="profile-copy">
-          <h1 id="profile-name"></h1>
-          <p class="text-sm" id="profile-meta"></p>
-          <p class="text-sm" id="profile-type-badge"></p>
-        </div>
-
-        <aside class="profile-actions">
-          <p class="rating-badge">
-            <span id="profile-rating"></span>
-            <i class="fa-regular fa-star"></i>
-          </p>
-          <p class="tag tag-white tag-static tag-xs followers-badge">
-            <i class="fa-regular fa-group"></i>
-            <span id="profile-followers"></span>
-            <span>Seguidores</span>
-          </p>
-        </aside>
       </section>
 
       <div class="perfil-own-actions flex gap-2 mt-3">
