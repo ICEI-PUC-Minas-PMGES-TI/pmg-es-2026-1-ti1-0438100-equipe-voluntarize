@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vagas de interesse | Voluntarize</title>
+    <link rel="stylesheet" href="../../design-system/css/globals.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="./script.js" defer></script>
+  </head>
+  <body class="saved-jobs-page">
+    <div class="container header-shell">
+      <header class="site-header saved-header">
+        <a class="brand-link" href="../../index.html" aria-label="Ir para o início">
+          <img
+            class="brand-logo"
+            src="../../assets/images/logo/logo-horizontal.png"
+            alt="Voluntarize"
+          />
+        </a>
+
+        <nav class="site-nav saved-nav" aria-label="Navegação principal">
+          <a href="../../index.html">Início</a>
+          <a href="#">Perfil</a>
+          <a href="../vagas/vagas.html">Vagas</a>
+          <a class="is-current" href="#">Vagas salvas</a>
+          <a href="#">Candidaturas</a>
+        </nav>
+
+        <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" type="button" aria-label="Abrir perfil">
+          <i class="fa-regular fa-user"></i>
+        </button>
+      </header>
+    </div>
+
+    <main class="container section saved-main">
+      <section class="page-heading" aria-labelledby="page-title">
+        <div class="divider-line divider-black prism-both" aria-hidden="true"></div>
+        <h1 id="page-title">Vagas de interesse</h1>
+        <p>Salve oportunidades para acompanhar e decidir quando se candidatar.</p>
+        <div class="divider-line divider-black prism-both" aria-hidden="true"></div>
+      </section>
+
+      <section class="surface surface-purple saved-toolbar" aria-label="Filtros de vagas">
+        <label class="field search-field" for="search-input">
+          <span class="field-icon" aria-hidden="true">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+          <input
+            id="search-input"
+            class="field-input"
+            type="search"
+            autocomplete="off"
+            placeholder="Buscar"
+          />
+        </label>
+
+        <div class="saved-tabs" role="tablist" aria-label="Filtrar vagas">
+          <button class="tab-button" type="button" data-filter="salvas" aria-pressed="true">
+            <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
+            Salvas
+          </button>
+          <button class="tab-button" type="button" data-filter="todas" aria-pressed="false">
+            <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
+            Todas
+          </button>
+          <button class="tab-button" type="button" data-filter="abertas" aria-pressed="false">
+            <i class="fa-regular fa-circle-check" aria-hidden="true"></i>
+            Abertas
+          </button>
+          <button class="tab-button" type="button" data-filter="encerradas" aria-pressed="false">
+            <i class="fa-regular fa-clock" aria-hidden="true"></i>
+            Encerradas
+          </button>
+        </div>
+      </section>
+
+      <p class="data-warning" id="data-warning" hidden>
+        Não foi possível carregar o JSON. Verifique se a página está sendo servida pela pasta pública do projeto.
+      </p>
+
+      <section class="surface saved-list-shell" aria-labelledby="list-title">
+        <header class="list-heading">
+          <div>
+            <h2 id="list-title">Vagas salvas</h2>
+            <p id="list-subtitle">Oportunidades marcadas como interesse pelo voluntário.</p>
+          </div>
+          <span class="tag tag-green tag-sm tag-shadow-xs" id="list-count">0 vagas</span>
+        </header>
+
+        <div class="cards-grid" id="cards-list" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <div class="container mb-4">
+      <footer class="site-footer">
+        <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+        <p class="text-sm">Plataforma de voluntários @ 2026</p>
+      </footer>
+    </div>
+  </body>
+</html>
