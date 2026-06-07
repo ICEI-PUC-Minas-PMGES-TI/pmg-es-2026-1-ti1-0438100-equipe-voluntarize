@@ -19,11 +19,8 @@
         <a href="#">Minhas Candidaturas</a>
       </nav>
 
-      <button class="icon-token icon-purple profile-button" type="button" aria-label="Abrir perfil">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20 21a8 8 0 0 0-16 0"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
+       <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário" onclick="redirectToProfile()">
+        <i class="fa-regular fa-user"></i>
       </button>
     </header>
 
@@ -68,6 +65,9 @@
             <img src="../../assets/images/imgs-undraw/img-home-banner-bolinhas-pessoas.svg" alt="">
           </figure>
           <button class="btn btn-primary btn-pad-xs detail-signup" type="button">Inscrever-se</button>
+          <p class="surface surface-xs inline-flex items-center justify-center gap-1 followers-badge" aria-live="polite">
+            Visualizações: <span data-action-views>0</span>
+          </p>
         </aside>
       </article>
     </section>
@@ -125,6 +125,8 @@
     </footer>
   </main>
 
+  <script src="../../assets/js/dynamic-page.js"></script>
   <script src="./js/detalhes.js"></script>
+  <script src="./../../assets/js/redirect-to-profile.js"></script>
 </body>
 </html>
