@@ -61,17 +61,9 @@
 
           <div class="stack gap-1">
 
-            <h1 class="h3">
-              ONG Dia Feliz
-            </h1>
-
-            <p class="text-sm">
-              Por: Carlos Henrique
-            </p>
-
-            <p class="text-xs text-muted">
-              Desde Ago. de 2025 na Voluntarize
-            </p>
+            <h1 class="h3" data-ong-name></h1>
+            <p class="text-sm" data-ong-responsible></p>
+            <p class="text-xs text-muted" data-ong-since></p>
 
           </div>
 
@@ -80,17 +72,9 @@
         <!-- DIREITA -->
         <div class="stack items-end gap-2">
 
-          <span class="tag tag-white tag-sm">
-            4,8 ⭐
-          </span>
-
-          <span class="text-sm text-semibold">
-            👥 200k Seguidores
-          </span>
-
-          <button class="btn btn-secondary btn-pad-sm">
-            Seguir
-          </button>
+          <span class="tag tag-white tag-sm" data-ong-rating></span>
+          <span class="text-sm text-semibold" data-ong-followers></span>
+          <button class="btn btn-secondary btn-pad-sm btn-seguir">Seguir</button>
 
         </div>
 
@@ -115,15 +99,7 @@
           </span>
         </div>
 
-        <p class="text-sm font-alt">
-          Contrary to popular belief, Lorem Ipsum is not simply random text.
-          It has roots in a piece of classical Latin literature from 45 BC.
-        </p>
-
-        <p class="text-sm font-alt">
-          The standard chunk of Lorem Ipsum used since the 1500s is reproduced
-          below for those interested.
-        </p>
+        <p class="text-sm font-alt" data-ong-description></p>
 
       </div>
 
@@ -166,67 +142,7 @@
         <i class="fa-solid fa-chevron-left"></i>
       </button>
 
-      <div class="grid grid-2 grow">
-
-        <!-- CARD -->
-        <article class="surface action-card">
-
-          <div class="action-image">
-
-            <span class="tag tag-purple tag-xs card-rate">
-              4,8 ⭐
-            </span>
-
-          </div>
-
-          <div class="stack">
-
-            <h3 class="text-lg text-bold">
-              Ação do Dia 15
-            </h3>
-
-            <p class="text-sm text-muted font-alt">
-              The standard chunk of Lorem Ipsum used since the 1500s...
-            </p>
-
-            <button class="btn btn-secondary btn-pad-xs">
-              Ver detalhes
-            </button>
-
-          </div>
-
-        </article>
-
-        <!-- CARD -->
-        <article class="surface action-card">
-
-          <div class="action-image">
-
-            <span class="tag tag-purple tag-xs card-rate">
-              4,8 ⭐
-            </span>
-
-          </div>
-
-          <div class="stack">
-
-            <h3 class="text-lg text-bold">
-              Ação do Dia 15
-            </h3>
-
-            <p class="text-sm text-muted font-alt">
-              The standard chunk of Lorem Ipsum used since the 1500s...
-            </p>
-
-            <button class="btn btn-secondary btn-pad-xs">
-              Ver detalhes
-            </button>
-
-          </div>
-
-        </article>
-
-      </div>
+      <div class="grid grid-2 grow" data-actions-list></div>
 
       <button class="btn btn-secondary btn-icon-only btn-pad-xs">
         <i class="fa-solid fa-chevron-right"></i>
@@ -252,90 +168,7 @@
 
       </div>
 
-      <div class="grid grid-3">
-
-        <!-- REVIEW -->
-        <article class="surface review-card">
-
-          <div class="flex items-center justify-between">
-
-            <div class="flex items-center gap-2">
-
-              <span class="icon-token icon-sm icon-purple">
-                <i class="fa-regular fa-user"></i>
-              </span>
-
-              <strong>Cláudia</strong>
-
-            </div>
-
-            <span class="tag tag-green tag-xs">
-              5,0 ⭐
-            </span>
-
-          </div>
-
-          <p class="text-sm text-muted font-alt">
-            The standard chunk of Lorem Ipsum used since the 1500s...
-          </p>
-
-        </article>
-
-        <!-- REVIEW -->
-        <article class="surface review-card">
-
-          <div class="flex items-center justify-between">
-
-            <div class="flex items-center gap-2">
-
-              <span class="icon-token icon-sm icon-purple">
-                <i class="fa-regular fa-user"></i>
-              </span>
-
-              <strong>Cláudia</strong>
-
-            </div>
-
-            <span class="tag tag-green tag-xs">
-              5,0 ⭐
-            </span>
-
-          </div>
-
-          <p class="text-sm text-muted font-alt">
-            The standard chunk of Lorem Ipsum used since the 1500s...
-          </p>
-
-        </article>
-
-        <!-- REVIEW -->
-        <article class="surface review-card">
-
-          <div class="flex items-center justify-between">
-
-            <div class="flex items-center gap-2">
-
-              <span class="icon-token icon-sm icon-purple">
-                <i class="fa-regular fa-user"></i>
-              </span>
-
-              <strong>Cláudia</strong>
-
-            </div>
-
-            <span class="tag tag-green tag-xs">
-              5,0 ⭐
-            </span>
-
-          </div>
-
-          <p class="text-sm text-muted font-alt">
-            The standard chunk of Lorem Ipsum used since the 1500s...
-          </p>
-
-        </article>
-
-      </div>
+      <div class="grid grid-3" data-reviews-list></div>
 
     </section>
 
@@ -359,6 +192,7 @@
     </footer>
 
   </div>
+  <script src="script.js"></script>
   <script src="./../../assets/js/redirect-to-profile.js"></script>
 </body>
 </html>

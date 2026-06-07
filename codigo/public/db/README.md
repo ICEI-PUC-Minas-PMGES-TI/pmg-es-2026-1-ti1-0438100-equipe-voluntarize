@@ -100,6 +100,7 @@ Ações e vagas publicadas pelas ONGs.
 | `tags` | string[] | Categorias para filtro por interesse |
 | `participants` | number[] | IDs dos voluntários confirmados |
 | `vacancies` | number | Número máximo de vagas |
+| `views` | number | Quantidade de visualizações acumuladas da ação |
 | `status` | string | `open`, `closed`, `completed` ou `cancelled` |
 | `endDate` | string (date) | Data limite para inscrições |
 | `image` | string (url) | Imagem de capa exibida no card |
