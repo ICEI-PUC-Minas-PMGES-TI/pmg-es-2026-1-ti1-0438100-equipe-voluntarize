@@ -1,5 +1,5 @@
 (function () {
-  const API = 'http://localhost:3000';
+  const API = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
 
   const find = (selector) => document.querySelector(selector);
   const setText = (selector, value) => { const el = find(selector); if (el) el.textContent = value; };

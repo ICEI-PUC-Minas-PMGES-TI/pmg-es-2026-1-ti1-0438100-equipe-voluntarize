@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  const API = 'http://localhost:3000';
+  const API = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
 
   const setText = (selector, value) => {
     const el = document.querySelector(selector);
