@@ -23,7 +23,7 @@
       if (saved) {
         reviews = JSON.parse(saved);
       } else {
-        console.warn('Erro ao carregar reviews do servidor e localStorage vazio:', e);
+        console.warn('Erro ao carregar reviews do servidor:', e);
         reviews = [];
       }
     }
