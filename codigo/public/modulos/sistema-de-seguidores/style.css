@@ -52,7 +52,7 @@
 
 .followers-intro {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 390px);
   align-items: end;
   gap: var(--space-4);
 }
@@ -71,18 +71,11 @@
   min-height: 58px;
   display: flex;
   align-items: center;
-  gap: var(--space-2);
   padding-inline: var(--space-3);
   border: 1px solid var(--color-black);
   border-radius: var(--radius-sm);
   background: var(--color-white);
   box-shadow: var(--shadow-sm);
-}
-
-.followers-search img,
-.tab-button img {
-  width: 24px;
-  height: 24px;
 }
 
 .followers-search input {
@@ -109,20 +102,15 @@
   font: 700 0.88rem / 1.4 var(--font-alt);
 }
 
-.followers-tabs,
-.summary-grid {
+.followers-tabs {
   display: grid;
   gap: var(--space-3);
 }
 
 .followers-tabs { grid-template-columns: repeat(4, minmax(140px, 1fr)); }
-.summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 .tab-button,
-.summary-card,
-.entity-card,
-.selected-card,
-.mini-card {
+.entity-card {
   border: 1px solid var(--color-black);
   border-radius: var(--radius-sm);
   background: var(--color-white);
@@ -141,6 +129,8 @@
   font: 700 0.95rem var(--font-alt);
 }
 
+.tab-button img { width: 24px; height: 24px; }
+
 .tab-button:is(:hover, .is-active),
 .followers-page .btn:hover {
   transform: translate(-1px, -1px);
@@ -152,27 +142,6 @@
   color: var(--color-white);
 }
 
-.summary-card {
-  min-height: 98px;
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3);
-  box-shadow: var(--screen-shadow);
-}
-
-.summary-card strong {
-  display: block;
-  color: var(--screen-border);
-  font: 700 1.65rem / 1 var(--font-alt);
-}
-
-.summary-card span {
-  color: #6f6f6f;
-  font: 700 0.82rem / 1.3 var(--font-alt);
-}
-
-.summary-icon,
 .panel-icon,
 .entity-avatar {
   display: inline-grid;
@@ -183,20 +152,13 @@
   box-shadow: var(--shadow-sm);
 }
 
-.summary-icon { width: 54px; height: 54px; }
 .panel-icon { width: 42px; height: 42px; }
-.summary-icon img,
 .panel-icon img { width: 28px; height: 28px; }
-.avatar-ong,
-.panel-icon-green,
-.summary-icon-green { background: var(--screen-green); }
+.avatar-ong { background: var(--screen-green); }
 .avatar-volunteer,
-.panel-icon-purple,
-.summary-icon-purple { background: var(--screen-purple); }
-.summary-icon-white { background: var(--color-white); }
+.panel-icon-purple { background: var(--screen-purple); }
 
-.followers-panel,
-.selected-panel {
+.followers-panel {
   border-width: 1px;
   border-radius: 14px;
   box-shadow: var(--screen-shadow);
@@ -253,46 +215,6 @@
 }
 
 .followers-page .btn { min-width: 105px; }
-.selected-panel { border-color: #9a7cdf; }
-
-.selected-grid {
-  display: grid;
-  grid-template-columns: minmax(300px, 430px) minmax(0, 1fr);
-  gap: var(--space-3);
-}
-
-.selected-card {
-  display: grid;
-  grid-template-columns: 84px minmax(0, 1fr);
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3);
-}
-
-.selected-card .entity-avatar { width: 78px; height: 78px; }
-.selected-card h3 { font: 700 1.25rem / 1.1 var(--font-alt); }
-.connections-title { margin: 2px 0 var(--space-2); color: var(--color-black); font: 700 1rem var(--font-alt); }
-
-.connection-strip {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(130px, 1fr));
-  gap: var(--space-2);
-}
-
-.mini-card {
-  min-height: 154px;
-  display: grid;
-  justify-items: center;
-  gap: 7px;
-  padding: var(--space-2);
-  text-align: center;
-}
-
-.mini-card .entity-avatar { width: 48px; height: 48px; }
-.mini-card .entity-avatar img { width: 30px; height: 30px; }
-.mini-card strong,
-.mini-card span { font: 700 0.78rem / 1.2 var(--font-alt); }
-.mini-card span { color: var(--screen-border); font-size: 0.68rem; }
 
 .empty-state {
   min-height: 160px;
@@ -313,9 +235,7 @@
   .brand-link { order: 1; }
   .followers-avatar { order: 2; }
   .followers-nav { order: 3; flex-basis: 100%; }
-  .followers-intro,
-  .summary-grid,
-  .selected-grid { grid-template-columns: 1fr; }
+  .followers-intro { grid-template-columns: 1fr; }
   .followers-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .entity-card { grid-template-columns: 56px minmax(0, 1fr); }
   .entity-meta {
@@ -327,13 +247,10 @@
     border-top: 1px solid var(--color-gray-300);
   }
   .entity-followers { text-align: left; }
-  .connection-strip { grid-template-columns: repeat(2, minmax(130px, 1fr)); }
 }
 
 @media (max-width: 560px) {
   .followers-page .brand-logo { height: 42px; }
-  .followers-tabs,
-  .connection-strip { grid-template-columns: 1fr; }
+  .followers-tabs { grid-template-columns: 1fr; }
   .panel-heading { align-items: flex-start; flex-direction: column; }
-  .selected-card { grid-template-columns: 1fr; justify-items: center; text-align: center; }
 }

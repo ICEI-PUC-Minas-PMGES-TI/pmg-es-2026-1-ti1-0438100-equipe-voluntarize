@@ -1,9 +1,7 @@
 (function () {
   const ASSETS = {
     volunteer: "./assets/profile-user.svg",
-    ong: "./assets/follower-icon.svg",
-    user: "./assets/review-user.svg",
-    star: "./assets/star.svg"
+    ong: "./assets/follower-icon.svg"
   };
 
   const CURRENT_USER = {
@@ -68,7 +66,6 @@
     follows: [],
     activeTab: "seguidores",
     search: "",
-    selected: { type: "ong", id: 1 },
     fetchFailed: false
   };
 
@@ -78,15 +75,6 @@
     listTitle: document.getElementById("list-title"),
     listCount: document.getElementById("list-count"),
     mainList: document.getElementById("main-list"),
-    selectedTitle: document.getElementById("selected-title"),
-    connectionsTitle: document.getElementById("connections-title"),
-    selectedCard: document.getElementById("selected-card"),
-    selectedFollowers: document.getElementById("selected-followers"),
-    selectedCount: document.getElementById("selected-count"),
-    highlightLabel: document.getElementById("highlight-label"),
-    followersTotal: document.getElementById("followers-total"),
-    followingTotal: document.getElementById("following-total"),
-    highlightTotal: document.getElementById("highlight-total"),
     dataWarning: document.getElementById("data-warning")
   };
 
@@ -166,7 +154,7 @@
 
   function getEntityDescription(type, entity) {
     if (!entity) {
-      return "Conexão cadastrada no sistema de seguidores.";
+      return "Conexão cadastrada na rede de voluntariado.";
     }
 
     if (type === "ong") {
@@ -196,12 +184,6 @@
         follow.targetType === type &&
         Number(follow.targetId) === Number(id)
     );
-  }
-
-  function getCurrentUserFollowingOngs() {
-    return getFollowingOf(CURRENT_USER.type, CURRENT_USER.id)
-      .filter((follow) => follow.targetType === "ong")
-      .map((follow) => toEntityItem("ong", follow.targetId, follow));
   }
 
   function toEntityItem(type, id, follow) {
@@ -312,6 +294,13 @@
     return button;
   }
 
+  function createProfileLink() {
+    const link = createElement("a", "btn btn-secondary btn-pad-xs btn-shadow-sm btn-border-thin", "Ver perfil");
+    link.href = "#";
+    link.addEventListener("click", (event) => event.preventDefault());
+    return link;
+  }
+
   function createEntityCard(item, options) {
     const card = createElement("article", "entity-card");
     card.appendChild(createAvatar(item.type));
@@ -341,45 +330,15 @@
       );
     }
 
-    actions.appendChild(createButton("Ver perfil", "", () => selectEntity(item.type, item.id)));
+    actions.appendChild(createProfileLink());
     meta.appendChild(actions);
     card.appendChild(meta);
     return card;
   }
 
-  function createMiniCard(item) {
-    const card = createElement("article", "mini-card");
-    card.appendChild(createAvatar(item.type));
-    card.appendChild(createElement("strong", "", item.name));
-    card.appendChild(createTag(item.type));
-    card.appendChild(createElement("span", "", formatFollowers(item.followers)));
-    card.appendChild(createButton("Remover", "outline", () => removeFollow(item.followId)));
-    return card;
-  }
-
-  function createSelectedCard(item) {
-    const fragment = document.createDocumentFragment();
-    fragment.appendChild(createAvatar(item.type));
-
-    const copy = createElement("div", "entity-copy");
-    const titleRow = createElement("div", "entity-title-row");
-    titleRow.appendChild(createElement("h3", "", item.name));
-    titleRow.appendChild(createTag(item.type));
-    copy.appendChild(titleRow);
-    copy.appendChild(createElement("p", "", item.description));
-    copy.appendChild(createElement("p", "entity-followers", formatFollowers(item.followers)));
-    copy.appendChild(
-      createButton(isCurrentUserFollowing(item.type, item.id) ? "Seguindo" : "Seguir", "secondary", () =>
-        toggleFollow(item.type, item.id)
-      )
-    );
-    fragment.appendChild(copy);
-    return fragment;
-  }
-
-  function renderEmpty(container, text, isError) {
+  function renderEmpty(container, text) {
     container.textContent = "";
-    container.appendChild(createElement("p", isError ? "error-state" : "empty-state", text));
+    container.appendChild(createElement("p", "empty-state", text));
   }
 
   function renderMainList() {
@@ -389,7 +348,7 @@
     elements.listCount.textContent = `${items.length} ${items.length === 1 ? "item" : "itens"}`;
 
     if (!items.length) {
-      renderEmpty(elements.mainList, "Nenhum resultado encontrado para esta busca.", false);
+      renderEmpty(elements.mainList, "Nenhum resultado encontrado para esta busca.");
       return;
     }
 
@@ -397,47 +356,6 @@
     items.forEach((item) => {
       elements.mainList.appendChild(createEntityCard(item, { allowRemove }));
     });
-  }
-
-  function renderSelected() {
-    let selectedEntity = getEntity(state.selected.type, state.selected.id);
-
-    if (!selectedEntity) {
-      const firstOng = (state.db.ongs || [])[0];
-      state.selected = firstOng ? { type: "ong", id: firstOng.id } : { type: "volunteer", id: 1 };
-      selectedEntity = getEntity(state.selected.type, state.selected.id);
-    }
-
-    const selectedItem = toEntityItem(state.selected.type, state.selected.id);
-    elements.selectedTitle.textContent = state.selected.type === "ong" ? "ONG selecionada" : "Voluntário selecionado";
-    elements.connectionsTitle.textContent =
-      state.selected.type === "ong" ? "Seguidores desta ONG" : "Conexões deste voluntário";
-    elements.highlightLabel.textContent =
-      state.selected.type === "ong" ? "seguidores da ONG selecionada" : "conexões do voluntário selecionado";
-
-    const followers = getFollowersOf(state.selected.type, state.selected.id).map((follow) =>
-      toEntityItem(follow.followerType, follow.followerId, follow)
-    );
-
-    elements.selectedCard.textContent = "";
-    elements.selectedCard.appendChild(createSelectedCard(selectedItem));
-    elements.selectedCount.textContent = formatFollowers(followers.length);
-    elements.highlightTotal.textContent = formatCount(followers.length);
-    elements.selectedFollowers.textContent = "";
-
-    if (!followers.length) {
-      renderEmpty(elements.selectedFollowers, "Esta conexão ainda não possui seguidores.", false);
-      return;
-    }
-
-    followers.forEach((item) => {
-      elements.selectedFollowers.appendChild(createMiniCard(item));
-    });
-  }
-
-  function renderSummary() {
-    elements.followersTotal.textContent = formatCount(state.follows.length);
-    elements.followingTotal.textContent = formatCount(getFollowingOf(CURRENT_USER.type, CURRENT_USER.id).length);
   }
 
   function renderTabs() {
@@ -452,14 +370,7 @@
     elements.dataWarning.hidden = !state.fetchFailed;
 
     renderTabs();
-    renderSummary();
     renderMainList();
-    renderSelected();
-  }
-
-  function selectEntity(type, id) {
-    state.selected = { type, id: Number(id) };
-    renderSelected();
   }
 
   function removeFollow(followId) {

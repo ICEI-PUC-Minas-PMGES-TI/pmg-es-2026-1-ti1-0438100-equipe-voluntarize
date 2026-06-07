@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sistema de seguidores | Voluntarize</title>
+    <title>Conexões voluntárias | Voluntarize</title>
     <link rel="stylesheet" href="../../design-system/css/globals.css" />
     <link rel="stylesheet" href="./style.css" />
     <script src="./script.js" defer></script>
@@ -36,19 +36,16 @@
     <main class="container followers-main">
       <section class="followers-intro" aria-labelledby="page-title">
         <div class="intro-copy">
-          <h1 id="page-title">Sistema de seguidores</h1>
-          <p>Gerencie conexões entre ONGs e voluntários.</p>
+          <h1 id="page-title">Conexões voluntárias</h1>
+          <p>Acompanhe seguidores, ONGs e voluntários conectados.</p>
         </div>
 
         <label class="followers-search" for="search-input">
-          <span class="search-icon" aria-hidden="true">
-            <img src="./assets/follower-icon.svg" alt="" />
-          </span>
           <input
             id="search-input"
             type="search"
             autocomplete="off"
-            placeholder="Buscar seguidores..."
+            placeholder="Buscar"
           />
         </label>
       </section>
@@ -76,36 +73,6 @@
         </button>
       </section>
 
-      <section class="summary-grid" aria-label="Resumo do sistema">
-        <article class="summary-card">
-          <span class="summary-icon summary-icon-green">
-            <img src="./assets/follower-icon.svg" alt="" />
-          </span>
-          <div>
-            <strong id="followers-total">0</strong>
-            <span>seguidores mapeados</span>
-          </div>
-        </article>
-        <article class="summary-card">
-          <span class="summary-icon summary-icon-purple">
-            <img src="./assets/follower-icon.svg" alt="" />
-          </span>
-          <div>
-            <strong id="following-total">0</strong>
-            <span>conexões ativas</span>
-          </div>
-        </article>
-        <article class="summary-card">
-          <span class="summary-icon summary-icon-white">
-            <img src="./assets/star.svg" alt="" />
-          </span>
-          <div>
-            <strong id="highlight-total">0</strong>
-            <span id="highlight-label">seguidores da ONG selecionada</span>
-          </div>
-        </article>
-      </section>
-
       <section class="content-grid">
         <article class="surface followers-panel" aria-labelledby="list-title">
           <div class="panel-heading">
@@ -119,26 +86,6 @@
           </div>
           <div class="cards-list" id="main-list" aria-live="polite"></div>
         </article>
-      </section>
-
-      <section class="surface selected-panel" aria-labelledby="selected-title">
-        <div class="panel-heading selected-heading">
-          <div class="heading-title">
-            <span class="panel-icon panel-icon-purple">
-              <img src="./assets/follower-icon.svg" alt="" />
-            </span>
-            <h2 id="selected-title">ONG selecionada</h2>
-          </div>
-          <span class="panel-count" id="selected-count">0 seguidores</span>
-        </div>
-
-        <div class="selected-grid">
-          <article class="selected-card" id="selected-card"></article>
-          <div>
-            <h3 class="connections-title" id="connections-title">Seguidores desta ONG</h3>
-            <div class="connection-strip" id="selected-followers" aria-live="polite"></div>
-          </div>
-        </div>
       </section>
     </main>
   </body>
