@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Validar Presença — Voluntarize</title>
+</head>
+<body>
+  <p id="msg">Validando presença...</p>
+  <script>
+    const API = 'http://localhost:3000';
+    const STORAGE_KEY = 'attendances';
+
+    async function validar() {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+      const msg = document.getElementById('msg');
+
+      if (!token || !token.startsWith('voluntarize:presenca:')) {
+        msg.textContent = ' QR Code inválido.';
+        return;
+      }
+
+      // Extrai dados do token: voluntarize:presenca:v1:a3:timestamp
+      const parts = token.split(':');
+      const volunteerId = Number(parts[2].replace('v', ''));
+      const actionId    = Number(parts[3].replace('a', ''));
+      const timestamp   = Number(parts[4]);
+
+      // Verifica expiração
+      if (Date.now() - timestamp > 15 * 60 * 1000) {
+        msg.textContent = 'QR Code expirado. Peça ao voluntário para recarregar a página.';
+        return;
+      }
+
+      // Verifica duplicata e salva
+      let attendances = [];
+      try {
+        const res = await fetch(`${API}/attendances?token=${encodeURIComponent(token)}`);
+        const list = await res.json();
+        if (list.length > 0) { msg.textContent = 'Presença já registrada!'; return; }
+      } catch {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        attendances = saved ? JSON.parse(saved) : [];
+        if (attendances.find(a => a.token === token)) {
+          msg.textContent = 'Presença já registrada!'; return;
+        }
+      }
+
+      const novo = {
+        volunteerId,
+        actionId,
+        token,
+        validatedAt: new Date().toISOString(),
+        deletedAt: null
+      };
+
+      try {
+        await fetch(`${API}/attendances`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(novo)
+        });
+      } catch {
+        // fallback localStorage
+        const saved = localStorage.getItem(STORAGE_KEY);
+        attendances = saved ? JSON.parse(saved) : [];
+        novo.id = attendances.reduce((max, a) => Math.max(max, a.id ?? 0), 0) + 1;
+        attendances.push(novo);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(attendances));
+      }
+
+      msg.textContent = `✓ Presença do voluntário #${volunteerId} confirmada!`;
+    }
+
+    validar();
+  </script>
+</body>
+</html> 
