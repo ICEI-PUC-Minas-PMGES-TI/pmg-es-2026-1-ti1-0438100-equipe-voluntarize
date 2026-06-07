@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meu Perfil | Voluntarize</title>
+    <link rel="stylesheet" href="../../design-system/css/globals.css" />
+    <link rel="stylesheet" href="css/meu-perfil.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  </head>
+  <body>
+
+    <div class="container header-shell">
+      <header class="site-header">
+        <img class="brand-logo" src="./../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+        <nav class="site-nav" aria-label="Navegação principal">
+          <a href="#">Início</a>
+          <a href="#" class="text-green">Perfil</a>
+          <a href="#">Vagas</a>
+          <a href="#">Minhas Candidaturas</a>
+        </nav>
+        <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário">
+          <i class="fa-regular fa-user"></i>
+        </button>
+      </header>
+    </div>
+
+    <main class="container section">
+
+      <section class="surface surface-green surface-lg profile-hero">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+          <div class="flex items-center gap-3">
+            <span class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-hidden="true" style="width: 100px; height: 100px;" id="profile-infos-photo">
+              <i class="fa-regular fa-user" style="font-size: 45px"></i>
+            </span>
+    
+            <div class="profile-copy">
+              <h1 id="profile-name"></h1>
+              <p class="text-sm" id="profile-meta"></p>
+              <p class="text-sm" id="profile-type-badge"></p>
+            </div>
+          </div>
+
+          <div class="stack items-end gap-2" id="profile-infos-count">
+            <aside class="profile-actions flex flex-col gap-2" style="align-items: end">
+              <p class="rating-badge tag tag-white tag-static tag-xs tag-white" style="width: fit-content;">
+                <span id="profile-rating"></span>
+                <i class="fa-regular fa-star"></i>
+              </p>
+              <p class="tag tag-white tag-static tag-xs followers-badge">
+                <i class="fa-solid fa-user-group"></i>
+                <span id="profile-followers"></span>
+                <span>Seguidores</span>
+              </p>
+            </aside>
+          </div>
+  
+        </div>
+
+      </section>
+
+      <div class="perfil-own-actions flex gap-2 mt-3" id="buttons-action-profile">
+        <button id="btn-editar" class="btn btn-primary btn-pad-sm btn-shadow-sm">
+          <i class="fa-solid fa-pen"></i> Editar Perfil
+        </button>
+        <button id="btn-inativar" class="btn btn-outline btn-pad-sm btn-shadow-sm">
+          <i class="fa-solid fa-ban"></i> Inativar Conta
+        </button>
+      </div>
+      <div class="perfil-own-actions flex gap-2 mt-3" id="buttons-action-profile-deslog">
+        <button id="btn-login" class="btn btn-secondary btn-pad-sm btn-shadow-sm">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Ir para login
+        </button>
+      </div>
+
+      <section class="surface story-card mt-3" aria-labelledby="bio-title">
+        <h2 id="bio-title">Sobre</h2>
+        <div id="profile-bio" class="story-text font-alt text-sm"></div>
+      </section>
+      <section class="surface stack gap-2 mt-3" id="section-infos">
+        <h3>Informações</h3>
+      </section>
+      <section class="surface stack gap-2 mt-3" id="section-acoes-ong" style="display:none;">
+        <div class="flex justify-between items-center">
+          <h3>Minhas Ações</h3>
+          <button id="btn-nova-acao" class="btn btn-primary btn-pad-sm btn-shadow-sm">
+            <i class="fa-solid fa-plus"></i> Nova Ação
+          </button>
+        </div>
+        <div id="lista-acoes-ong" class="stack gap-2"></div>
+      </section>
+    </main>
+    
+    <div class="container mb-4">
+      <footer class="site-footer">
+        <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+        <p class="text-xs">Plataforma de voluntários @ 2026 | Todos os direitos reservados</p>
+      </footer>
+    </div>
+    
+    <!--  modais  -->
+    
+    <div id="modal-edicao" class="mp-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+      <div class="mp-modal surface surface-lg">
+        <div class="flex justify-between items-center mb-3">
+          <h2 id="modal-title" class="text-lg">Editar Perfil</h2>
+          <button id="btn-fechar-modal" class="btn btn-ghost btn-icon-only" aria-label="Fechar">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <form id="form-edicao" class="stack gap-3" novalidate>
+        </form>
+        <div class="flex gap-2 mt-3">
+          <button type="submit" form="form-edicao" class="btn btn-primary btn-pad-sm btn-shadow-sm w-full">
+            <i class="fa-solid fa-floppy-disk"></i> Salvar
+          </button>
+          <button type="button" id="btn-cancelar-modal" class="btn btn-outline btn-pad-sm btn-shadow-sm w-full">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-acao" class="mp-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-acao-title" hidden>
+      <div class="mp-modal surface surface-lg">
+        <div class="flex justify-between items-center mb-3">
+          <h2 id="modal-acao-title" class="text-lg">Ação</h2>
+          <button id="btn-fechar-modal-acao" class="btn btn-ghost btn-icon-only" aria-label="Fechar">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <form id="form-acao" class="stack gap-3" novalidate></form>
+        <div class="flex gap-2 mt-3">
+          <button type="submit" form="form-acao" class="btn btn-primary btn-pad-sm btn-shadow-sm w-full">
+            <i class="fa-solid fa-floppy-disk"></i> Salvar Ação
+          </button>
+          <button type="button" id="btn-cancelar-modal-acao" class="btn btn-outline btn-pad-sm btn-shadow-sm w-full">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="modal-inativar" class="mp-modal-overlay" role="dialog" aria-modal="true" hidden>
+      <div class="mp-modal surface surface-lg" style="max-width:420px;">
+        <h2 class="text-lg mb-2">Inativar conta</h2>
+        <p class="text-sm font-alt mb-3">
+          Tem certeza que deseja inativar sua conta? Você não conseguirá mais acessar o sistema com este cadastro.
+        </p>
+        <div class="flex gap-2">
+          <button id="btn-confirmar-inativar" class="btn btn-outline btn-pad-sm btn-shadow-sm w-full" style="border-color:#c0392b;color:#c0392b;">
+            <i class="fa-solid fa-ban"></i> Sim, inativar
+          </button>
+          <button id="btn-cancelar-inativar" class="btn btn-primary btn-pad-sm btn-shadow-sm w-full">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../assets/js/dynamic-page.js"></script>
+    <script src="js/meu-perfil.js"></script>
+  </body>
+</html>
