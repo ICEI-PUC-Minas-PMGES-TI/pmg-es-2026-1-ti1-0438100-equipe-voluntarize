@@ -30,7 +30,7 @@
       <section class="surface surface-green surface-lg profile-hero">
         <div class="flex justify-between items-center flex-wrap gap-4">
           <div class="flex items-center gap-3">
-            <span class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-hidden="true" style="width: 100px; height: 100px;">
+            <span class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-hidden="true" style="width: 100px; height: 100px;" id="profile-infos-photo">
               <i class="fa-regular fa-user" style="font-size: 45px"></i>
             </span>
     
@@ -41,7 +41,7 @@
             </div>
           </div>
 
-          <div class="stack items-end gap-2">
+          <div class="stack items-end gap-2" id="profile-infos-count">
             <aside class="profile-actions flex flex-col gap-2" style="align-items: end">
               <p class="rating-badge tag tag-white tag-static tag-xs tag-white" style="width: fit-content;">
                 <span id="profile-rating"></span>
@@ -59,12 +59,17 @@
 
       </section>
 
-      <div class="perfil-own-actions flex gap-2 mt-3">
+      <div class="perfil-own-actions flex gap-2 mt-3" id="buttons-action-profile">
         <button id="btn-editar" class="btn btn-primary btn-pad-sm btn-shadow-sm">
           <i class="fa-solid fa-pen"></i> Editar Perfil
         </button>
         <button id="btn-inativar" class="btn btn-outline btn-pad-sm btn-shadow-sm">
           <i class="fa-solid fa-ban"></i> Inativar Conta
+        </button>
+      </div>
+      <div class="perfil-own-actions flex gap-2 mt-3" id="buttons-action-profile-deslog">
+        <button id="btn-login" class="btn btn-secondary btn-pad-sm btn-shadow-sm">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Ir para login
         </button>
       </div>
 
