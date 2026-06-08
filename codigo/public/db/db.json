@@ -752,31 +752,6 @@
       "name": "Esporte e Lazer"
     }
   ],
-  "attendances": [
-    {
-      "volunteerId": 1,
-      "actionId": 1,
-      "token": "voluntarize:presenca:v1:a1:1780869223174",
-      "validatedAt": "2026-06-07T21:54:55.140Z",
-      "deletedAt": null,
-      "id": "Inup4UpS0u4"
-    },
-    {
-      "volunteerId": 2,
-      "actionId": 1,
-      "token": "voluntarize:presenca:v2:a1:1780869312550",
-      "validatedAt": "2026-06-07T21:55:20.987Z",
-      "deletedAt": null,
-      "id": "trkh8mozlTI"
-    },
-    {
-      "volunteerId": 2,
-      "actionId": 4,
-      "token": "voluntarize:presenca:v2:a4:1780869342815",
-      "validatedAt": "2026-06-07T21:55:57.413Z",
-      "deletedAt": null,
-      "id": "e0US-pyL4Jc"
-    }
-  ],
+  "attendances": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
