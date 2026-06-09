@@ -1,53 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login de Usuario</title>
-  <link rel="stylesheet" href="css/login.css">
-  <script src="js/login-local.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Voluntarize</title>
+  <link rel="stylesheet" href="../../design-system/css/globals.css" />
+  <link rel="stylesheet" href="css/login.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
-
 <body>
-  <main class="login-page">
-    <button class="back-button" type="button" id="backButton">Voltar</button>
 
-    <section class="login-shell">
-      <aside class="illustration-panel" aria-hidden="true">
-        <img src="assets/fingerprint-login.svg" alt="">
+  <main class="login-layout">
+    <div class="login-topbar">
+      <button type="button" id="backButton"
+              class="btn btn-secondary btn-shadow-sm btn-rounded-sm login-back-btn">
+        <i class="fa-solid fa-arrow-left-long"></i>
+        Voltar
+      </button>
+    </div>
+    <div class="login-main">
+      <aside class="login-illustration" aria-hidden="true">
+        <img src="assets/fingerprint-login.svg" alt="" />
       </aside>
+      <section class="surface login-card" aria-labelledby="loginTitle">
+        <div class="login-card-header">
+          <div class="surface surface-xs">
+            ENTRAR
+          </div>
+        </div>
 
-      <section class="login-card" aria-labelledby="loginTitle">
-        <form id="loginForm" novalidate>
-          <div class="heading">
-            <span class="title-box" id="loginTitle">Entrar</span>
-            <p>Que bom ver voce por aqui novamente!</p>
+        <p class="font-alt text-sm text-center login-welcome">
+          Que bom ver você por aqui novamente!
+        </p>
+
+        <form id="loginForm" class="stack gap-3" novalidate>
+          <div class="stack gap-1">
+            <div class="field">
+              <span class="field-icon" aria-hidden="true">
+                <i class="fa-regular fa-user"></i>
+              </span>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                class="field-input"
+                placeholder="Digite seu email"
+                autocomplete="email"
+                required
+              />
+            </div>
+            <small id="erro-email" class="field-error" role="alert"></small>
+          </div>
+          <div class="stack gap-1">
+            <div class="field">
+              <span class="field-icon" aria-hidden="true">
+                <i class="fa-solid fa-lock"></i>
+              </span>
+              <input
+                id="senha"
+                name="senha"
+                type="password"
+                class="field-input"
+                placeholder="Digite sua senha"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+            <small id="erro-senha" class="field-error" role="alert"></small>
           </div>
 
-          <label class="sr-only" for="email">E-mail</label>
-          <div class="input-box">
-            <span class="field-icon user-icon" aria-hidden="true"></span>
-            <input id="email" name="email" type="email" placeholder="Digite seu email" autocomplete="email" required>
-          </div>
-          <small class="field-error" id="erro-email"></small>
-
-          <label class="sr-only" for="senha">Senha</label>
-          <div class="input-box">
-            <span class="field-icon lock-icon" aria-hidden="true"></span>
-            <input id="senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="current-password" required>
-          </div>
-          <small class="field-error" id="erro-senha"></small>
-
-          <a class="forgot-link" href="#">Esqueci minha senha</a>
-          <p class="form-message" id="formMessage" role="alert" aria-live="polite"></p>
-
-          <button class="primary-button" type="submit">Entrar</button>
-          <p class="register-link">Ainda nao tem uma conta? <a href="../cadastro-usuario/index.html">Cadastra-se!</a></p>
+          <a href="#" class="login-forgot font-alt text-xs">
+            Esqueci minha senha
+          </a>
+          <p id="formMessage"
+             class="form-message font-alt text-sm text-center"
+             role="alert"
+             aria-live="polite"></p>
+          <button type="submit"
+                  class="btn btn-primary btn-pad-md btn-shadow-md w-full login-submit">
+            Entrar
+          </button>
+          <p class="font-alt text-xs text-center login-register">
+            Ainda não tem uma conta?
+            <a href="../cadastro-usuario/index.html" class="text-bold">Cadastra-se!</a>
+          </p>
         </form>
       </section>
-    </section>
+    </div>
   </main>
-</body>
 
+  <script src="js/login-local.js"></script>
+</body>
 </html>

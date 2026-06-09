@@ -2,7 +2,7 @@
   "volunteers": [
     {
       "id": 1,
-      "name": "Cláudia Mendes",
+      "name": "Cláudia Mendes hahahah",
       "email": "claudia.mendes@email.com",
       "password": "123456",
       "cpf": "123.456.789-00",
@@ -71,7 +71,7 @@
       "bio": "Professora aposentada, dedico meu tempo livre ao ensino de adultos.",
       "phone": "(31) 96543-2109",
       "profilePicture": "",
-      "rating": 5.0,
+      "rating": 5,
       "createdAt": "2019-11-20",
       "deletedAt": null
     },
@@ -101,16 +101,15 @@
       "bio": "Universitária apaixonada por causas ambientais e sociais.",
       "phone": "(31) 94321-0987",
       "profilePicture": "",
-      "rating": 4.0,
+      "rating": 4,
       "createdAt": "2024-02-14",
       "deletedAt": null
     }
   ],
-
   "ongs": [
     {
       "id": 1,
-      "name": "ONG Dia Feliz",
+      "name": "ONG Dia Feliz 1234",
       "email": "contato@diafeliz.org",
       "password": "123456",
       "cnpj": "12.345.678/0001-99",
@@ -194,7 +193,6 @@
       "deletedAt": null
     }
   ],
-
   "actions": [
     {
       "id": 1,
@@ -203,9 +201,17 @@
       "location": "Rua das Flores, 215 - Jardim Felicidade, Belo Horizonte, MG",
       "date": "2026-08-15",
       "ongId": 1,
-      "tags": ["Alimentação", "Comunidade"],
-      "participants": [1, 2, 5],
+      "tags": [
+        "Alimentação",
+        "Comunidade"
+      ],
+      "participants": [
+        1,
+        2,
+        5
+      ],
       "vacancies": 20,
+      "views": 42,
       "status": "open",
       "endDate": "2026-08-12",
       "image": "",
@@ -220,9 +226,17 @@
       "location": "Av. Afonso Pena, 1500 - Centro, Belo Horizonte, MG",
       "date": "2026-09-05",
       "ongId": 2,
-      "tags": ["Educação", "Crianças"],
-      "participants": [3, 5, 7],
+      "tags": [
+        "Educação",
+        "Crianças"
+      ],
+      "participants": [
+        3,
+        5,
+        7
+      ],
       "vacancies": 10,
+      "views": 37,
       "status": "open",
       "endDate": "2026-09-01",
       "image": "",
@@ -237,9 +251,16 @@
       "location": "Rua São Francisco, 88 - Santa Efigênia, Belo Horizonte, MG",
       "date": "2026-08-22",
       "ongId": 3,
-      "tags": ["Idosos"],
-      "participants": [1, 4, 6],
+      "tags": [
+        "Idosos"
+      ],
+      "participants": [
+        1,
+        4,
+        6
+      ],
       "vacancies": 15,
+      "views": 52,
       "status": "open",
       "endDate": "2026-08-20",
       "image": "",
@@ -254,9 +275,15 @@
       "location": "Parque das Mangabeiras - Belo Horizonte, MG",
       "date": "2026-09-20",
       "ongId": 4,
-      "tags": ["Meio Ambiente"],
-      "participants": [2, 7],
+      "tags": [
+        "Meio Ambiente"
+      ],
+      "participants": [
+        2,
+        7
+      ],
       "vacancies": 30,
+      "views": 21,
       "status": "open",
       "endDate": "2026-09-17",
       "image": "",
@@ -271,9 +298,16 @@
       "location": "Praça da Liberdade - Belo Horizonte, MG",
       "date": "2026-07-10",
       "ongId": 5,
-      "tags": ["Saúde"],
-      "participants": [3, 4, 6],
+      "tags": [
+        "Saúde"
+      ],
+      "participants": [
+        3,
+        4,
+        6
+      ],
       "vacancies": 25,
+      "views": 12,
       "status": "completed",
       "endDate": "2026-07-07",
       "image": "",
@@ -288,9 +322,13 @@
       "location": "Rua Tupis, 45 - Centro, Belo Horizonte, MG",
       "date": "2026-10-01",
       "ongId": 2,
-      "tags": ["Capacitação Profissional", "Educação"],
+      "tags": [
+        "Capacitação Profissional",
+        "Educação"
+      ],
       "participants": [],
       "vacancies": 20,
+      "views": 15,
       "status": "open",
       "endDate": "2026-09-28",
       "image": "",
@@ -305,9 +343,18 @@
       "location": "Viaduto Santa Tereza - Belo Horizonte, MG",
       "date": "2026-07-01",
       "ongId": 1,
-      "tags": ["Moradores de Rua"],
-      "participants": [1, 2, 3, 5, 6],
+      "tags": [
+        "Moradores de Rua"
+      ],
+      "participants": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
       "vacancies": 40,
+      "views": 9,
       "status": "completed",
       "endDate": "2026-06-28",
       "image": "",
@@ -316,7 +363,6 @@
       "deletedAt": null
     }
   ],
-
   "applications": [
     {
       "id": 1,
@@ -490,7 +536,6 @@
       "attended": true
     }
   ],
-
   "reviews": [
     {
       "id": 1,
@@ -603,7 +648,6 @@
       "deletedAt": null
     }
   ],
-
   "follows": [
     {
       "id": 1,
@@ -646,7 +690,6 @@
       "createdAt": "2026-07-03"
     }
   ],
-
   "favorites": [
     {
       "id": 1,
@@ -667,17 +710,47 @@
       "createdAt": "2026-06-01"
     }
   ],
-
   "tags": [
-    { "id": 1, "name": "Alimentação" },
-    { "id": 2, "name": "Idosos" },
-    { "id": 3, "name": "Educação" },
-    { "id": 4, "name": "Saúde" },
-    { "id": 5, "name": "Meio Ambiente" },
-    { "id": 6, "name": "Crianças" },
-    { "id": 7, "name": "Animais" },
-    { "id": 8, "name": "Moradores de Rua" },
-    { "id": 9, "name": "Capacitação Profissional" },
-    { "id": 10, "name": "Esporte e Lazer" }
-  ]
+    {
+      "id": 1,
+      "name": "Alimentação"
+    },
+    {
+      "id": 2,
+      "name": "Idosos"
+    },
+    {
+      "id": 3,
+      "name": "Educação"
+    },
+    {
+      "id": 4,
+      "name": "Saúde"
+    },
+    {
+      "id": 5,
+      "name": "Meio Ambiente"
+    },
+    {
+      "id": 6,
+      "name": "Crianças"
+    },
+    {
+      "id": 7,
+      "name": "Animais"
+    },
+    {
+      "id": 8,
+      "name": "Moradores de Rua"
+    },
+    {
+      "id": 9,
+      "name": "Capacitação Profissional"
+    },
+    {
+      "id": 10,
+      "name": "Esporte e Lazer"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
