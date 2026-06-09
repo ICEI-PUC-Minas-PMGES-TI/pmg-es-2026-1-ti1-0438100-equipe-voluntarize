@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciar Candidaturas | Voluntarize</title>
+  <link rel="stylesheet" href="../../design-system/css/globals.css" />
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+  <div class="container header-shell">
+    <header class="site-header">
+      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <nav class="site-nav" aria-label="Navegação">
+        <a href="../home/home-ong.html">Início</a>
+        <a href="#">Perfil</a>
+        <a href="#">Vagas</a>
+      </nav>
+      <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário" onclick="redirectToProfile()">
+        <i class="fa-regular fa-user"></i>
+      </button>
+    </header>
+  </div>
+
+  <main class="container section stack gap-4">
+
+    <div class="manage-header surface surface-green">
+      <div>
+        <h1 class="h3" data-action-title>Carregando...</h1>
+        <p class="text-sm text-muted" data-action-meta></p>
+      </div>
+      <a href="../home/home-ong.html" class="btn btn-secondary btn-pad-sm">
+        <i class="fa-solid fa-arrow-left"></i> Voltar
+      </a>
+    </div>
+
+    <div class="divider-label"><span>Candidaturas Pendentes</span></div>
+    <section data-list-pending class="candidates-grid"></section>
+
+    <div class="divider-label"><span>Candidaturas Aceitas</span></div>
+    <section data-list-accepted class="candidates-grid"></section>
+
+    <div class="divider-label"><span>Candidaturas Recusadas</span></div>
+    <section data-list-rejected class="candidates-grid"></section>
+
+  </main>
+
+  <div class="container mb-4 mt-4">
+    <footer class="site-footer">
+      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <p class="text-sm">Plataforma de voluntários @ 2026 | Todos os direitos reservados</p>
+    </footer>
+  </div>
+
+  <script src="../../assets/js/dynamic-page.js"></script>
+  <script src="./script.js"></script>
+  <script src="./../../assets/js/redirect-to-profile.js"></script>
+</body>
+</html>

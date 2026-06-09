@@ -193,9 +193,11 @@ function renderVagaCard(action, ongName, variant = 'ong', appStatus = null) {
   const detailsUrl = `../detalhes-vagas/detalhes.html?id=${action.id}`;
   const ongProfileUrl = action.ongId ? `../visualizacao-detalhada-ong/index.html?id=${action.ongId}` : '#';
 
+  const manageUrl = `../gerenciar-candidaturas-ong/index.html?id=${action.id}`;
+
   const botoes = variant === 'ong'
     ? `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
-       <button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Editar</button>`
+       <a class="btn btn-primary btn-pad-xs rounded-xs w-full" href="${manageUrl}">Candidatos</a>`
     : `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
        <a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${ongProfileUrl}">Ver ONG</a>`;
 
