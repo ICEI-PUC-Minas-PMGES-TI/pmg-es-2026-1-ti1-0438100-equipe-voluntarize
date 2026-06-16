@@ -32,17 +32,15 @@ function getVisibleCount() {
 // Detecta qual home está ativa pelo título da página
 const isVoluntario = document.title.includes('Voluntário');
 
-// Sessão simulada — enquanto não há autenticação real, o usuário logado é
-// definido aqui. Troque o id para testar com outros usuários do db.json.
-// Quando a autenticação for implementada, deve-se remover esse bloco.
-if (!sessionStorage.getItem('usuarioCorrente')) {
-  const mock = isVoluntario
-    ? { id: 4, tipo: 'voluntario', nome: 'Rafael Santos' }
-    : { id: 2, tipo: 'ong', nome: 'Instituto Mãos Unidas' };
-  sessionStorage.setItem('usuarioCorrente', JSON.stringify(mock));
-}
+// Lê o usuário logado do localStorage (salvo pelo login real)
+// formato: { id, type }  — type 0 = voluntário, type 1 = ONG
+const usuarioLogado = (() => {
+  try { return JSON.parse(localStorage.getItem('usuarioLogado')) || null; } catch (e) { return null; }
+})();
 
-const usuarioCorrente = JSON.parse(sessionStorage.getItem('usuarioCorrente'));
+const usuarioCorrente = usuarioLogado
+  ? { id: usuarioLogado.id, tipo: usuarioLogado.type === 0 ? 'voluntario' : 'ong' }
+  : null;
 
 // Inicializa um carrossel horizontal genérico.
 // Retorna { track, update } para que o chamador possa inserir cards e disparar
@@ -173,25 +171,33 @@ function getActionViews(action) {
   return Number.isFinite(action.views) ? action.views : 0;
 }
 
-// Card de vaga com duas variantes de botões e badge opcional de aprovação.
+// Card de vaga com duas variantes de botões e badge de status.
 //
 // variant 'ong'        → botões "Ver Detalhes" + "Editar"  (home da ONG)
 // variant 'voluntario' → botões "Ver Detalhes" + "Ver ONG" (home do voluntário)
 //
-// A badge "Aprovado" só aparece quando a inscrição tem status 'accepted'
-// e confirmedAt preenchido — ou seja, foi aceita e confirmada pela ONG.
-function renderVagaCard(action, ongName, variant = 'ong', aprovado = false) {
+// appStatus: 'pending' | 'accepted' | 'rejected' | null
+const STATUS_BADGE = {
+  pending:  { label: 'Pendente',  cls: 'vaga-badge-pendente' },
+  accepted: { label: 'Aprovado',  cls: 'vaga-badge-aprovado' },
+  rejected: { label: 'Recusado', cls: 'vaga-badge-recusado' },
+};
+
+function renderVagaCard(action, ongName, variant = 'ong', appStatus = null) {
   const inscritos = action.participants ? action.participants.length : 0;
   const div = document.createElement('div');
   div.className = 'vaga-card surface surface-white';
 
-  const badge = aprovado ? `<div class="vaga-badge-aprovado">Aprovado</div>` : '';
+  const badgeInfo = appStatus ? STATUS_BADGE[appStatus] : null;
+  const badge = badgeInfo ? `<div class="${badgeInfo.cls}">${badgeInfo.label}</div>` : '';
   const detailsUrl = `../detalhes-vagas/detalhes.html?id=${action.id}`;
   const ongProfileUrl = action.ongId ? `../visualizacao-detalhada-ong/index.html?id=${action.ongId}` : '#';
 
+  const manageUrl = `../gerenciar-candidaturas-ong/index.html?id=${action.id}`;
+
   const botoes = variant === 'ong'
     ? `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
-       <button class="btn btn-secondary btn-pad-xs rounded-xs w-full">Editar</button>`
+       <a class="btn btn-primary btn-pad-xs rounded-xs w-full" href="${manageUrl}">Candidatos</a>`
     : `<a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${detailsUrl}">Ver Detalhes</a>
        <a class="btn btn-secondary btn-pad-xs rounded-xs w-full" href="${ongProfileUrl}">Ver ONG</a>`;
 
@@ -255,23 +261,23 @@ async function init() {
 
     // Carrossel vertical de vagas — conteúdo varia por tipo de usuário:
     // ONG       → suas próprias ações abertas
-    // Voluntário → ações em que se inscreveu, com badge se confirmado
+    // Voluntário → ações em que se inscreveu, com badge de status da candidatura
     const vagasCarousel = initVerticalCarousel('vagasTrack', 'vagasPrevBtn', 'vagasNextBtn');
     if (vagasCarousel) {
-      if (isVoluntario) {
+      if (isVoluntario && usuarioCorrente) {
         const actionMap = Object.fromEntries(actions.map(a => [a.id, a]));
         applications
-          .filter(app => app.volunteerId === usuarioCorrente.id)
+          .filter(app => String(app.volunteerId) === String(usuarioCorrente.id))
           .forEach(app => {
             const action = actionMap[app.actionId];
             if (!action) return;
             vagasCarousel.track.appendChild(
-              renderVagaCard(action, ongMap[action.ongId] || '', 'voluntario', app.status === 'accepted' && !!app.confirmedAt)
+              renderVagaCard(action, ongMap[action.ongId] || '', 'voluntario', app.status)
             );
           });
-      } else {
+      } else if (!isVoluntario && usuarioCorrente) {
         actions
-          .filter(a => a.status === 'open' && a.ongId === usuarioCorrente.id)
+          .filter(a => a.status === 'open' && String(a.ongId) === String(usuarioCorrente.id))
           .forEach(a => vagasCarousel.track.appendChild(renderVagaCard(a, ongMap[a.ongId] || '', 'ong')));
       }
       vagasCarousel.setHeight();
