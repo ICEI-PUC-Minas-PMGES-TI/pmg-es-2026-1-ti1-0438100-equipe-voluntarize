@@ -830,6 +830,10 @@ h1, h2, h3, h4 {
     width: calc(100vw - (var(--space-2) * 2));
   }
 
+  .header-shell {
+    min-height: 170px;
+  }
+
   .site-footer {
     flex-direction: column;
     justify-content: center;
@@ -841,5 +845,11 @@ h1, h2, h3, h4 {
 
   .site-footer p {
     flex: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-shell {
+    min-height: 190px;
   }
 }

@@ -5,17 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro de ONG</title>
-  <link rel="stylesheet" href="../../design-system/css/globals.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/cadastro-ong.js" defer></script>
 </head>
 
 <body>
-  <main class="page">
-    <button class="back-button" type="button" id="backButton">Voltar</button>
+  <main class="cadastro-page">
+    <button class="back-button" type="button" id="backButton" aria-label="Voltar">Voltar</button>
 
     <section class="choice-card" id="choiceScreen" aria-labelledby="choiceTitle">
-      <span class="title-box" id="choiceTitle">Cadastrar</span>
+      <span class="title-pill" id="choiceTitle">Cadastrar</span>
       <p>Selecione o tipo de cadastro que mais se adequa a voce:</p>
 
       <div class="choice-options">
@@ -34,114 +33,142 @@
       <p class="login-link">Ja tem uma conta? <a href="../login/login.html">Entrar!</a></p>
     </section>
 
-    <section class="register-screen" id="registerScreen" hidden>
+    <section class="cadastro-shell" id="registerScreen" aria-labelledby="cadastroTitulo" hidden>
       <aside class="illustration-panel" aria-hidden="true">
         <img id="stepIllustration" src="assets/successful-group.svg" alt="">
       </aside>
 
-      <section class="form-card">
-        <form id="ongForm" novalidate>
-          <div class="heading">
-            <span class="title-box">CADASTRO</span>
+      <section class="cadastro-card">
+        <form class="cadastro-form" id="ongForm" novalidate>
+          <div class="card-heading">
+            <span class="title-pill" id="cadastroTitulo">Cadastro</span>
             <p id="stepIntro">Venha fazer parte dessa comunidade!</p>
           </div>
 
           <div class="form-step" data-step="0">
-            <label class="sr-only" for="nomeOng">Nome da ONG</label>
-            <div class="input-box">
-              <input id="nomeOng" name="nomeOng" type="text" placeholder="Digite o nome da ONG" autocomplete="organization" required>
+            <div class="field-group">
+              <label for="nomeOng">Nome da ONG</label>
+              <div class="input-shell">
+                <input id="nomeOng" name="nomeOng" type="text" placeholder="Digite o nome da ONG" autocomplete="organization" required>
+              </div>
+              <small class="field-error" id="erro-nomeOng"></small>
             </div>
-            <small class="field-error" id="erro-nomeOng"></small>
 
-            <label class="sr-only" for="email">E-mail</label>
-            <div class="input-box">
-              <input id="email" name="email" type="email" placeholder="Digite o email" autocomplete="email" required>
+            <div class="field-group">
+              <label for="email">E-mail</label>
+              <div class="input-shell">
+                <input id="email" name="email" type="email" placeholder="Digite o email" autocomplete="email" required>
+              </div>
+              <small class="field-error" id="erro-email"></small>
             </div>
-            <small class="field-error" id="erro-email"></small>
 
-            <label class="sr-only" for="senha">Senha</label>
-            <div class="input-box">
-              <input id="senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="new-password" required>
+            <div class="field-group">
+              <label for="senha">Senha</label>
+              <div class="input-shell">
+                <input id="senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="new-password" required>
+              </div>
+              <small class="field-error" id="erro-senha"></small>
             </div>
-            <small class="field-error" id="erro-senha"></small>
 
-            <label class="sr-only" for="confirmarSenha">Confirmar senha</label>
-            <div class="input-box">
-              <input id="confirmarSenha" name="confirmarSenha" type="password" placeholder="Confirme sua senha" autocomplete="new-password" required>
+            <div class="field-group">
+              <label for="confirmarSenha">Confirmar senha</label>
+              <div class="input-shell">
+                <input id="confirmarSenha" name="confirmarSenha" type="password" placeholder="Confirme sua senha" autocomplete="new-password" required>
+              </div>
+              <small class="field-error" id="erro-confirmarSenha"></small>
             </div>
-            <small class="field-error" id="erro-confirmarSenha"></small>
           </div>
 
           <div class="form-step" data-step="1" hidden>
-            <label class="sr-only" for="telefone">Telefone da ONG</label>
-            <div class="input-box">
-              <input id="telefone" name="telefone" type="tel" placeholder="Digite o telefone da ONG" autocomplete="tel" required>
+            <div class="field-group">
+              <label for="telefone">Telefone da ONG</label>
+              <div class="input-shell">
+                <input id="telefone" name="telefone" type="tel" placeholder="Digite o telefone da ONG" autocomplete="tel" required>
+              </div>
+              <small class="field-error" id="erro-telefone"></small>
             </div>
-            <small class="field-error" id="erro-telefone"></small>
 
-            <label class="sr-only" for="cnpj">CNPJ da ONG</label>
-            <div class="input-box">
-              <input id="cnpj" name="cnpj" type="text" placeholder="Digite o CNPJ da ONG" inputmode="numeric" required>
+            <div class="field-group">
+              <label for="cnpj">CNPJ da ONG</label>
+              <div class="input-shell">
+                <input id="cnpj" name="cnpj" type="text" placeholder="Digite o CNPJ da ONG" inputmode="numeric" required>
+              </div>
+              <small class="field-error" id="erro-cnpj"></small>
             </div>
-            <small class="field-error" id="erro-cnpj"></small>
 
-            <label class="sr-only" for="cep">CEP da ONG</label>
-            <div class="input-box">
-              <input id="cep" name="cep" type="text" placeholder="Digite o CEP da ONG" inputmode="numeric" autocomplete="postal-code" required>
+            <div class="field-group">
+              <label for="cep">CEP da ONG</label>
+              <div class="input-shell">
+                <input id="cep" name="cep" type="text" placeholder="Digite o CEP da ONG" inputmode="numeric" autocomplete="postal-code" required>
+              </div>
+              <small class="field-error" id="erro-cep"></small>
             </div>
-            <small class="field-error" id="erro-cep"></small>
 
-            <label class="sr-only" for="dataFundacao">Data de fundacao</label>
-            <div class="input-box">
-              <input id="dataFundacao" name="dataFundacao" type="text" placeholder="Digite a data de fundacao" inputmode="numeric" required>
+            <div class="field-group">
+              <label for="dataFundacao">Data de fundacao</label>
+              <div class="input-shell">
+                <input id="dataFundacao" name="dataFundacao" type="text" placeholder="Digite a data de fundacao" inputmode="numeric" required>
+              </div>
+              <small class="field-error" id="erro-dataFundacao"></small>
             </div>
-            <small class="field-error" id="erro-dataFundacao"></small>
           </div>
 
           <div class="form-step" data-step="2" hidden>
-            <label class="sr-only" for="responsavel">Nome do responsavel</label>
-            <div class="input-box">
-              <input id="responsavel" name="responsavel" type="text" placeholder="Nome completo do responsavel" autocomplete="name" required>
+            <div class="field-group">
+              <label for="responsavel">Nome do responsavel</label>
+              <div class="input-shell">
+                <input id="responsavel" name="responsavel" type="text" placeholder="Nome completo do responsavel" autocomplete="name" required>
+              </div>
+              <small class="field-error" id="erro-responsavel"></small>
             </div>
-            <small class="field-error" id="erro-responsavel"></small>
 
-            <label class="sr-only" for="cpfResponsavel">CPF do responsavel</label>
-            <div class="input-box">
-              <input id="cpfResponsavel" name="cpfResponsavel" type="text" placeholder="Digite o CPF do responsavel" inputmode="numeric" required>
+            <div class="field-group">
+              <label for="cpfResponsavel">CPF do responsavel</label>
+              <div class="input-shell">
+                <input id="cpfResponsavel" name="cpfResponsavel" type="text" placeholder="Digite o CPF do responsavel" inputmode="numeric" required>
+              </div>
+              <small class="field-error" id="erro-cpfResponsavel"></small>
             </div>
-            <small class="field-error" id="erro-cpfResponsavel"></small>
 
-            <label class="sr-only" for="emailResponsavel">E-mail do responsavel</label>
-            <div class="input-box">
-              <input id="emailResponsavel" name="emailResponsavel" type="email" placeholder="Digite o email do responsavel" autocomplete="email" required>
+            <div class="field-group">
+              <label for="emailResponsavel">E-mail do responsavel</label>
+              <div class="input-shell">
+                <input id="emailResponsavel" name="emailResponsavel" type="email" placeholder="Digite o email do responsavel" autocomplete="email" required>
+              </div>
+              <small class="field-error" id="erro-emailResponsavel"></small>
             </div>
-            <small class="field-error" id="erro-emailResponsavel"></small>
 
-            <label class="sr-only" for="nascimentoResponsavel">Data de nascimento</label>
-            <div class="input-box">
-              <input id="nascimentoResponsavel" name="nascimentoResponsavel" type="text" placeholder="Digite a data de nascimento" inputmode="numeric" required>
+            <div class="field-group">
+              <label for="nascimentoResponsavel">Data de nascimento</label>
+              <div class="input-shell">
+                <input id="nascimentoResponsavel" name="nascimentoResponsavel" type="text" placeholder="Digite a data de nascimento" inputmode="numeric" required>
+              </div>
+              <small class="field-error" id="erro-nascimentoResponsavel"></small>
             </div>
-            <small class="field-error" id="erro-nascimentoResponsavel"></small>
           </div>
 
           <div class="form-step" data-step="3" hidden>
-            <label class="sr-only" for="site">URL do site ou redes sociais</label>
-            <div class="input-box">
-              <input id="site" name="site" type="url" placeholder="URL do site ou redes sociais">
+            <div class="field-group">
+              <label for="site">URL do site ou redes sociais</label>
+              <div class="input-shell">
+                <input id="site" name="site" type="url" placeholder="URL do site ou redes sociais">
+              </div>
+              <small class="field-error" id="erro-site"></small>
             </div>
-            <small class="field-error" id="erro-site"></small>
 
-            <label class="sr-only" for="historia">Historia da ONG</label>
-            <div class="input-box textarea-box">
-              <textarea id="historia" name="historia" rows="5" placeholder="Digite a historia da ONG..." required></textarea>
+            <div class="field-group">
+              <label for="historia">Historia da ONG</label>
+              <div class="input-shell textarea-shell">
+                <textarea id="historia" name="historia" rows="5" placeholder="Digite a historia da ONG..." required></textarea>
+              </div>
+              <small class="helper-text">Essa informacao sera exibida no perfil da ONG.</small>
+              <small class="field-error" id="erro-historia"></small>
             </div>
-            <small class="helper-text">Essa informacao sera exibida no objeto do perfil. Ela podera ser editada depois.</small>
-            <small class="field-error" id="erro-historia"></small>
           </div>
 
           <p class="form-message" id="formMessage" role="alert" aria-live="polite"></p>
 
-          <div class="actions">
+          <div class="form-actions">
             <button class="secondary-button" type="button" id="prevStep">Voltar</button>
             <button class="primary-button" type="button" id="nextStep">Proximo</button>
             <button class="primary-button" type="submit" id="submitForm" hidden>Cadastrar</button>
@@ -149,11 +176,11 @@
 
           <p class="login-link">Ja tem uma conta? <a href="../login/login.html">Entrar!</a></p>
 
-          <div class="dots" aria-label="Etapas do cadastro">
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
+          <div class="step-dots" aria-label="Etapas do cadastro">
+            <span class="step-dot dot active"></span>
+            <span class="step-dot dot"></span>
+            <span class="step-dot dot"></span>
+            <span class="step-dot dot"></span>
           </div>
         </form>
 

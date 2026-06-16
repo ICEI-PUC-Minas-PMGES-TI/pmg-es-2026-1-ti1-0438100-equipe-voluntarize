@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voluntarize | Mapa de ONGs</title>
+
+  <link rel="stylesheet" href="../../design-system/css/globals.css?v=mapa-ongs" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+  <div class="container header-shell">
+    <header class="site-header">
+      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <nav class="site-nav" aria-label="Navegação principal">
+        <a href="../home/home-voluntarios.html">Início</a>
+        <a href="../meu-perfil/meu-perfil.html">Perfil</a>
+        <a href="../vagas/vagas.html">Vagas</a>
+        <a href="./index.html" class="text-green">Mapa de ONGs</a>
+      </nav>
+      <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário" onclick="redirectToProfile()">
+        <i class="fa-regular fa-user"></i>
+      </button>
+    </header>
+  </div>
+
+  <main class="container section stack gap-4">
+    <div class="stack gap-2">
+      <div class="divider-line divider-black prism-both"></div>
+      <h1 class="text-center text-2xl text-bold text-uppercase">Buscar ONGs pelo mapa</h1>
+      <div class="divider-line divider-black prism-both"></div>
+    </div>
+
+    <section class="surface surface-green stack gap-3 map-search">
+      <div class="flex justify-between items-center flex-wrap gap-2">
+        <div class="stack gap-1">
+          <span class="tag tag-white tag-xs tag-static">
+            <i class="fa-solid fa-location-dot"></i>
+            Mapa de Belo Horizonte
+          </span>
+          <h2 class="text-lg text-bold text-uppercase">Encontre organizações perto de você</h2>
+        </div>
+        <span id="resultadoResumo" class="tag tag-purple tag-sm tag-static">Carregando...</span>
+      </div>
+
+      <div class="map-filter-grid">
+        <label class="stack input-group" for="filtroTexto">
+          <span class="ml-2 text-md text-semibold">ONG ou causa</span>
+          <div class="field">
+            <span class="field-icon" aria-hidden="true">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <input
+              id="filtroTexto"
+              class="field-input"
+              type="search"
+              placeholder="Digite nome, descrição ou causa"
+              autocomplete="off"
+            />
+          </div>
+        </label>
+
+        <label class="stack input-group" for="filtroLocal">
+          <span class="ml-2 text-md text-semibold">Região</span>
+          <div class="field">
+            <span class="field-icon" aria-hidden="true">
+              <i class="fa-solid fa-map-pin"></i>
+            </span>
+            <input
+              id="filtroLocal"
+              class="field-input"
+              type="search"
+              placeholder="Bairro, cidade ou CEP"
+              autocomplete="off"
+            />
+          </div>
+        </label>
+
+        <label class="stack input-group" for="filtroCausa">
+          <span class="ml-2 text-md text-semibold">Área</span>
+          <div class="field">
+            <span class="field-icon" aria-hidden="true">
+              <i class="fa-solid fa-tag"></i>
+            </span>
+            <select id="filtroCausa" class="field-input" aria-label="Área">
+              <option value="">Todas as áreas</option>
+            </select>
+          </div>
+        </label>
+      </div>
+
+      <div class="flex justify-end flex-wrap gap-2">
+        <button id="btnLimparMapa" class="btn btn-outline btn-pad-sm text-xs" type="button">
+          Limpar
+        </button>
+        <button id="btnBuscarMapa" class="btn btn-secondary btn-pad-sm text-xs" type="button">
+          Buscar
+        </button>
+      </div>
+    </section>
+
+    <section class="map-content-grid" aria-label="Resultado da busca de ONGs">
+      <div class="stack gap-2">
+        <div class="divider-label">
+          <span>Mapa</span>
+        </div>
+        <div class="map-wrapper">
+          <div id="mapaOngs" class="ong-map" role="application" aria-label="Mapa com ONGs cadastradas"></div>
+          <div id="mapaFallback" class="map-fallback" hidden>
+            <span class="icon-token icon-lg icon-purple">
+              <i class="fa-solid fa-location-dot"></i>
+            </span>
+            <p class="text-sm text-bold">Não foi possível carregar o mapa.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="stack gap-2">
+        <div class="divider-label">
+          <span>ONGs encontradas</span>
+        </div>
+        <div id="listaOngs" class="ong-results stack gap-3" aria-live="polite"></div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="container mb-4">
+    <footer class="site-footer">
+      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <p class="text-sm">Plataforma de voluntários @ 2026</p>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script src="./js/mapa-ongs.js" defer></script>
+  <script src="./../../assets/js/redirect-to-profile.js"></script>
+</body>
+</html>
