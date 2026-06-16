@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Validação de Presença — Voluntarize</title>
+  <link rel="stylesheet" href="..\..\design-system\css\globals.css" />
+  <link rel="stylesheet" href="..\..\modulos\presenca\presenca.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+    <div class="container header-shell">
+    <header class="site-header">
+      <img class="brand-logo" src="\assets\images\logo\logo-horizontal.png" alt="Voluntarize" />
+      <nav class="site-nav" aria-label="Navegação">
+        <a href="#">Início</a>
+        <a href="#">Perfil</a>
+        <a href="#">Vagas</a>
+        <a href="#">Minhas Candidaturas</a>
+      </nav>
+      <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm avatar-border" aria-label="Perfil">
+        <i class="fa-regular fa-user"></i>
+      </button>
+    </header>
+  </div>
+
+
+  
+  <div class="page">
+    <button class="btn btn-secondary btn-pad-sm back-btn" type="button" onclick="history.back()">
+      <i class="fa-solid fa-rotate-left"></i>
+      Voltar
+    </button>
+ 
+    <section class="review-card">
+      <div class="review-grid">
+        <div class="illustration-wrapper" aria-hidden="true">
+          <img src="\assets\images\imgs-presenca\ilustracao-presenca.png" alt="Ilustração de validação de presença" />
+        </div>
+ 
+  
+        <div class="review-content">
+          <div class="review-title-pill">Confirmar participação</div>
+ 
+          <p class="review-description">
+            Leia o QR-Code abaixo e valide sua presença na ação!
+          </p>
+
+          <div class="qr-wrapper" id="qr-wrapper" aria-label="QR Code de validacao">
+            
+          </div>
+ 
+          <button id="btnConcluir" class="btn btn-primary btn-pad-lg conclude-btn" type="button">
+            Concluir
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+ 
+  <div class="container mb-4 mt-4">
+    <footer class="site-footer">
+      <img class="brand-logo" src="\assets\images\logo\logo-horizontal.png" alt="Voluntarize" />
+      <p class="text-sm">
+        Plataforma de voluntários @ 2026 | Todos os direitos reservados
+      </p>
+    </footer>
+  </div>
+  <script src="..\..\modulos\presenca\presenca.js"></script>
+</body>
+</html>

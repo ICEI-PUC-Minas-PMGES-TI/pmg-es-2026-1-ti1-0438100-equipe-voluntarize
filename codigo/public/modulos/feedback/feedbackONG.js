@@ -3,57 +3,61 @@
   const STAR_EMPTY = '../../assets/images/imgs-feedback/star-regular-full.svg';
 
   // ===== Caminho para o banco de dados =====
-  const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
-  
-  function api(path) { return (API_BASE ? API_BASE : '') + path; }
+  const API = 'http://localhost:3000';
 
-  // ===== Banco com persistência em localStorage + fetch do db.json =====
-  const STORAGE_KEY = 'reviews-ong'; 
+  // ===== Banco com persistência em localStorage + fetch do JSON Server =====
+  const STORAGE_KEY = 'reviews-ong';
 
   let reviews = [];
 
-  // Carrega reviews do localStorage ou do banco de dados
+  // Carrega reviews do JSON Server ou do localStorage como fallback
   async function loadreviews() {
-      try {
-        const res = await fetch(api('/reviews'));
-        reviews = await res.json();
-        save(); // Atualiza localStorage com dados do servidor
-      } catch (e) {
-        // Se falhar, usa o que está no localStorage
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          reviews = JSON.parse(saved);
-        } else {
-          console.warn('Erro ao carregar reviews e localStorage vazio:', e);
-          reviews = [];
-        }
+    try {
+      // Busca direto do endpoint /reviews
+      const res = await fetch(API + '/reviews');
+      reviews = await res.json();
+      save(); // Atualiza localStorage com dados do servidor
+    } catch (e) {
+      // Se falhar, usa o que está no localStorage
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        reviews = JSON.parse(saved);
+      } else {
+        console.warn('Erro ao carregar reviews do servidor:', e);
+        reviews = [];
       }
     }
+  }
 
   function save() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
-  }
-
-  function nextReviewId() {
-    return reviews.reduce((max, r) => Math.max(max, r.id), 0) + 1;
   }
 
   function todayISO() {
     return new Date().toISOString().slice(0, 10);
   }
 
-  // Contexto da avaliação atual (ONG)
-  // Os dados do usuário logado devem vir de sessionStorage (como em home.js)
+  // ===== Contexto da avaliação atual (voluntário) =====
   const usuarioCorrente = JSON.parse(sessionStorage.getItem('usuarioCorrente')) || {
     id: 1,
-    tipo: 'ong',
-    nome: 'ong'
+    tipo: 'voluntario',
+    nome: 'Voluntário'
   };
 
-  const CURRENT_AUTHOR_ID   = usuarioCorrente.id;
-  const CURRENT_TARGET_TYPE = "ong"; // ← MUDA PARA ONG
-  const CURRENT_TARGET_ID   = 1; // ID da ONG que está sendo avaliada (se quiser testar outros ids, só mudar)
-  const CURRENT_ACTION_ID   = 1; // ID da ação ( se quiser testar outros ids, só mudar)
+  // ===== Pega os dados da URL =====
+  const params = new URLSearchParams(window.location.search);
+  const CURRENT_TARGET_ID = Number(params.get('targetId')) || 2;
+  const CURRENT_ACTION_ID = Number(params.get('actionId')) || 1;
+
+  const CURRENT_AUTHOR_ID = usuarioCorrente.id;
+  const CURRENT_TARGET_TYPE = "volunteer";
+
+  console.log('Avaliação context:', {
+    authorId: CURRENT_AUTHOR_ID,
+    targetId: CURRENT_TARGET_ID,
+    actionId: CURRENT_ACTION_ID,
+    targetType: CURRENT_TARGET_TYPE
+  });
 
   // ===== Estrelas =====
   const stars = document.querySelectorAll('.star-btn');
@@ -79,7 +83,7 @@
   });
 
   // ===== Concluir =====
-  document.getElementById('btnConcluir').addEventListener('click', () => {
+  document.getElementById('btnConcluir').addEventListener('click', async () => {
     const comentario = document.getElementById('comentario').value.trim();
 
     if (currentRating === 0) {
@@ -87,33 +91,48 @@
       return;
     }
 
+    // O id é gerado automaticamente pelo JSON Server
     const novo = {
-      id: nextReviewId(),
-      authorId:   CURRENT_AUTHOR_ID,
+      authorId: CURRENT_AUTHOR_ID,
       targetType: CURRENT_TARGET_TYPE,
-      targetId:   CURRENT_TARGET_ID,
-      actionId:   CURRENT_ACTION_ID,
-      rating:     currentRating,
-      comment:    comentario,
-      createdAt:  todayISO(),
-      deletedAt:  null
+      targetId: CURRENT_TARGET_ID,
+      actionId: CURRENT_ACTION_ID,
+      rating: currentRating,
+      comment: comentario,
+      createdAt: todayISO(),
+      deletedAt: null
     };
 
-    reviews.push(novo);
-    save();
+    try {
+      // Envia pro servidor (JSON Server gera o ID automaticamente)
+      const res = await fetch(API + '/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(novo)
+      });
 
-    console.log('Review criado:', novo);
-    console.log('Lista atualizada:', reviews);
+      if (!res.ok) throw new Error('Erro ao salvar no servidor');
 
-    alert('Avaliação enviada com sucesso! ⭐ ' + currentRating + '/5');
+      const savedReview = await res.json();
+      reviews.push(savedReview);
+      save();
 
-    // reset
-    currentRating = 0;
-    paint(0);
-    document.getElementById('comentario').value = '';
+      console.log('Review criado:', savedReview);
+      console.log('Lista atualizada:', reviews);
+
+      alert('Avaliação enviada com sucesso! ⭐ ' + currentRating + '/5');
+
+      // Reset
+      currentRating = 0;
+      paint(0);
+      document.getElementById('comentario').value = '';
+    } catch (e) {
+      console.error('Erro ao salvar review:', e);
+      alert('Erro ao salvar avaliação. Tente novamente.');
+    }
   });
 
-  // Inicializa carregando as reviews
+  // Carrega as reviews quando a página abre
   loadreviews().then(() => {
     console.log('reviews carregados:', reviews);
   });
