@@ -9,7 +9,8 @@
 
   const STORAGE_KEYS = {
     actionIndex: "voluntarize:visualizacao-detalhada-voluntario:acao",
-    following: "voluntarize:visualizacao-detalhada-voluntario:seguindo"
+    following: "voluntarize:visualizacao-detalhada-voluntario:seguindo",
+    followers: "voluntarize:visualizacao-detalhada-voluntario:seguidores"
   };
 
   const ASSETS = {
@@ -29,7 +30,8 @@
     profileReviews: [],
     actionIndex: 0,
     following: false,
-    savingFollow: false
+    savingFollow: false,
+    dataSource: "jsonserver"
   };
 
   const elements = {
@@ -72,7 +74,7 @@
     return response.json();
   }
 
-  async function loadData() {
+  async function loadFromJsonServer() {
     const [volunteers, ongs, actions, applications, reviews] = await Promise.all([
       fetchJson(API.volunteers),
       fetchJson(API.ongs),
@@ -81,11 +83,59 @@
       fetchJson(API.reviews)
     ]);
 
+    return { volunteers, ongs, actions, applications, reviews };
+  }
+
+  function getDatabaseFallbackUrls() {
+    const urls = new Set();
+    const publicIndex = window.location.pathname.indexOf("/public/");
+
+    if (window.location.protocol !== "file:" && publicIndex >= 0) {
+      const projectPath = window.location.pathname.slice(0, publicIndex);
+      urls.add(`${window.location.origin}${projectPath}/db/db.json`);
+    }
+
+    urls.add(new URL("../../../db/db.json", window.location.href).href);
+    return Array.from(urls);
+  }
+
+  async function loadFromDatabaseFile() {
+    let lastError = null;
+
+    for (const url of getDatabaseFallbackUrls()) {
+      try {
+        return await fetchJson(url, { cache: "no-store" });
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    throw lastError || new Error("Arquivo db.json não encontrado.");
+  }
+
+  function applyDatabase(database, dataSource) {
+    const volunteers = Array.isArray(database.volunteers) ? database.volunteers : [];
+    const ongs = Array.isArray(database.ongs) ? database.ongs : [];
+    const actions = Array.isArray(database.actions) ? database.actions : [];
+    const applications = Array.isArray(database.applications) ? database.applications : [];
+    const reviews = Array.isArray(database.reviews) ? database.reviews : [];
+
     state.volunteers = volunteers.filter(isActiveRecord);
     state.ongs = ongs.filter(isActiveRecord);
     state.actions = actions.filter(isActiveRecord);
     state.applications = applications;
     state.reviews = reviews.filter(isActiveRecord);
+    state.dataSource = dataSource;
+  }
+
+  async function loadData() {
+    try {
+      applyDatabase(await loadFromJsonServer(), "jsonserver");
+    } catch (jsonServerError) {
+      const database = await loadFromDatabaseFile();
+      applyDatabase(database, "file");
+      console.warn("JSONServer indisponível; usando db.json em modo somente local.");
+    }
   }
 
   function normalizeText(value) {
@@ -228,6 +278,10 @@
 
   function getFollowingKey(profileId) {
     return `${STORAGE_KEYS.following}:${profileId}`;
+  }
+
+  function getFollowersKey(profileId) {
+    return `${STORAGE_KEYS.followers}:${profileId}`;
   }
 
   function getActionIndexKey(profileId) {
@@ -519,6 +573,16 @@
     elements.followButton.removeAttribute("title");
     renderFollowButton();
 
+    if (state.dataSource !== "jsonserver") {
+      state.profile.followers = nextFollowers;
+      state.following = nextFollowing;
+      state.savingFollow = false;
+      localStorage.setItem(getFollowingKey(state.profile.id), String(state.following));
+      localStorage.setItem(getFollowersKey(state.profile.id), String(nextFollowers));
+      renderProfile();
+      return;
+    }
+
     try {
       const updatedProfile = await fetchJson(`${API.volunteers}/${state.profile.id}`, {
         method: "PATCH",
@@ -542,6 +606,16 @@
 
   function selectProfile(profile) {
     state.profile = profile;
+
+    if (state.dataSource !== "jsonserver") {
+      const savedFollowersValue = localStorage.getItem(getFollowersKey(profile.id));
+      const savedFollowers = Number(savedFollowersValue);
+
+      if (savedFollowersValue !== null && Number.isFinite(savedFollowers) && savedFollowers >= 0) {
+        state.profile.followers = savedFollowers;
+      }
+    }
+
     state.profileActions = getProfileActions(profile.id);
     state.profileReviews = getProfileReviews(profile.id);
     state.actionIndex = Number(localStorage.getItem(getActionIndexKey(profile.id))) || 0;
@@ -573,8 +647,9 @@
       setContentVisibility(true);
       renderPage();
     } catch (error) {
-      showStatus("Não foi possível carregar os dados do voluntário.");
-      console.error("Erro ao carregar dados do JSONServer:", error);
+      setContentVisibility(false);
+      showStatus("Não foi possível carregar os dados. Inicie o projeto com npm start.");
+      console.error("Erro ao carregar dados do voluntário:", error);
     }
   }
 

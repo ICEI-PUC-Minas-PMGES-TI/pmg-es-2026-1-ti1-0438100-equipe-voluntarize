@@ -13,6 +13,10 @@
   padding-top: var(--space-2);
 }
 
+.volunteer-page [hidden] {
+  display: none !important;
+}
+
 .page-status {
   margin-bottom: var(--space-4);
   text-align: center;
