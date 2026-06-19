@@ -239,6 +239,12 @@
   min-height: 540px;
 }
 
+@media (min-width: 561px) {
+  .story-copy {
+    align-self: start;
+  }
+}
+
 .story-title {
   width: min(520px, 100%);
   margin: 0 auto var(--space-5);
