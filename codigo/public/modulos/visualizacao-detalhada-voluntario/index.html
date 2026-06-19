@@ -27,17 +27,16 @@
             <a href="#">Minhas Candidaturas</a>
           </nav>
 
-          <button class="header-avatar" type="button" aria-label="Abrir perfil">
-            <img src="./assets/header-user.svg" alt="" />
-          </button>
+          <button class="header-avatar" type="button" aria-label="Abrir perfil"></button>
         </header>
       </div>
 
       <main class="container section volunteer-main">
-        <section class="surface surface-green profile-hero" aria-labelledby="volunteer-name">
-          <div class="profile-avatar" aria-hidden="true">
-            <img src="./assets/profile-user.svg" alt="" />
-          </div>
+        <section
+          class="surface surface-green surface-lg profile-hero"
+          aria-labelledby="volunteer-name"
+        >
+          <div class="profile-avatar" aria-hidden="true"></div>
 
           <div class="profile-copy">
             <h1 class="volunteer-name" id="volunteer-name"></h1>
@@ -45,7 +44,7 @@
           </div>
 
           <aside class="profile-actions" aria-label="Resumo do volunt&aacute;rio">
-            <p class="rating-badge">
+            <p class="rating-badge text-2xl">
               <span id="volunteer-rating"></span>
               <img src="./assets/star.svg" alt="" />
             </p>
@@ -64,13 +63,16 @@
 
         <div class="volunteer-divider">
           <span class="volunteer-line volunteer-line-left" aria-hidden="true"></span>
-          <span class="volunteer-divider-text">Hist&oacute;ria da ONG</span>
+          <span class="volunteer-divider-text text-lg">Hist&oacute;ria da ONG</span>
           <span class="volunteer-line volunteer-line-right" aria-hidden="true"></span>
         </div>
 
-        <section class="surface story-card" aria-labelledby="story-title">
+        <section class="surface surface-lg story-card" aria-labelledby="story-title">
           <div class="story-copy">
-            <h2 class="surface surface-purple surface-xs story-title" id="story-title"></h2>
+            <h2
+              class="surface surface-purple surface-xs story-title text-base"
+              id="story-title"
+            ></h2>
             <div class="story-text font-alt text-sm" id="volunteer-story"></div>
           </div>
 
@@ -84,11 +86,16 @@
 
         <div class="volunteer-divider">
           <span class="volunteer-line volunteer-line-left" aria-hidden="true"></span>
-          <span class="volunteer-divider-text">Hist&oacute;rico de A&ccedil;&otilde;es</span>
+          <span class="volunteer-divider-text text-lg">
+            Hist&oacute;rico de A&ccedil;&otilde;es
+          </span>
           <span class="volunteer-line volunteer-line-right" aria-hidden="true"></span>
         </div>
 
-        <section class="actions-panel" aria-label="Hist&oacute;rico de a&ccedil;&otilde;es">
+        <section
+          class="surface surface-green surface-lg actions-panel"
+          aria-label="Hist&oacute;rico de a&ccedil;&otilde;es"
+        >
           <button
             class="btn btn-secondary btn-icon-only btn-icon-only-xs btn-shadow-xs btn-border-thin"
             id="previous-action"
@@ -112,15 +119,20 @@
 
         <div class="volunteer-divider">
           <span class="volunteer-line volunteer-line-left" aria-hidden="true"></span>
-          <span class="volunteer-divider-text">Avalia&ccedil;&otilde;es</span>
+          <span class="volunteer-divider-text text-lg">Avalia&ccedil;&otilde;es</span>
           <span class="volunteer-line volunteer-line-right" aria-hidden="true"></span>
         </div>
 
-        <section class="reviews-panel" aria-label="Avalia&ccedil;&otilde;es">
-          <p class="surface surface-xs review-heading">
+        <section
+          class="surface surface-purple surface-lg reviews-panel"
+          aria-label="Avalia&ccedil;&otilde;es"
+        >
+          <p class="surface surface-xs review-heading text-md">
             <img src="./assets/review-icon.svg" alt="" />
-            Veja o que outros usu&aacute;rios disseram sobre trabalhar com
-            <span id="review-volunteer-name"></span>
+            <span class="review-heading-copy">
+              Veja o que outros usu&aacute;rios disseram sobre trabalhar com
+              <span id="review-volunteer-name"></span>
+            </span>
           </p>
 
           <div class="reviews-list" id="reviews-list"></div>
@@ -134,7 +146,7 @@
             src="../../assets/images/logo/logo-horizontal.png"
             alt="Voluntarize"
           />
-          <p class="text-xs">
+          <p class="text-sm">
             Plataforma de volunt&aacute;rios @ 2026 | Todos os direitos reservados
           </p>
         </footer>
