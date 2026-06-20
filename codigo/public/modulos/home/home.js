@@ -95,10 +95,11 @@ function initVerticalCarousel(trackId, prevId, nextId) {
   }
 
   function setHeight() {
-    const card = track.querySelector('.vaga-card');
-    if (!card) return;
+    const cards = track.querySelectorAll('.vaga-card');
+    if (!cards.length) return;
     const gap = parseInt(getComputedStyle(track).gap) || 16;
-    track.parentElement.style.height = (card.offsetHeight * VISIBLE + gap * (VISIBLE - 1)) + 'px';
+    const visible = Math.min(VISIBLE, cards.length);
+    track.parentElement.style.height = (cards[0].offsetHeight * visible + gap * (visible - 1)) + 'px';
   }
 
   function getMaxIndex() {
@@ -119,7 +120,7 @@ function initVerticalCarousel(trackId, prevId, nextId) {
 }
 
 // Card do carrossel de ONGs populares (usado nas duas homes)
-function renderOngCard(ong, index) {
+function renderOngCard(ong, index, followerCount, isFollowing, followId) {
   const logo = ONG_LOGOS[index % ONG_LOGOS.length];
   const div = document.createElement('div');
   div.className = 'ong-card surface';
@@ -127,20 +128,49 @@ function renderOngCard(ong, index) {
   const profileUrl = `../visualizacao-detalhada-ong/index.html?id=${ong.id}`;
 
   div.innerHTML = `
-    <div style="width:100px;position:absolute;top:0;right:var(--space-4)">
+    <div class="section-divider-inline" style="width:100px;position:absolute;top:0;right:var(--space-4)">
       <div class="divider-line divider-black divider-prism-sm prism-right" aria-hidden="true"></div>
     </div>
     <img src="${logo}" alt="${ong.name}" class="ong-card-img" />
     <h3 class="text-lg text-bold mt-2">${ong.name}</h3>
-    <p class="text-md text-muted mt-1">★ ${ong.rating.toFixed(1).replace('.', ',')} &nbsp;|&nbsp; ${formatFollowers(ong.followers)} seguidores</p>
-    <div class="stack mt-4 gap-1 w-full">
-      <button class="btn btn-primary btn-pad-sm w-full">Seguir</button>
+    <p class="text-md text-muted mt-1">★ ${ong.rating.toFixed(1).replace('.', ',')} &nbsp;|&nbsp; <span class="follower-count">${formatFollowers(followerCount)}</span> seguidores</p>
+    <div class="stack mt-2 gap-1 w-full">
+      <button class="btn ${isFollowing ? 'btn-outline' : 'btn-primary'} btn-pad-sm w-full btn-follow" data-ong-id="${ong.id}" data-follow-id="${followId || ''}" data-following="${isFollowing}">${isFollowing ? 'Seguindo' : 'Seguir'}</button>
       <a class="btn btn-secondary btn-pad-sm w-full" href="${profileUrl}">Ver Perfil</a>
     </div>
-    <div style="width:100px;position:absolute;bottom:0;left:var(--space-4)">
+    <div class="section-divider-inline" style="width:100px;position:absolute;bottom:0;left:var(--space-4)">
       <div class="divider-line divider-black divider-prism-sm prism-left" aria-hidden="true"></div>
     </div>
   `;
+
+  const followBtn = div.querySelector('.btn-follow');
+  followBtn.addEventListener('click', async () => {
+    if (!usuarioCorrente) return;
+    const following = followBtn.dataset.following === 'true';
+    if (following) {
+      const fid = followBtn.dataset.followId;
+      await fetch(api(`/follows/${fid}`), { method: 'DELETE' });
+      followBtn.dataset.following = 'false';
+      followBtn.dataset.followId = '';
+      followBtn.textContent = 'Seguir';
+      followBtn.className = 'btn btn-primary btn-pad-sm w-full btn-follow';
+      const countEl = div.querySelector('.follower-count');
+      countEl.textContent = formatFollowers(parseInt(countEl.dataset.raw || followerCount) - 1);
+      countEl.dataset.raw = parseInt(countEl.dataset.raw || followerCount) - 1;
+    } else {
+      const body = { followerType: 'volunteer', followerId: usuarioCorrente.id, targetType: 'ong', targetId: ong.id, createdAt: new Date().toISOString().split('T')[0] };
+      const res = await fetch(api('/follows'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const created = await res.json();
+      followBtn.dataset.following = 'true';
+      followBtn.dataset.followId = created.id;
+      followBtn.textContent = 'Seguindo';
+      followBtn.className = 'btn btn-outline btn-pad-sm w-full btn-follow';
+      const countEl = div.querySelector('.follower-count');
+      countEl.textContent = formatFollowers(parseInt(countEl.dataset.raw || followerCount) + 1);
+      countEl.dataset.raw = parseInt(countEl.dataset.raw || followerCount) + 1;
+    }
+  });
+
   return div;
 }
 
@@ -214,7 +244,7 @@ function renderVagaCard(action, ongName, variant = 'ong', appStatus = null) {
         <p class="text-xs text-muted mt-1">${action.vacancies} vagas &nbsp;·&nbsp; ${inscritos} inscritos</p>
       </div>
     </div>
-    <div class="flex gap-1 mt-1 w-full pl-3 pr-3" style="align-items:center;justify-content:center">
+    <div class="flex flex-col gap-1 mt-1 w-full pl-3 pr-3">
       ${botoes}
     </div>
   `;
@@ -223,18 +253,20 @@ function renderVagaCard(action, ongName, variant = 'ong', appStatus = null) {
 
 async function init() {
   try {
-    const [resOngs, resActions, resApplications, resVolunteers] = await Promise.all([
+    const [resOngs, resActions, resApplications, resVolunteers, resFollows] = await Promise.all([
       fetch(api('/ongs')),
       fetch(api('/actions')),
       fetch(api('/applications')),
-      fetch(api('/volunteers'))
+      fetch(api('/volunteers')),
+      fetch(api('/follows'))
     ]);
 
-    const [ongs, actions, applications, volunteers] = await Promise.all([
+    const [ongs, actions, applications, volunteers, follows] = await Promise.all([
       resOngs.json(),
       resActions.json(),
       resApplications.json(),
-      resVolunteers.json()
+      resVolunteers.json(),
+      resFollows.json()
     ]);
 
     const ongMap = Object.fromEntries(ongs.map(o => [o.id, o.name]));
@@ -245,7 +277,11 @@ async function init() {
     ongs
       .slice()
       .sort((a, b) => getOngViews(b.id, actions) - getOngViews(a.id, actions))
-      .forEach((ong, i) => ongCarousel.track.appendChild(renderOngCard(ong, i)));
+      .forEach((ong, i) => {
+        const followerCount = follows.filter(f => f.targetType === 'ong' && String(f.targetId) === String(ong.id)).length;
+        const followEntry = usuarioCorrente ? follows.find(f => f.targetType === 'ong' && String(f.targetId) === String(ong.id) && String(f.followerId) === String(usuarioCorrente.id)) : null;
+        ongCarousel.track.appendChild(renderOngCard(ong, i, followerCount, !!followEntry, followEntry ? followEntry.id : null));
+      });
     ongCarousel.update();
   }
 
@@ -264,6 +300,7 @@ async function init() {
     // Voluntário → ações em que se inscreveu, com badge de status da candidatura
     const vagasCarousel = initVerticalCarousel('vagasTrack', 'vagasPrevBtn', 'vagasNextBtn');
     if (vagasCarousel) {
+      let hasCards = false;
       if (isVoluntario && usuarioCorrente) {
         const actionMap = Object.fromEntries(actions.map(a => [a.id, a]));
         applications
@@ -274,11 +311,21 @@ async function init() {
             vagasCarousel.track.appendChild(
               renderVagaCard(action, ongMap[action.ongId] || '', 'voluntario', app.status)
             );
+            hasCards = true;
           });
       } else if (!isVoluntario && usuarioCorrente) {
         actions
           .filter(a => a.status === 'open' && String(a.ongId) === String(usuarioCorrente.id))
-          .forEach(a => vagasCarousel.track.appendChild(renderVagaCard(a, ongMap[a.ongId] || '', 'ong')));
+          .forEach(a => { vagasCarousel.track.appendChild(renderVagaCard(a, ongMap[a.ongId] || '', 'ong')); hasCards = true; });
+      }
+      if (!hasCards) {
+        const label = isVoluntario ? 'Você ainda não se inscreveu em nenhuma vaga.' : 'Nenhuma vaga em aberto no momento.';
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.innerHTML = `<i class="fa-solid fa-ghost"></i><p class="text-bold text-muted">${label}</p>`;
+        vagasCarousel.track.appendChild(empty);
+        document.getElementById('vagasPrevBtn').style.display = 'none';
+        document.getElementById('vagasNextBtn').style.display = 'none';
       }
       vagasCarousel.setHeight();
       vagasCarousel.update();
