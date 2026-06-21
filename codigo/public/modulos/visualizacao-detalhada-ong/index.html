@@ -19,30 +19,7 @@
 <body>
 
   
-  <div class="container header-shell">
-
-    <header class="site-header">
-
-      <img
-        class="brand-logo"
-        src="https://dummyimage.com/140x40/ffffff/000000&text=Voluntarize"
-        alt="Voluntarize"
-      />
-
-      <nav class="site-nav">
-        <a href="#">Início</a>
-        <a href="#">Perfil</a>
-        <a href="#">Vagas</a>
-        <a href="#">Minhas candidaturas</a>
-      </nav>
-
-      <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário" onclick="redirectToProfile()">
-        <i class="fa-regular fa-user"></i>
-      </button>
-
-    </header>
-
-  </div>
+  <div id="header-global" data-header-class="site-header"></div>
 
   <!-- MAIN -->
   <main class="container section stack gap-4">
@@ -192,6 +169,7 @@
     </footer>
 
   </div>
+  <script src="../../js/global-header.js"></script>
   <script src="script.js"></script>
   <script src="./../../assets/js/redirect-to-profile.js"></script>
 </body>

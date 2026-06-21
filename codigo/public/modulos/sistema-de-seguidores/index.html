@@ -9,51 +9,29 @@
     <script src="./script.js" defer></script>
   </head>
   <body class="followers-page">
-    <div class="container header-shell">
-      <header class="site-header followers-header">
-        <a class="brand-link" href="../../index.html" aria-label="Ir para o início">
-          <img
-            class="brand-logo"
-            src="./assets/logo-horizontal.png"
-            alt="Voluntarize"
-          />
-        </a>
-
-        <nav class="site-nav followers-nav" aria-label="Navegação principal">
-          <a href="../../index.html">Início</a>
-          <a href="#">Perfil</a>
-          <a href="#">ONGs</a>
-          <a href="#">Voluntários</a>
-          <a href="#">Candidaturas</a>
-        </nav>
-
-        <button class="header-avatar followers-avatar" type="button" aria-label="Abrir perfil">
-          <img src="./assets/header-user.svg" alt="" />
-        </button>
-      </header>
-    </div>
-
+    <div id="header-global" data-header-class="site-header followers-header"></div>
+    
     <main class="container followers-main">
       <section class="followers-intro" aria-labelledby="page-title">
         <div class="intro-copy">
           <h1 id="page-title">Conexões voluntárias</h1>
           <p>Acompanhe seguidores, ONGs e voluntários conectados.</p>
         </div>
-
+        
         <label class="followers-search" for="search-input">
           <input
-            id="search-input"
-            type="search"
-            autocomplete="off"
-            placeholder="Buscar"
+          id="search-input"
+          type="search"
+          autocomplete="off"
+          placeholder="Buscar"
           />
         </label>
       </section>
-
+      
       <p class="data-warning" id="data-warning" hidden>
         Não foi possível carregar o JSON. Exibindo dados de exemplo para manter a tela testável.
       </p>
-
+      
       <section class="followers-tabs" aria-label="Filtros de conexões">
         <button class="tab-button is-active" type="button" data-tab="seguidores">
           <img src="./assets/follower-icon.svg" alt="" />
@@ -72,7 +50,7 @@
           Voluntários
         </button>
       </section>
-
+      
       <section class="content-grid">
         <article class="surface followers-panel" aria-labelledby="list-title">
           <div class="panel-heading">
@@ -88,5 +66,7 @@
         </article>
       </section>
     </main>
+    <script src="../../js/global-header.js"></script>
   </body>
-</html>
+  </html>
+  
