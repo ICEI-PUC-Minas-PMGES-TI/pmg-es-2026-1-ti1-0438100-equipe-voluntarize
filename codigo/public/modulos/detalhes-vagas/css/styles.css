@@ -183,11 +183,22 @@
 }
 
 .detail-signup,
+.detail-favorite,
 .organizer-profile,
 .participant-card .btn {
   min-width: 168px;
   letter-spacing: 0;
   text-transform: none;
+}
+
+.detail-actions {
+  width: 100%;
+  align-items: center;
+}
+
+.favorite-feedback {
+  min-height: 1.2em;
+  max-width: 220px;
 }
 
 .organizer-card {
@@ -368,6 +379,12 @@
   }
 
   .detail-image {
+    width: 100%;
+  }
+
+  .detail-actions,
+  .detail-signup,
+  .detail-favorite {
     width: 100%;
   }
 
