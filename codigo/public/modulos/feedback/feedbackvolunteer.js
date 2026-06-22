@@ -2,56 +2,52 @@
   const STAR_FILLED = '../../assets/images/imgs-feedback/star-solid-full.svg';
   const STAR_EMPTY = '../../assets/images/imgs-feedback/star-regular-full.svg';
 
-  // ===== Caminho para o banco de dados =====
+
   const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
-  
+
   function api(path) { return (API_BASE ? API_BASE : '') + path; }
 
-  // ===== Banco com persistência em localStorage + fetch do JSON Server =====
-  const STORAGE_KEY = 'reviews-volunteer'; 
+
+  const STORAGE_KEY = 'reviews-volunteer';
 
   let reviews = [];
 
-  // Carrega reviews do JSON Server ou do localStorage como fallback
   async function loadreviews() {
-      try {
-        const res = await fetch(api('/reviews'));
-        reviews = await res.json();
-        save(); // Atualiza localStorage com dados do servidor
-      } catch (e) {
-        // Se falhar, usa o que está no localStorage
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          reviews = JSON.parse(saved);
-        } else {
-          console.warn('Erro ao carregar reviews e localStorage vazio:', e);
-          reviews = [];
-        }
+    try {
+      const res = await fetch(api('/reviews'));
+      reviews = await res.json();
+      save();
+    } catch (e) {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        reviews = JSON.parse(saved);
+      } else {
+        console.warn('Erro ao carregar reviews e localStorage vazio:', e);
+        reviews = [];
       }
     }
+  }
 
   function save() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
   }
-
 
   function todayISO() {
     return new Date().toISOString().slice(0, 10);
   }
 
   // ===== Contexto da avaliação atual (voluntário) =====
-  const usuarioCorrente = JSON.parse(sessionStorage.getItem('usuarioCorrente')) || {
+  const usuarioCorrente = JSON.parse(localStorage.getItem('usuarioLogado')) || {
     id: 1,
-    tipo: 'voluntario',
-    nome: 'Voluntário'
+    type: 1
   };
 
   // ===== Pega os dados da URL =====
   const params = new URLSearchParams(window.location.search);
-  const CURRENT_TARGET_ID   = Number(params.get('targetId')) || 2;
-  const CURRENT_ACTION_ID   = Number(params.get('actionId')) || 1;
+  const CURRENT_TARGET_ID = Number(params.get('targetId') || params.get('volunteerId')) || 2;
+  const CURRENT_ACTION_ID = Number(params.get('actionId')) || 1;
 
-  const CURRENT_AUTHOR_ID   = usuarioCorrente.id;
+  const CURRENT_AUTHOR_ID = usuarioCorrente.id;
   const CURRENT_TARGET_TYPE = "volunteer";
 
   console.log('Avaliação context:', {
@@ -61,7 +57,6 @@
     targetType: CURRENT_TARGET_TYPE
   });
 
-  // ===== Estrelas =====
   const stars = document.querySelectorAll('.star-btn');
   let currentRating = 0;
 
@@ -84,8 +79,57 @@
     btn.addEventListener('mouseleave', () => paint(currentRating));
   });
 
-  // ===== Concluir =====
+  // ===== Bloqueia avaliação duplicada: mesmo autor, mesmo alvo, mesma ação =====
+  function jaAvaliado() {
+    return reviews.some(r =>
+      r.authorId === CURRENT_AUTHOR_ID &&
+      r.targetId === CURRENT_TARGET_ID &&
+      r.actionId === CURRENT_ACTION_ID &&
+      r.targetType === CURRENT_TARGET_TYPE &&
+      !r.deletedAt
+    );
+  }
+
+  function bloquearFormulario() {
+    const btnConcluir = document.getElementById('btnConcluir');
+    const comentario = document.getElementById('comentario');
+    if (btnConcluir) {
+      btnConcluir.disabled = true;
+      btnConcluir.textContent = 'Você já avaliou este voluntário';
+    }
+    if (comentario) comentario.disabled = true;
+    stars.forEach(btn => btn.disabled = true);
+  }
+
+  async function atualizarRatingVoluntario(volunteerId) {
+    try {
+      const res = await fetch(api(`/reviews?targetType=volunteer&targetId=${volunteerId}`));
+      const list = await res.json();
+      const validas = list.filter(r => !r.deletedAt);
+
+      if (validas.length === 0) return;
+
+      const media = validas.reduce((sum, r) => sum + Number(r.rating), 0) / validas.length;
+      const mediaArredondada = Math.round(media * 10) / 10;
+
+      await fetch(api(`/volunteers/${volunteerId}`), {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating: mediaArredondada })
+      });
+
+      console.log('Rating do voluntário atualizado:', mediaArredondada);
+    } catch (e) {
+      console.error('Erro ao atualizar rating do voluntário:', e);
+    }
+  }
+
   document.getElementById('btnConcluir').addEventListener('click', async () => {
+    if (jaAvaliado()) {
+      alert('Você já avaliou este voluntário nesta ação.');
+      return;
+    }
+
     const comentario = document.getElementById('comentario').value.trim();
 
     if (currentRating === 0) {
@@ -94,9 +138,9 @@
     }
 
     const novoId =
-  reviews.length > 0
-    ? Math.max(...reviews.map(r => Number(r.id) || 0)) + 1
-    : 1;
+      reviews.length > 0
+        ? Math.max(...reviews.map(r => Number(r.id) || 0)) + 1
+        : 1;
 
     const novo = {
       id: novoId,
@@ -111,8 +155,7 @@
     };
 
     try {
-      // Envia pro servidor com o ID já definido
-      const res = await fetch(API + '/reviews', {
+      const res = await fetch(api('/reviews'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(novo)
@@ -125,22 +168,21 @@
       save();
 
       console.log('Review criado:', savedReview);
-      console.log('Lista atualizada:', reviews);
+
+      // Atualiza o rating médio do voluntário no banco
+      await atualizarRatingVoluntario(CURRENT_TARGET_ID);
 
       alert('Avaliação enviada com sucesso! ⭐ ' + currentRating + '/5');
 
-      // Reset
-      currentRating = 0;
-      paint(0);
-      document.getElementById('comentario').value = '';
+      bloquearFormulario();
     } catch (e) {
       console.error('Erro ao salvar review:', e);
       alert('Erro ao salvar avaliação. Tente novamente.');
     }
   });
 
-  // Carrega as reviews quando a página abre
   loadreviews().then(() => {
     console.log('reviews carregados:', reviews);
+    if (jaAvaliado()) bloquearFormulario();
   });
 })();
