@@ -26,19 +26,6 @@
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   };
 
-  const renderSignupButton = (btn, application, action, user) => {
-    if (!btn) return;
-    const isVolunteer = user && user.type === 0;
-    const isOpen = action.status === 'open';
-    const hasApplication = !!application;
-
-    btn.disabled = !isVolunteer || !isOpen;
-    btn.textContent = hasApplication ? 'Cancelar inscrição' : 'Inscrever-se';
-    btn.classList.toggle('btn-danger', hasApplication);
-    btn.classList.toggle('btn-primary', !hasApplication);
-    btn.dataset.applicationId = hasApplication ? application.id : '';
-  };
-
   const formatDate = (date) => { const [y, m, d] = date.split('-'); return `${d}/${m}/${y}`; };
   const formatRating = (r) => Number(r).toFixed(1).replace('.', ',');
   const formatFollowers = (n) => n >= 1000 ? `${Math.round(n / 1000)}K` : String(n);
@@ -48,9 +35,7 @@
 
     const response = await fetch(`${API}/actions/${action.id}`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ views: currentViews + 1 })
     });
 
@@ -74,7 +59,30 @@
     });
   };
 
-  const renderParticipants = (participants) => {
+
+  async function isPresenceConfirmed(volunteerId, actionId) {
+    try {
+      const res = await fetch(`${API}/attendances?volunteerId=${volunteerId}&actionId=${actionId}`);
+      if (!res.ok) return false;
+      const list = await res.json();
+      return list.length > 0;
+    } catch {
+      return false;
+    }
+  }
+
+  async function jaAvaliouVoluntario(ongId, volunteerId, actionId) {
+    try {
+      const res = await fetch(`${API}/reviews?authorId=${ongId}&targetType=volunteer&targetId=${volunteerId}&actionId=${actionId}`);
+      if (!res.ok) return false;
+      const list = await res.json();
+      return list.some(r => !r.deletedAt);
+    } catch {
+      return false;
+    }
+  }
+
+  const renderParticipants = async (participants, actionId, user, ongId, actionStarted) => {
     const container = find('[data-participants]');
     if (!container) return;
     container.innerHTML = '';
@@ -85,7 +93,10 @@
       container.appendChild(p);
       return;
     }
-    participants.forEach((participant) => {
+
+    const isOng = user && user.type === 1 && Number(user.id) === Number(ongId) && actionStarted;
+
+    for (const participant of participants) {
       const card = document.createElement('article');
       card.className = 'surface surface-sm grid items-center gap-2 participant-card';
       const avatar = document.createElement('span');
@@ -98,6 +109,10 @@
       name.textContent = participant.name;
       const stats = document.createElement('p');
       stats.textContent = `${formatRating(participant.rating)} | ${formatFollowers(participant.followers || 0)} seguidores`;
+
+      const actionsWrapper = document.createElement('div');
+      actionsWrapper.className = 'flex flex-col gap-1';
+
       const btn = document.createElement('button');
       btn.className = 'btn btn-primary btn-pad-xs';
       btn.type = 'button';
@@ -105,10 +120,45 @@
       btn.addEventListener('click', () => {
         window.location.href = `../visualizacao-detalhada-voluntario/index.html?id=${participant.id}`;
       });
+      actionsWrapper.appendChild(btn);
+
+      let confirmed = false;
+      if (isOng) {
+        confirmed = await isPresenceConfirmed(participant.id, actionId);
+        if (!confirmed) {
+          const btnQr = document.createElement('button');
+          btnQr.className = 'btn btn-secondary btn-pad-xs';
+          btnQr.type = 'button';
+          btnQr.textContent = 'Mostrar QR Code de presença';
+          btnQr.addEventListener('click', () => {
+            window.location.href = `../presenca/presenca.html?volunteerId=${participant.id}&actionId=${actionId}`;
+          });
+          actionsWrapper.appendChild(btnQr);
+        }
+      }
+
+      if (isOng && confirmed) {
+        const jaAvaliado = await jaAvaliouVoluntario(user.id, participant.id, actionId);
+        const btnAvaliar = document.createElement('button');
+        btnAvaliar.className = 'btn btn-secondary btn-pad-xs';
+        btnAvaliar.type = 'button';
+
+        if (jaAvaliado) {
+          btnAvaliar.textContent = 'Voluntário já avaliado';
+          btnAvaliar.disabled = true;
+        } else {
+          btnAvaliar.textContent = 'Avaliar voluntário';
+          btnAvaliar.addEventListener('click', () => {
+            window.location.href = `../feedback/feedbackvolunteer.html?volunteerId=${participant.id}&actionId=${actionId}`;
+          });
+        }
+        actionsWrapper.appendChild(btnAvaliar);
+      }
+
       info.append(name, stats);
-      card.append(avatar, info, btn);
+      card.append(avatar, info, actionsWrapper);
       container.appendChild(card);
-    });
+    }
   };
 
   const loadDetails = async () => {
@@ -129,8 +179,12 @@
       if (!resOng.ok) throw new Error(`ONG da ação não encontrada.`);
       const ong = await resOng.json();
 
+      const resApplications = await fetch(`${API}/applications?actionId=${actionId}&status=accepted`);
+      const acceptedApplications = resApplications.ok ? await resApplications.json() : [];
+      const participantIds = acceptedApplications.map((a) => a.volunteerId);
+
       const participantResponses = await Promise.all(
-        (action.participants || []).map((id) => fetch(`${API}/volunteers/${id}`))
+        participantIds.map((id) => fetch(`${API}/volunteers/${id}`))
       );
       const participants = (await Promise.all(
         participantResponses.map((r) => r.ok ? r.json() : null)
@@ -146,7 +200,7 @@
       setText('[data-ong-followers]', formatFollowers(ong.followers || 0));
 
       renderTags(action.tags || []);
-      renderParticipants(participants);
+      await renderParticipants(participants, actionId, user, action.ongId, isActionDateReached(action.date));
 
       try {
         const nextViews = await incrementViews(action);
@@ -163,7 +217,6 @@
         });
       }
 
-      // Botão de inscrição
       const btn = find('[data-signup-button]');
       if (!btn) return;
 
@@ -177,10 +230,18 @@
         }
       }
 
-      renderSignupButton(btn, currentApplication, action, user);
+      await renderSignupButton(btn, currentApplication, action, user, API);
 
       btn.addEventListener('click', async () => {
-        if (!user || user.type !== 0) return;
+        if (!user) return;
+
+        if (btn.dataset.mode === 'avaliar-ong') {
+          window.location.href = `../feedback/feedbackONG.html?targetId=${ong.id}&actionId=${actionId}`;
+          return;
+        }
+
+        if (user.type !== 0) return;
+
         btn.disabled = true;
 
         try {
@@ -203,8 +264,9 @@
             });
             if (!res.ok) throw new Error('Erro ao realizar inscrição.');
             currentApplication = await res.json();
+            alert('Inscrição enviada! Aguarde a aprovação da ONG.');
           }
-          renderSignupButton(btn, currentApplication, action, user);
+          await renderSignupButton(btn, currentApplication, action, user, API);
         } catch (err) {
           console.error(err);
           btn.disabled = false;
@@ -218,3 +280,82 @@
 
   loadDetails();
 })();
+
+function isActionDateReached(actionDate) {
+  if (!actionDate) return false;
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  return actionDate <= today;
+}
+
+async function renderSignupButton(btn, application, action, user, API) {
+  if (!btn) return;
+  const isVolunteer = user && user.type === 0;
+  const isOng = user && user.type === 1 && Number(user.id) === Number(action.ongId);
+  const isOpen = action.status === 'open';
+  const hasApplication = !!application;
+  const actionStarted = isActionDateReached(action.date);
+
+  btn.classList.remove('btn-danger');
+  btn.classList.add('btn-primary');
+
+ 
+  if (isOng) {
+    btn.style.display = 'none';
+    return;
+  }
+
+  
+  if (actionStarted) {
+    if (isVolunteer && hasApplication) {
+      const confirmed = await isPresenceConfirmedGlobal(API, user.id, action.id);
+      btn.dataset.applicationId = application.id;
+
+      if (confirmed) {
+        const jaAvaliouOng = await jaAvaliouAlvo(API, user.id, 'ong', action.ongId, action.id);
+        btn.style.display = '';
+        if (jaAvaliouOng) {
+          btn.disabled = true;
+          btn.textContent = 'ONG já avaliada';
+          btn.dataset.mode = '';
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Avaliar ONG';
+          btn.dataset.mode = 'avaliar-ong';
+        }
+      } else {
+        
+        btn.style.display = 'none';
+        btn.dataset.mode = '';
+      }
+    } else {
+      btn.style.display = 'none';
+      btn.dataset.mode = '';
+    }
+    return;
+  }
+
+  btn.style.display = '';
+  btn.disabled = !isVolunteer || (!hasApplication && !isOpen);
+  btn.textContent = hasApplication ? 'Cancelar inscrição' : 'Inscrever-se';
+  btn.classList.toggle('btn-danger', hasApplication);
+  btn.classList.toggle('btn-primary', !hasApplication);
+  btn.dataset.applicationId = hasApplication ? application.id : '';
+  btn.dataset.mode = 'signup';
+}
+
+async function isPresenceConfirmedGlobal(API, volunteerId, actionId) {
+  try {
+    const res = await fetch(`${API}/attendances?volunteerId=${volunteerId}&actionId=${actionId}`);
+    if (!res.ok) return false;
+    return (await res.json()).length > 0;
+  } catch { return false; }
+}
+
+async function jaAvaliouAlvo(API, authorId, targetType, targetId, actionId) {
+  try {
+    const res = await fetch(`${API}/reviews?authorId=${authorId}&targetType=${targetType}&targetId=${targetId}&actionId=${actionId}`);
+    if (!res.ok) return false;
+    return (await res.json()).some(r => !r.deletedAt);
+  } catch { return false; }
+}
