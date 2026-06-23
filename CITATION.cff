@@ -1,31 +1,40 @@
 cff-version: 1.0.1
-message: Please cite this software using these metadata.
-title: 
+message: Plataforma que conecta ONGs e voluntários para coloaborarem em ações solidárias.
+title: Voluntarize
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+  - family-names: Lopes Diniz
+    given-names: Bernardo 
+  - family-names: Viana Melchichi
+    given-names: Daniel
+  - family-names: Castro
+    given-names: João Paulo de
+  - family-names: Andrade Motta
+    given-names: Mateus
+  - family-names: Bruno Rodrigues da Cruz
+    given-names: Igor
+  - family-names: Moura e Souza
+    given-names: Luiz Gustavo
+  - family-names: Lutes de Castro
+    given-names: Thiago
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: de Faria Barros
+    given-names: Diego Augusto 
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Almeida Louzada
+    given-names: Henrique 
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Soares de Paiva Lacerda
+    given-names: Lucca 
 keywords:
-  - 
-  - 
-repository-code: 
+  - voluntariado
+  - ong
+  - trabalho voluntario
+  - plataforma web
+  - trabalho interdisciplinar
+repository-code: https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-equipe-voluntarize
 license: CC-BY-4.0
 version: 1.0.0
-date-released: 2022-07-14
+date-released: 2026-06-22
