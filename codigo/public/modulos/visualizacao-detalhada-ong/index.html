@@ -1,148 +1,104 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfil da ONG | Voluntarize</title>
 
-  
   <link rel="stylesheet" href="../../design-system/css/globals.css">
-
-  
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-    
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  
   <div id="header-global" data-header-class="site-header"></div>
 
-  <!-- MAIN -->
   <main class="container section stack gap-4">
 
-    <!-- TOPO ONG -->
-    <section class="surface surface-green surface-lg">
-
+    <section class="surface surface-green">
       <div class="flex justify-between items-center flex-wrap gap-4">
 
-        <!-- ESQUERDA -->
         <div class="flex items-center gap-3">
-
-          <span class="icon-token icon-lg icon-purple">
-            <i class="fa-regular fa-user"></i>
-          </span>
-
+          <div data-ong-avatar>
+            <span class="icon-token icon-lg icon-purple">
+              <i class="fa-regular fa-user"></i>
+            </span>
+          </div>
           <div class="stack gap-1">
-
             <h1 class="h3" data-ong-name></h1>
             <p class="text-sm" data-ong-responsible></p>
             <p class="text-xs text-muted" data-ong-since></p>
-
           </div>
-
         </div>
 
-        <!-- DIREITA -->
         <div class="stack items-end gap-2">
-
           <span class="tag tag-white tag-sm" data-ong-rating></span>
           <span class="text-sm text-semibold" data-ong-followers></span>
-          <button class="btn btn-secondary btn-pad-sm btn-seguir">Seguir</button>
-
+          <button class="btn btn-secondary btn-pad-sm btn-seguir">
+            <i class="fa-solid fa-user-plus"></i> Seguir
+          </button>
         </div>
 
       </div>
-
     </section>
 
-    <!-- DIVIDER -->
     <div class="divider-label">
       <span>História da ONG</span>
     </div>
 
-    <!-- HISTORIA -->
-    <section class="grid grid-2 gap-4">
-
-      <!-- TEXTO -->
-      <div class="surface stack">
-
-        <div>
-          <span class="tag tag-purple">
-            Conheça um pouco mais sobre a ONG
-          </span>
-        </div>
-
+    <section class="surface stack">
+      <div>
+        <span class="tag tag-purple">
+          <i class="fa-solid fa-circle-info"></i> Conheça um pouco mais sobre a ONG
+        </span>
+      </div>
+      <div class="historia-content">
         <p class="text-sm font-alt" data-ong-description></p>
-
-      </div>
-
-      <!-- CELULAR -->
-      <div class="surface surface-purple phone-box">
-
-        <div class="phone-frame">
-
-          <div class="phone-notch"></div>
-
-          <div class="phone-content">
-
-            <span class="icon-token icon-lg icon-white">
-              <i class="fa-solid fa-heart"></i>
-            </span>
-
-            <div class="phone-lines">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-
-          </div>
-
+        <div class="historia-ilustracao">
+          <img src="../../assets/images/imgs-undraw/img-pessoas-unidas-landing.svg"
+            alt="Pessoas unidas pelo voluntariado" />
         </div>
-
       </div>
-
     </section>
 
-    
     <div class="divider-label">
       <span>Histórico de Ações</span>
     </div>
 
-  
-    <section class="actions-wrapper">
+    <section class="surface surface-white stack">
 
-      <button class="btn btn-secondary btn-icon-only btn-pad-xs">
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
+      <div class="surface surface-green p-3 flex items-center gap-2 text-sm text-bold">
+        <i class="fa-solid fa-calendar-check"></i>
+        Ações realizadas por essa ONG
+      </div>
 
-      <div class="grid grid-2 grow" data-actions-list></div>
-
-      <button class="btn btn-secondary btn-icon-only btn-pad-xs">
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
+      <div class="actions-wrapper">
+        <button class="btn btn-secondary btn-icon-only btn-pad-xs" data-actions-prev aria-label="Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="carousel-track-container">
+          <div class="carousel-track" data-actions-list></div>
+        </div>
+        <button class="btn btn-secondary btn-icon-only btn-pad-xs" data-actions-next aria-label="Próximo">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
 
     </section>
 
-    <!-- DIVIDER -->
     <div class="divider-label">
       <span>Avaliações</span>
     </div>
 
-    <!-- REVIEWS -->
     <section class="surface surface-purple stack">
 
       <div class="reviews-alert">
-
         <i class="fa-solid fa-check"></i>
-
         <p class="text-sm text-bold">
           Veja o que os usuários disseram sobre o trabalho dessa ONG
         </p>
-
       </div>
 
       <div class="grid grid-3" data-reviews-list></div>
@@ -150,27 +106,19 @@
     </section>
 
   </main>
-  
-  <!-- FOOTER -->
+
   <div class="container mb-4">
-
     <footer class="site-footer">
-
-      <img
-        class="brand-logo"
-        src="https://dummyimage.com/140x40/ffffff/000000&text=Voluntarize"
-        alt="Voluntarize"
-      />
-
+      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
       <p class="text-sm">
-        Plataforma de voluntários @ 2026
+        Plataforma de voluntários @ 2026 | Todos os direitos reservados
       </p>
-
     </footer>
-
   </div>
+
   <script src="../../js/global-header.js"></script>
   <script src="script.js"></script>
   <script src="./../../assets/js/redirect-to-profile.js"></script>
 </body>
+
 </html>
