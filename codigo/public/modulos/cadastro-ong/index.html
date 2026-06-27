@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="../../design-system/css/globals.css">
   <link rel="stylesheet" href="css/style.css?v=3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <script src="js/cadastro-ong.js?v=5" defer></script>
 </head>
 
 <body>
@@ -17,39 +16,39 @@
       <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
       Voltar
     </button>
-
+    
     <section class="choice-card" id="choiceScreen" aria-labelledby="choiceTitle">
       <span class="btn btn-outline btn-pad-sm btn-shadow-sm title-pill" id="choiceTitle">Cadastrar</span>
       <p>Selecione o tipo de cadastro que mais se adequa a voce:</p>
-
+      
       <div class="choice-options">
         <button class="choice-option selected" type="button" id="selectOng" data-register-type="ongs" aria-pressed="true">
           <img src="assets/successful-group.svg" alt="">
           <span>ONG</span>
         </button>
-
+        
         <button class="choice-option" type="button" id="selectVolunteer" data-register-type="volunteers" aria-pressed="false">
           <img src="assets/successful-person.svg" alt="">
           <span>Voluntario</span>
         </button>
       </div>
-
+      
       <button class="btn btn-primary btn-pad-md btn-shadow-md primary-button" type="button" id="startOng">Prosseguir</button>
       <p class="login-link">Ja tem uma conta? <a href="../login/login.html">Entrar!</a></p>
     </section>
-
+    
     <section class="cadastro-shell" id="registerScreen" aria-labelledby="cadastroTitulo" hidden>
       <aside class="illustration-panel" aria-hidden="true">
         <img id="stepIllustration" src="assets/successful-group.svg" alt="">
       </aside>
-
+      
       <section class="cadastro-card">
         <form class="cadastro-form" id="ongForm" novalidate>
           <div class="card-heading">
             <span class="btn btn-outline btn-pad-sm btn-shadow-sm title-pill" id="cadastroTitulo">Cadastro</span>
             <p id="stepIntro">Venha fazer parte dessa comunidade!</p>
           </div>
-
+          
           <div class="form-step" data-step="0">
             <div class="field-group">
               <label for="nomeOng">Nome da ONG</label>
@@ -58,7 +57,7 @@
               </div>
               <small class="field-error" id="erro-nomeOng"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="email">E-mail</label>
               <div class="input-shell">
@@ -66,7 +65,7 @@
               </div>
               <small class="field-error" id="erro-email"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="senha">Senha</label>
               <div class="input-shell">
@@ -74,7 +73,7 @@
               </div>
               <small class="field-error" id="erro-senha"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="confirmarSenha">Confirmar senha</label>
               <div class="input-shell">
@@ -83,7 +82,7 @@
               <small class="field-error" id="erro-confirmarSenha"></small>
             </div>
           </div>
-
+          
           <div class="form-step" data-step="1" hidden>
             <div class="field-group">
               <label for="telefone">Telefone da ONG</label>
@@ -92,7 +91,7 @@
               </div>
               <small class="field-error" id="erro-telefone"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="cnpj">CNPJ da ONG</label>
               <div class="input-shell">
@@ -100,7 +99,7 @@
               </div>
               <small class="field-error" id="erro-cnpj"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="cep">CEP da ONG</label>
               <div class="input-shell">
@@ -108,7 +107,7 @@
               </div>
               <small class="field-error" id="erro-cep"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="dataFundacao">Data de fundacao</label>
               <div class="input-shell">
@@ -117,7 +116,7 @@
               <small class="field-error" id="erro-dataFundacao"></small>
             </div>
           </div>
-
+          
           <div class="form-step" data-step="2" hidden>
             <div class="field-group">
               <label for="responsavel">Nome do responsavel</label>
@@ -126,7 +125,7 @@
               </div>
               <small class="field-error" id="erro-responsavel"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="cpfResponsavel">CPF do responsavel</label>
               <div class="input-shell">
@@ -134,7 +133,7 @@
               </div>
               <small class="field-error" id="erro-cpfResponsavel"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="emailResponsavel">E-mail do responsavel</label>
               <div class="input-shell">
@@ -142,7 +141,7 @@
               </div>
               <small class="field-error" id="erro-emailResponsavel"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="nascimentoResponsavel">Data de nascimento</label>
               <div class="input-shell">
@@ -151,7 +150,7 @@
               <small class="field-error" id="erro-nascimentoResponsavel"></small>
             </div>
           </div>
-
+          
           <div class="form-step" data-step="3" hidden>
             <div class="field-group">
               <label for="site">URL do site ou redes sociais</label>
@@ -160,7 +159,7 @@
               </div>
               <small class="field-error" id="erro-site"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="historia">Historia da ONG</label>
               <div class="input-shell textarea-shell">
@@ -170,17 +169,17 @@
               <small class="field-error" id="erro-historia"></small>
             </div>
           </div>
-
+          
           <p class="form-message" id="formMessage" role="alert" aria-live="polite"></p>
-
+          
           <div class="form-actions">
             <button class="btn btn-ghost btn-pad-sm secondary-button" type="button" id="prevStep">Voltar</button>
             <button class="btn btn-primary btn-pad-sm btn-shadow-md primary-button" type="button" id="nextStep">Proximo</button>
             <button class="btn btn-primary btn-pad-sm btn-shadow-md primary-button" type="submit" id="submitForm" hidden>Cadastrar</button>
           </div>
-
+          
           <p class="login-link">Ja tem uma conta? <a href="../login/login.html">Entrar!</a></p>
-
+          
           <div class="step-dots" aria-label="Etapas do cadastro">
             <span class="step-dot dot active"></span>
             <span class="step-dot dot"></span>
@@ -188,7 +187,7 @@
             <span class="step-dot dot"></span>
           </div>
         </form>
-
+        
         <section class="success-panel" id="successPanel" hidden>
           <img src="assets/successful-group.svg" alt="">
           <h2>Cadastro realizado!</h2>
@@ -198,6 +197,8 @@
       </section>
     </section>
   </main>
+  
+  <script src="./js/cadastro-ong.js"></script>
   <script src="./../../assets/js/redirect-to-profile.js"></script>
 </body>
 </html>
