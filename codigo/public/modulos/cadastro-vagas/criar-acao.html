@@ -5,45 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Criar Ação</title>
   <link rel="stylesheet" href="../../design-system/css/globals.css">
-  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/styles.css?v=2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-  <div class="container header-shell">
-    <header class="site-header">
-      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize">
-      <nav class="site-nav" aria-label="Navegação principal">
-        <a href="../home/home-ong.html">Início</a>
-        <a href="#">Perfil</a>
-        <a href="#" class="text-green">Vagas</a>
-        <a href="#">Minhas Vagas</a>
-      </nav>
-      <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm profile-button" type="button" aria-label="Abrir perfil">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20 21a8 8 0 0 0-16 0"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-      </button>
-    </header>
-  </div>
+  <main class="page">
+    <button class="btn btn-secondary btn-shadow-sm btn-rounded-sm back-button" type="button" aria-label="Voltar para a página anterior">
+      <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
+      Voltar
+    </button>
 
-  <main class="container section stack gap-3 action-page">
-    <div class="page-heading text-center">
-      <div class="divider-line divider-black prism-both" aria-hidden="true"></div>
-      <h1 id="form-title" class="text-2xl">Criar ação</h1>
-      <p class="font-alt text-sm">Publique uma nova oportunidade e encontre pessoas para fazer a diferença.</p>
-      <div class="divider-line divider-black prism-both" aria-hidden="true"></div>
-    </div>
-
-    <section class="surface surface-purple grid rounded-lg shadow-lg action-card" aria-labelledby="form-title">
-      <div class="illustration flex items-center justify-center" aria-hidden="true">
+    <section class="action-card" aria-labelledby="form-title">
+      <div class="illustration" aria-hidden="true">
         <img class="illustration__image" src="./img/undraw_my-resume_etai-1.svg" alt="">
       </div>
 
-      <form class="stack gap-2 action-form" id="criarAcaoForm" novalidate>
-        <div class="surface surface-green text-center p-3 form-intro">
-          <h2 class="text-md">Informações da ação</h2>
-          <p class="font-alt text-xs">Preencha os dados abaixo para anunciar a vaga.</p>
-        </div>
+      <form class="stack action-form" id="criarAcaoForm">
+        <header class="form-header">
+          <h1 id="form-title">Criar ação</h1>
+          <p>Crie uma ação e anuncie para encontrar voluntários</p>
+        </header>
 
         <label class="field action-field">
           <span class="field-icon" aria-hidden="true">

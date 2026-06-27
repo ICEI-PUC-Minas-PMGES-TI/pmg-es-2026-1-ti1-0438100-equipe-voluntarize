@@ -1,4 +1,9 @@
+const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, "") : "";
 const STORAGE_KEY = "tiaw_ongs";
+
+function api(path) {
+  return API_BASE + path;
+}
 
 const choiceScreen = document.getElementById("choiceScreen");
 const registerScreen = document.getElementById("registerScreen");
@@ -26,7 +31,7 @@ const registerRoutes = {
   },
   volunteers: {
     jsonKey: "volunteers",
-    url: "../cadastro-usuario/index.html"
+    url: "../cadastro-usuario/index.html?start=1"
   }
 };
 
@@ -254,7 +259,13 @@ function validateStep(stepIndex) {
 function showRegister() {
   choiceScreen.hidden = true;
   registerScreen.hidden = false;
+  backButton.hidden = false;
   updateStep();
+}
+
+function toIsoDate(value) {
+  const [day, month, year] = value.split("/");
+  return day && month && year ? `${year}-${month}-${day}` : value;
 }
 
 function selectRegisterType(type) {
@@ -302,33 +313,52 @@ function goToStep(stepIndex) {
 }
 
 function createOng() {
-  const cnpj = field("cnpj").value;
-  const cpfResponsavel = field("cpfResponsavel").value;
-
   return {
-    id: `ong-${Date.now()}`,
-    tipo: "ong",
-    nomeOng: normalizeText(field("nomeOng").value),
+    name: normalizeText(field("nomeOng").value),
     email: normalizeText(field("email").value),
-    senha: field("senha").value,
-    telefone: field("telefone").value,
-    cnpj,
-    cnpjNumeros: onlyDigits(cnpj),
+    password: field("senha").value,
+    cnpj: field("cnpj").value,
+    foundationDate: toIsoDate(field("dataFundacao").value),
     cep: field("cep").value,
-    cepNumeros: onlyDigits(field("cep").value),
-    dataFundacao: field("dataFundacao").value,
-    responsavel: normalizeText(field("responsavel").value),
-    cpfResponsavel,
-    cpfResponsavelNumeros: onlyDigits(cpfResponsavel),
-    emailResponsavel: normalizeText(field("emailResponsavel").value),
-    nascimentoResponsavel: field("nascimentoResponsavel").value,
-    site: normalizeText(field("site").value),
-    historia: normalizeText(field("historia").value),
-    criadoEm: new Date().toISOString()
+    address: "",
+    city: "",
+    state: "",
+    latitude: null,
+    longitude: null,
+    description: normalizeText(field("historia").value),
+    responsibleName: normalizeText(field("responsavel").value),
+    responsibleCpf: field("cpfResponsavel").value,
+    responsibleEmail: normalizeText(field("emailResponsavel").value),
+    responsibleBirthDate: toIsoDate(field("nascimentoResponsavel").value),
+    phone: field("telefone").value,
+    website: normalizeText(field("site").value),
+    logo: "",
+    rating: 0,
+    createdAt: new Date().toISOString().slice(0, 10),
+    deletedAt: null
   };
 }
 
-function handleSubmit(event) {
+async function postOng(ong) {
+  const response = await fetch(api("/ongs"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(ong)
+  });
+
+  if (!response.ok) {
+    throw new Error("Nao foi possivel salvar a ONG.");
+  }
+
+  return response.json();
+}
+
+function setSubmitting(isSubmitting) {
+  submitButton.disabled = isSubmitting;
+  submitButton.textContent = isSubmitting ? "Cadastrando..." : "Cadastrar";
+}
+
+async function handleSubmit(event) {
   event.preventDefault();
 
   for (let index = 0; index < steps.length; index += 1) {
@@ -349,13 +379,24 @@ function handleSubmit(event) {
     }
   }
 
-  const ongs = readOngs();
-  ongs.push(createOng());
-  saveOngs(ongs);
+  setSubmitting(true);
+  setMessage("");
 
-  form.hidden = true;
-  successPanel.hidden = false;
-  setMessage("", "success");
+  try {
+    const savedOng = await postOng(createOng());
+    const ongs = readOngs();
+    ongs.push(savedOng);
+    saveOngs(ongs);
+
+    form.hidden = true;
+    successPanel.hidden = false;
+    setMessage("", "success");
+  } catch (error) {
+    console.error(error);
+    setMessage("Nao foi possivel salvar no servidor. Verifique se a API esta ativa.", "error");
+  } finally {
+    setSubmitting(false);
+  }
 }
 
 startButton.addEventListener("click", startSelectedRegister);
@@ -366,6 +407,10 @@ choiceButtons.forEach((button) => {
 
 selectRegisterType(selectedRegisterType);
 
+if (new URLSearchParams(window.location.search).get("start") === "1") {
+  showRegister();
+}
+
 backButton.addEventListener("click", () => {
   if (!registerScreen.hidden && currentStep > 0) {
     goToStep(currentStep - 1);
@@ -375,6 +420,7 @@ backButton.addEventListener("click", () => {
   if (!registerScreen.hidden) {
     registerScreen.hidden = true;
     choiceScreen.hidden = false;
+    backButton.hidden = true;
     return;
   }
 
