@@ -74,11 +74,6 @@
   cursor: pointer;
 }
 
-.choice-option.selected {
-  outline: 2px solid var(--color-purple);
-  outline-offset: 2px;
-}
-
 .choice-option img {
   width: 132px;
   max-width: 100%;
@@ -186,8 +181,8 @@
 
 .input-shell:focus-within,
 .choice-option:focus-visible {
-  outline: 2px solid var(--color-purple);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--shadow-md);
 }
 
 .input-shell input,

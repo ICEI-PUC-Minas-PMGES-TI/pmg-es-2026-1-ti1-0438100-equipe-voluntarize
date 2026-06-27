@@ -84,8 +84,8 @@
 }
 
 .action-field:focus-within {
-  outline: 2px solid var(--color-purple);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--shadow-md);
 }
 
 .field-icon {
