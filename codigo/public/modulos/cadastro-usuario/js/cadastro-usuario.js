@@ -277,10 +277,18 @@ function selectRegisterType(type) {
   selectedRegisterType = type;
 
   choiceButtons.forEach((button) => {
-    const selected = button.dataset.registerType === type;
-    button.classList.toggle("selected", selected);
-    button.setAttribute("aria-pressed", String(selected));
+    button.classList.remove("isActive");
+    button.setAttribute("aria-pressed", "false");
   });
+
+  const activeButton = choiceButtons.find(
+    button => button.dataset.registerType === type
+  );
+
+  if (activeButton) {
+    activeButton.classList.add("isActive");
+    activeButton.setAttribute("aria-pressed", "true");
+  }
 }
 
 function startSelectedRegister() {
@@ -318,8 +326,9 @@ function goToStep(stepIndex) {
   updateStep();
 }
 
-function buildUser() {
+async function buildUser() {
   return {
+    id: await generateNewId(),
     name: normalizeText(getField("nome").value),
     email: normalizeText(getField("email").value),
     password: getField("senha").value,
@@ -336,6 +345,16 @@ function buildUser() {
     createdAt: new Date().toISOString().slice(0, 10),
     deletedAt: null
   };
+}
+
+async function generateNewId(){
+  const listResponse = await fetch(api("/volunteers"));
+
+  if (!listResponse.ok) {
+    throw new Error("Nao foi possivel consultar as Voluntários.");
+  }
+  const volunteers = await listResponse.json();
+  return parseInt(volunteers[volunteers.length - 1].id) + 1;
 }
 
 async function postUser(user) {
@@ -376,7 +395,8 @@ async function handleSubmit(event) {
   setMessage("", "");
 
   try {
-    const savedUser = await postUser(buildUser());
+    const user = await buildUser();
+    const savedUser = await postUser(user);
     const users = readUsers();
     users.push(savedUser);
     saveUsers(users);

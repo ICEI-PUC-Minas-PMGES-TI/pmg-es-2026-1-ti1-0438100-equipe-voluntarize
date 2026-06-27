@@ -272,10 +272,18 @@ function selectRegisterType(type) {
   selectedRegisterType = type;
 
   choiceButtons.forEach((button) => {
-    const selected = button.dataset.registerType === type;
-    button.classList.toggle("selected", selected);
-    button.setAttribute("aria-pressed", String(selected));
+    button.classList.remove("isActive");
+    button.setAttribute("aria-pressed", "false");
   });
+
+  const activeButton = choiceButtons.find(
+    button => button.dataset.registerType === type
+  );
+
+  if (activeButton) {
+    activeButton.classList.add("isActive");
+    activeButton.setAttribute("aria-pressed", "true");
+  }
 }
 
 function startSelectedRegister() {
@@ -312,8 +320,9 @@ function goToStep(stepIndex) {
   updateStep();
 }
 
-function createOng() {
+async function createOng() {
   return {
+    id: await generateNewid(),
     name: normalizeText(field("nomeOng").value),
     email: normalizeText(field("email").value),
     password: field("senha").value,
@@ -339,11 +348,21 @@ function createOng() {
   };
 }
 
-async function postOng(ong) {
+async function generateNewId(){
+  const listResponse = await fetch(api("/ongs"));
+
+  if (!listResponse.ok) {
+    throw new Error("Nao foi possivel consultar as ONGs.");
+  }
+  const ongs = await listResponse.json();
+  return parseInt(ongs[ongs.length - 1].id) + 1;
+}
+
+async function postOng(ong) {  
   const response = await fetch(api("/ongs"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(ong)
+    body: JSON.stringify(user)
   });
 
   if (!response.ok) {
@@ -383,7 +402,8 @@ async function handleSubmit(event) {
   setMessage("");
 
   try {
-    const savedOng = await postOng(createOng());
+    const ong = await createOng();
+    const savedOng = await postOng(ong);
     const ongs = readOngs();
     ongs.push(savedOng);
     saveOngs(ongs);
