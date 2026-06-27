@@ -3,7 +3,7 @@
     ? window.__ENV.UR_API.replace(/\/$/, "")
     : "";
   const DB_FILE = "../../db/db.json";
-  const HOME_ONG_URL = "../home/home-ong.html";
+  const HOME_ONG_URL = "../home/home-ong.html#vagas";
 
   const state = {
     tags: [],
@@ -238,6 +238,9 @@
       renderSelectedTags();
       renderDropdown();
       closeDropdown();
+      setTimeout(() => {
+        window.location.href = HOME_ONG_URL;
+      }, 700);
       showFeedback("Ação cadastrada com sucesso.");
     } catch (error) {
       console.error(error);
