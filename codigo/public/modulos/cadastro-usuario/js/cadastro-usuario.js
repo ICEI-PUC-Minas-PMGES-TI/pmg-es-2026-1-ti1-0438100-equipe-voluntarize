@@ -339,10 +339,22 @@ function buildUser() {
 }
 
 async function postUser(user) {
+  const listResponse = await fetch(api("/volunteers"));
+
+  if (!listResponse.ok) {
+    throw new Error("Nao foi possivel consultar os voluntarios.");
+  }
+
+  const volunteers = await listResponse.json();
+  const nextId = volunteers.reduce((largestId, volunteer) => {
+    const numericId = Number(volunteer.id);
+    return Number.isInteger(numericId) ? Math.max(largestId, numericId) : largestId;
+  }, 0) + 1;
+
   const response = await fetch(api("/volunteers"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
+    body: JSON.stringify({ ...user, id: nextId })
   });
 
   if (!response.ok) {

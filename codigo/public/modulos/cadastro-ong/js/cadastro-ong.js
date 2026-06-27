@@ -340,10 +340,22 @@ function createOng() {
 }
 
 async function postOng(ong) {
+  const listResponse = await fetch(api("/ongs"));
+
+  if (!listResponse.ok) {
+    throw new Error("Nao foi possivel consultar as ONGs.");
+  }
+
+  const ongs = await listResponse.json();
+  const nextId = ongs.reduce((largestId, registeredOng) => {
+    const numericId = Number(registeredOng.id);
+    return Number.isInteger(numericId) ? Math.max(largestId, numericId) : largestId;
+  }, 0) + 1;
+
   const response = await fetch(api("/ongs"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(ong)
+    body: JSON.stringify({ ...ong, id: nextId })
   });
 
   if (!response.ok) {
