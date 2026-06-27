@@ -22,7 +22,7 @@ let selectedRegisterType = "volunteers";
 const registerRoutes = {
   ongs: {
     jsonKey: "ongs",
-    url: "../cadastro-ong/index.html"
+    url: "../cadastro-ong/index.html?start=1"
   },
   volunteers: {
     jsonKey: "volunteers",
@@ -272,6 +272,7 @@ function validateAllSteps() {
 function showRegister() {
   choiceScreen.hidden = true;
   registerScreen.hidden = false;
+  backButton.hidden = false;
   updateStep();
 }
 
@@ -372,6 +373,7 @@ backButton.addEventListener("click", () => {
   if (!registerScreen.hidden && currentStep === 0) {
     registerScreen.hidden = true;
     choiceScreen.hidden = false;
+    backButton.hidden = true;
     return;
   }
 
@@ -426,3 +428,7 @@ Array.from(form.elements).forEach((field) => {
 });
 
 selectRegisterType(selectedRegisterType);
+
+if (new URLSearchParams(window.location.search).get("start") === "1") {
+  showRegister();
+}

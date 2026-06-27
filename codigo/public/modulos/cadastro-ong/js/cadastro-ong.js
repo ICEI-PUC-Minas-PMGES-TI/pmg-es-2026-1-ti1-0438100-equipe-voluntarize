@@ -26,7 +26,7 @@ const registerRoutes = {
   },
   volunteers: {
     jsonKey: "volunteers",
-    url: "../cadastro-usuario/index.html"
+    url: "../cadastro-usuario/index.html?start=1"
   }
 };
 
@@ -254,6 +254,7 @@ function validateStep(stepIndex) {
 function showRegister() {
   choiceScreen.hidden = true;
   registerScreen.hidden = false;
+  backButton.hidden = false;
   updateStep();
 }
 
@@ -366,6 +367,10 @@ choiceButtons.forEach((button) => {
 
 selectRegisterType(selectedRegisterType);
 
+if (new URLSearchParams(window.location.search).get("start") === "1") {
+  showRegister();
+}
+
 backButton.addEventListener("click", () => {
   if (!registerScreen.hidden && currentStep > 0) {
     goToStep(currentStep - 1);
@@ -375,6 +380,7 @@ backButton.addEventListener("click", () => {
   if (!registerScreen.hidden) {
     registerScreen.hidden = true;
     choiceScreen.hidden = false;
+    backButton.hidden = true;
     return;
   }
 

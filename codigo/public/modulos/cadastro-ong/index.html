@@ -5,16 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro de ONG</title>
+  <link rel="stylesheet" href="../../design-system/css/globals.css">
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/cadastro-ong.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="js/cadastro-ong.js?v=3" defer></script>
 </head>
 
 <body>
   <main class="cadastro-page">
-    <button class="back-button" type="button" id="backButton" aria-label="Voltar">Voltar</button>
+    <button class="btn btn-secondary btn-shadow-sm btn-rounded-sm back-button" type="button" id="backButton" aria-label="Voltar" hidden>
+      <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
+      Voltar
+    </button>
 
     <section class="choice-card" id="choiceScreen" aria-labelledby="choiceTitle">
-      <span class="title-pill" id="choiceTitle">Cadastrar</span>
+      <span class="btn btn-outline btn-pad-sm btn-shadow-sm title-pill" id="choiceTitle">Cadastrar</span>
       <p>Selecione o tipo de cadastro que mais se adequa a voce:</p>
 
       <div class="choice-options">
@@ -29,7 +34,7 @@
         </button>
       </div>
 
-      <button class="primary-button" type="button" id="startOng">Prosseguir</button>
+      <button class="btn btn-primary btn-pad-md btn-shadow-md primary-button" type="button" id="startOng">Prosseguir</button>
       <p class="login-link">Ja tem uma conta? <a href="../login/login.html">Entrar!</a></p>
     </section>
 
@@ -41,7 +46,7 @@
       <section class="cadastro-card">
         <form class="cadastro-form" id="ongForm" novalidate>
           <div class="card-heading">
-            <span class="title-pill" id="cadastroTitulo">Cadastro</span>
+            <span class="btn btn-outline btn-pad-sm btn-shadow-sm title-pill" id="cadastroTitulo">Cadastro</span>
             <p id="stepIntro">Venha fazer parte dessa comunidade!</p>
           </div>
 
@@ -169,9 +174,9 @@
           <p class="form-message" id="formMessage" role="alert" aria-live="polite"></p>
 
           <div class="form-actions">
-            <button class="secondary-button" type="button" id="prevStep">Voltar</button>
-            <button class="primary-button" type="button" id="nextStep">Proximo</button>
-            <button class="primary-button" type="submit" id="submitForm" hidden>Cadastrar</button>
+            <button class="btn btn-ghost btn-pad-sm secondary-button" type="button" id="prevStep">Voltar</button>
+            <button class="btn btn-primary btn-pad-sm btn-shadow-md primary-button" type="button" id="nextStep">Proximo</button>
+            <button class="btn btn-primary btn-pad-sm btn-shadow-md primary-button" type="submit" id="submitForm" hidden>Cadastrar</button>
           </div>
 
           <p class="login-link">Ja tem uma conta? <a href="../login/login.html">Entrar!</a></p>
@@ -188,7 +193,7 @@
           <img src="assets/successful-group.svg" alt="">
           <h2>Cadastro realizado!</h2>
           <p>Os dados da ONG foram salvos com sucesso.</p>
-          <a class="primary-button" href="../login/login.html">Entrar</a>
+          <a class="btn btn-primary btn-pad-sm btn-shadow-md primary-button" href="../login/login.html">Entrar</a>
         </section>
       </section>
     </section>
