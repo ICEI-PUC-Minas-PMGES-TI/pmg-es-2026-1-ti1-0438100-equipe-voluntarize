@@ -51,9 +51,6 @@
           <a href="${links.mapa}">
             <i class="fa-solid fa-map-pin"></i> Mapa de ONGs
           </a>
-          <a href="${links.candidaturas}">
-            <i class="fa-solid fa-list-ul"></i> Minhas Candidaturas
-          </a>
         </nav>
 
         <div class="header-user" style="position:relative; display:inline-block;">
@@ -84,10 +81,7 @@
           </a>
           <a href="${links.mapa}">
             <i class="fa-solid fa-map-pin"></i> Mapa de ONGs
-          </a>
-          <a href="${links.candidaturas}">
-            <i class="fa-solid fa-list-ul"></i> Minhas Candidaturas
-          </a>
+          </a>          
           <button id="menu-perfil-mobile" class="btn btn-ghost">
             <i class="fa-regular fa-user"></i>
             <span class="label">Ir para perfil</span>
