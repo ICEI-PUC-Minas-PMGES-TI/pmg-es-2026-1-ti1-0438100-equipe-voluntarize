@@ -137,18 +137,12 @@ function renderOngCard(ong, index, followerCount, isFollowing, followId) {
   const profileUrl = `../visualizacao-detalhada-ong/index.html?id=${ong.id}`;
 
   div.innerHTML = `
-    <div class="section-divider-inline" style="width:100px;position:absolute;top:0;right:var(--space-4)">
-      <div class="divider-line divider-black divider-prism-sm prism-right" aria-hidden="true"></div>
-    </div>
     <img src="${logo}" alt="${ong.name}" class="ong-card-img" />
     <h3 class="text-lg text-bold mt-2">${ong.name}</h3>
     <p class="text-md text-muted mt-1">★ ${ong.rating.toFixed(1).replace('.', ',')} &nbsp;|&nbsp; <span class="follower-count">${formatFollowers(followerCount)}</span> seguidores</p>
     <div class="stack mt-2 gap-1 w-full">
       <button class="btn ${isFollowing ? 'btn-outline' : 'btn-primary'} btn-pad-sm w-full btn-follow" data-ong-id="${ong.id}" data-follow-id="${followId || ''}" data-following="${isFollowing}">${isFollowing ? 'Seguindo' : 'Seguir'}</button>
       <a class="btn btn-secondary btn-pad-sm w-full" href="${profileUrl}">Ver Perfil</a>
-    </div>
-    <div class="section-divider-inline" style="width:100px;position:absolute;bottom:0;left:var(--space-4)">
-      <div class="divider-line divider-black divider-prism-sm prism-left" aria-hidden="true"></div>
     </div>
   `;
 
