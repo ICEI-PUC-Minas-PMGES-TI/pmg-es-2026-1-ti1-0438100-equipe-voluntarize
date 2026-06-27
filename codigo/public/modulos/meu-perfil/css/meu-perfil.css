@@ -1,0 +1,135 @@
+.perfil-own-actions {
+  flex-wrap: wrap;
+}
+
+#profile-type-badge {
+  margin-top: 4px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+}
+
+.mp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 28, 28, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: var(--space-3);
+}
+
+.mp-modal-overlay[hidden] {
+  display: none;
+}
+
+.mp-modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.mp-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mp-field-group label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mp-field-group .field {
+  box-shadow: var(--shadow-sm);
+}
+
+.mp-field-group .field-input {
+  width: 100%;
+}
+
+.acao-card {
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  background: var(--color-white);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.acao-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.acao-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.acao-card-meta {
+  font-size: 0.78rem;
+  color: var(--color-gray-400);
+  font-family: var(--font-alt);
+}
+
+.acao-card-desc {
+  font-size: 0.82rem;
+  font-family: var(--font-alt);
+  color: var(--color-black);
+}
+
+.acao-card-actions {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  margin-top: var(--space-1);
+}
+
+.acao-status-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-black);
+}
+
+.acao-status-open    { background: var(--color-green); }
+.acao-status-completed { background: var(--color-gray-200); }
+.acao-status-cancelled { background: #ffd6d6; }
+
+.mp-toast {
+  position: fixed;
+  bottom: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-black);
+  color: var(--color-white);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+  z-index: 999;
+  white-space: nowrap;
+  animation: mp-toast-in 0.2s ease;
+}
+
+@keyframes mp-toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}

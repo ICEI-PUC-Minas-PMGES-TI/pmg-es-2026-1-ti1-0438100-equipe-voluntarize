@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil do Voluntário | Voluntarize</title>
+  <link rel="stylesheet" href="../../design-system/css/globals.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="header-global" data-header-class="site-header"></div>
+
+  <main class="container section stack gap-4">
+
+    <section class="surface surface-green">
+      <div class="flex justify-between items-center flex-wrap gap-4">
+
+        <div class="flex items-center gap-3">
+          <div>
+            <span class="icon-token icon-lg icon-purple">
+              <i class="fa-regular fa-user"></i>
+            </span>
+          </div>
+          <div class="stack gap-1">
+            <h1 class="h3" id="volunteer-name"></h1>
+            <div id="volunteer-meta" class="vol-meta font-alt text-sm text-muted"></div>
+          </div>
+        </div>
+
+        <div class="stack items-end gap-2">
+          <span class="tag tag-white tag-sm">
+            <i class="fa-solid fa-star"></i>
+            <span id="volunteer-rating"></span>
+          </span>
+          <span class="text-sm text-semibold">
+            <i class="fa-solid fa-users"></i>
+            <span id="volunteer-followers"></span>
+            <span class="font-alt"> Seguidores</span>
+          </span>
+          <button class="btn btn-secondary btn-pad-sm" id="follow-button" type="button">
+            <i class="fa-solid fa-user-plus"></i> Seguir
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="divider-label">
+      <span>História do Voluntário</span>
+    </div>
+
+    <section class="surface stack">
+      <div>
+        <span class="tag tag-purple">
+          <i class="fa-solid fa-book-open"></i>
+          <span id="story-title"></span>
+        </span>
+      </div>
+      <div class="historia-content">
+        <div id="volunteer-story" class="historia-vol-text text-sm font-alt"></div>
+        <div class="historia-ilustracao">
+          <img src="../../assets/images/imgs-undraw/img-pessoas-unidas-landing.svg" alt="Voluntário em ação" />
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-label">
+      <span>Histórico de Ações</span>
+    </div>
+
+    <section class="surface surface-white stack">
+      <div class="surface surface-green p-3 flex items-center gap-2 text-sm text-bold">
+        <i class="fa-solid fa-fire"></i>
+        Veja as ações em que este voluntário participou!
+      </div>
+      <div class="actions-wrapper">
+        <button class="btn btn-secondary btn-icon-only btn-pad-xs" id="previous-action" aria-label="Ação anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="carousel-track-container">
+          <div class="carousel-track" id="actions-list"></div>
+        </div>
+        <button class="btn btn-secondary btn-icon-only btn-pad-xs" id="next-action" aria-label="Próxima ação">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <div class="divider-label">
+      <span>Avaliações</span>
+    </div>
+
+    <section class="surface surface-purple stack">
+      <div class="reviews-alert">
+        <i class="fa-solid fa-check"></i>
+        <p class="text-sm text-bold">
+          Veja o que os usuários disseram sobre <strong id="review-volunteer-name"></strong>
+        </p>
+      </div>
+      <div class="grid grid-3" id="reviews-list"></div>
+    </section>
+
+  </main>
+
+  <div class="container mb-4">
+    <footer class="site-footer">
+      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <p class="text-sm">
+        Plataforma de voluntários @ 2026 | Todos os direitos reservados
+      </p>
+    </footer>
+  </div>
+
+  <script src="../../js/global-header.js"></script>
+  <script src="./script.js"></script>
+</body>
+
+</html>

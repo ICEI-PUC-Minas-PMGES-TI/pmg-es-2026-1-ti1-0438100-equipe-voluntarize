@@ -1,0 +1,371 @@
+.hero-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: var(--space-5);
+  min-height: 450px;
+}
+
+.hero-text {
+  flex: 1;
+  max-width: 500px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  margin-left: var(--space-5);
+}
+
+.hero-text h1 {
+  font-size: clamp(1.3rem, 2.8vw, 2rem);
+  line-height: 1.2;
+}
+
+.hero-illustration {
+  flex-shrink: 0;
+  width: 300px;
+}
+
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.carousel-track-container {
+  flex: 1;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  gap: var(--space-3);
+  transition: transform 0.35s ease;
+}
+
+.ong-card {
+  flex: 0 0 calc((100% - var(--space-3) * 2) / 3);
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  padding: var(--space-3);
+  box-shadow: var(--shadow-md);
+  gap: var(--space-2);
+}
+
+.ong-card-img {
+  width: 120px;
+  height: 120px;
+  border: var(--border);
+  background: var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--color-gray-400);
+  box-shadow: var(--shadow-md);
+}
+
+.vagas-alta-section {
+  background: var(--color-purple);
+  border: var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-4);
+}
+
+.alta-card {
+  flex: 0 0 calc((100% - var(--space-3) * 2) / 3);
+  min-width: 200px;
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  padding: var(--space-3);
+  gap: var(--space-2);
+}
+
+.alta-card-thumb {
+  width: 100px;
+  height: 100px;
+  background: var(--color-gray-200);
+  border: var(--border);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--color-gray-400);
+  flex-shrink: 0;
+}
+
+.alta-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: stretch;
+}
+
+.favorites-empty {
+  flex: 0 0 100%;
+  min-height: 220px;
+  border: var(--border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  box-shadow: var(--shadow-md);
+}
+
+.vagas-carousel-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.vagas-carousel-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.vagas-carousel-track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: transform 0.35s ease;
+}
+
+.vagas-section {
+  border-radius: 18px;
+  border: var(--border);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-5);
+}
+
+.vagas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.vaga-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+}
+
+.vaga-badge-aprovado {
+  position: absolute;
+  top: 14px;
+  left: -28px;
+  width: 110px;
+  background: var(--color-green);
+  color: var(--color-black);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding: 4px 0;
+  border-top: 2px solid var(--color-black);
+  border-bottom: 2px solid var(--color-black);
+  transform: rotate(-45deg);
+  transform-origin: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.vaga-badge-pendente {
+  position: absolute;
+  top: 14px;
+  left: -28px;
+  width: 110px;
+  background: #f5c542;
+  color: var(--color-black);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding: 4px 0;
+  border-top: 2px solid var(--color-black);
+  border-bottom: 2px solid var(--color-black);
+  transform: rotate(-45deg);
+  transform-origin: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.vaga-badge-recusado {
+  position: absolute;
+  top: 14px;
+  left: -28px;
+  width: 110px;
+  background: #e74c3c;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding: 4px 0;
+  border-top: 2px solid var(--color-black);
+  border-bottom: 2px solid var(--color-black);
+  transform: rotate(-45deg);
+  transform-origin: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.vaga-card-img {
+  flex-shrink: 0;
+  width: 130px;
+  height: 130px;
+  border-radius: var(--radius-sm);
+  border: var(--border);
+  background: var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--color-gray-400);
+  box-shadow: var(--shadow-sm);
+}
+
+.vaga-card-body {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.vagas-illustration {
+  margin-block: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+}
+
+.vagas-illustration img {
+  width: 100%;
+  max-width: 360px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  text-align: center;
+  width: 100%;
+}
+
+.empty-state i {
+  font-size: 2.5rem;
+  color: var(--color-gray-400);
+  animation: ghost-float 2s ease-in-out infinite;
+}
+
+@keyframes ghost-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+.hero-divider {
+  display: none;
+}
+
+.section-divider-inline {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .hero-divider {
+    display: block;
+  }
+
+  .section-divider-inline {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-4);
+    min-height: unset;
+    gap: var(--space-4);
+  }
+
+  .hero-text {
+    max-width: 100%;
+    margin-left: 0;
+    gap: var(--space-3);
+  }
+
+  .hero-text .flex {
+    justify-content: center;
+  }
+
+  .hero-illustration {
+    width: 200px;
+  }
+
+  .ong-card,
+  .alta-card {
+    flex: 0 0 calc((100% - var(--space-3)) / 2);
+  }
+
+  .vagas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vagas-illustration {
+    display: none;
+  }
+
+  .vaga-card-body {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .vaga-card-img {
+    width: 100%;
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ong-card,
+  .alta-card {
+    flex: 0 0 85%;
+  }
+
+  .site-header {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .site-nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

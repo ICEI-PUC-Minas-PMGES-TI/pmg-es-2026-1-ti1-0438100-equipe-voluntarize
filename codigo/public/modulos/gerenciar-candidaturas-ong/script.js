@@ -1,0 +1,228 @@
+(function () {
+  const API = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, '') : '';
+
+  const find = (selector) => document.querySelector(selector);
+  const setText = (selector, value) => { const el = find(selector); if (el) el.textContent = value; };
+
+  const getActionId = () => {
+    const params = new URLSearchParams(window.location.search);
+    const raw = params.get('id') || params.get('actionId');
+    return raw || null;
+  };
+
+  const getLoggedUser = () => {
+    try {
+      const raw = localStorage.getItem('usuarioLogado');
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return (parsed && parsed.id != null) ? parsed : null;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const formatDate = (iso) => {
+    if (!iso) return '—';
+    const [y, m, d] = iso.split('-');
+    return `${d}/${m}/${y}`;
+  };
+
+  const getVolunteerProfileUrl = (volunteerId) => (
+    `../visualizacao-detalhada-voluntario/index.html?id=${encodeURIComponent(String(volunteerId))}`
+  );
+
+  const STATUS_LABEL = { pending: 'Pendente', accepted: 'Aceito', rejected: 'Recusado' };
+  const STATUS_CLS   = { pending: 'tag-yellow', accepted: 'tag-green', rejected: 'tag-red' };
+
+  const renderEmpty = (container, msg) => {
+    const p = document.createElement('p');
+    p.className = 'empty-state-card text-sm text-muted';
+
+    const icon = document.createElement('span');
+    icon.className = 'icon-token icon-white icon-xs';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.innerHTML = '<i class="fa-regular fa-folder-open"></i>';
+
+    const text = document.createElement('span');
+    text.textContent = msg;
+
+    p.append(icon, text);
+    container.appendChild(p);
+  };
+
+  const renderCard = (application, volunteer, onAction) => {
+    const card = document.createElement('article');
+    card.className = 'surface surface-sm candidate-card';
+
+    const statusCls = STATUS_CLS[application.status] || '';
+    const statusLabel = STATUS_LABEL[application.status] || application.status;
+    const volunteerId = volunteer && volunteer.id != null ? volunteer.id : application.volunteerId;
+
+    card.innerHTML = `
+      <div class="candidate-info">
+        <span class="icon-token icon-purple icon-sm" aria-hidden="true">
+          <i class="fa-regular fa-user"></i>
+        </span>
+        <div class="candidate-main">
+          <h3 class="text-md text-bold candidate-title">${volunteer ? volunteer.name : 'Voluntário #' + application.volunteerId}</h3>
+          <div class="candidate-meta text-xs text-muted">
+            <span><i class="fa-regular fa-calendar"></i> Inscrito em: ${formatDate(application.appliedAt)}</span>
+            ${volunteer ? `<span><i class="fa-solid fa-star"></i> ${Number(volunteer.rating || 0).toFixed(1).replace('.', ',')} &nbsp;·&nbsp; ${volunteer.email}</span>` : ''}
+          </div>
+        </div>
+        <span class="tag tag-xs ${statusCls} candidate-status">${statusLabel}</span>
+      </div>
+      <div class="candidate-actions" data-card-actions></div>
+    `;
+
+    const actionsEl = card.querySelector('[data-card-actions]');
+
+    if (application.status === 'pending') {
+      const btnAccept = document.createElement('button');
+      btnAccept.className = 'btn btn-primary btn-pad-xs';
+      btnAccept.innerHTML = '<i class="fa-solid fa-check"></i> Aceitar';
+      btnAccept.addEventListener('click', () => onAction(application, 'accepted', card));
+
+      const btnReject = document.createElement('button');
+      btnReject.className = 'btn btn-outline btn-pad-xs';
+      btnReject.innerHTML = '<i class="fa-solid fa-xmark"></i> Recusar';
+      btnReject.addEventListener('click', () => onAction(application, 'rejected', card));
+
+      actionsEl.append(btnAccept, btnReject);
+    } else if (application.status === 'accepted') {
+      const btnReject = document.createElement('button');
+      btnReject.className = 'btn btn-outline btn-pad-xs';
+      btnReject.innerHTML = '<i class="fa-solid fa-xmark"></i> Recusar';
+      btnReject.addEventListener('click', () => onAction(application, 'rejected', card));
+      actionsEl.append(btnReject);
+    } else if (application.status === 'rejected') {
+      const btnAccept = document.createElement('button');
+      btnAccept.className = 'btn btn-primary btn-pad-xs';
+      btnAccept.innerHTML = '<i class="fa-solid fa-check"></i> Aceitar';
+      btnAccept.addEventListener('click', () => onAction(application, 'accepted', card));
+      actionsEl.append(btnAccept);
+    }
+
+    if (volunteerId != null) {
+      const profileLink = document.createElement('a');
+      profileLink.className = 'btn btn-secondary btn-pad-xs profile-button';
+      profileLink.href = getVolunteerProfileUrl(volunteerId);
+      profileLink.innerHTML = '<i class="fa-regular fa-address-card"></i> Ver perfil';
+      actionsEl.appendChild(profileLink);
+    }
+
+    return card;
+  };
+
+  const init = async () => {
+    const actionId = getActionId();
+    const user = getLoggedUser();
+
+    if (!actionId) {
+      setText('[data-action-title]', 'Nenhuma ação selecionada.');
+      return;
+    }
+
+    if (!user || user.type !== 1) {
+      setText('[data-action-title]', 'Acesso restrito à ONG responsável.');
+      return;
+    }
+
+    try {
+      const [resAction, resApplications] = await Promise.all([
+        fetch(`${API}/actions/${actionId}`),
+        fetch(`${API}/applications?actionId=${actionId}`)
+      ]);
+
+      if (!resAction.ok) throw new Error('Ação não encontrada.');
+      const action = await resAction.json();
+
+      // Garante que a ONG logada é dona da ação
+      if (String(action.ongId) !== String(user.id)) {
+        setText('[data-action-title]', 'Acesso negado: esta ação não pertence à sua ONG.');
+        return;
+      }
+
+      setText('[data-action-title]', action.title);
+      setText('[data-action-meta]', `${action.vacancies} vagas · ${formatDate(action.date)}`);
+
+      const applications = await resApplications.json();
+
+      // Carrega dados dos voluntários de uma vez
+      const volunteerIds = [...new Set(applications.map(a => a.volunteerId))];
+      const volunteers = await Promise.all(
+        volunteerIds.map(id => fetch(`${API}/volunteers/${id}`).then(r => r.ok ? r.json() : null))
+      );
+      const volunteerMap = Object.fromEntries(
+        volunteers.filter(Boolean).map(v => [String(v.id), v])
+      );
+
+      const listPending  = find('[data-list-pending]');
+      const listAccepted = find('[data-list-accepted]');
+      const listRejected = find('[data-list-rejected]');
+
+      const byStatus = { pending: [], accepted: [], rejected: [] };
+      applications.forEach(app => {
+        if (byStatus[app.status]) byStatus[app.status].push(app);
+      });
+
+      const onAction = async (application, newStatus, card) => {
+        const btns = card.querySelectorAll('button');
+        btns.forEach(b => b.disabled = true);
+
+        try {
+          const res = await fetch(`${API}/applications/${application.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: newStatus })
+          });
+
+          if (!res.ok) throw new Error('Erro ao atualizar candidatura.');
+
+          application.status = newStatus;
+
+          // Move o card para a seção correta
+          card.remove();
+          const volunteer = volunteerMap[String(application.volunteerId)];
+          const newCard = renderCard(application, volunteer, onAction);
+
+          const targetList = newStatus === 'accepted' ? listAccepted : listRejected;
+          const emptyMsg = targetList.querySelector('p');
+          if (emptyMsg) emptyMsg.remove();
+          targetList.appendChild(newCard);
+
+          // Adiciona mensagem de vazio nas listas que ficaram sem cards
+          [listPending, listAccepted, listRejected].forEach((list, i) => {
+            const statuses = ['pending', 'accepted', 'rejected'];
+            if (!list.querySelector('.candidate-card')) {
+              list.innerHTML = '';
+              renderEmpty(list, `Nenhuma candidatura ${STATUS_LABEL[statuses[i]].toLowerCase()}.`);
+            }
+          });
+
+        } catch (err) {
+          console.error(err);
+          btns.forEach(b => b.disabled = false);
+        }
+      };
+
+      // Renderiza cada seção
+      const volunteer = (app) => volunteerMap[String(app.volunteerId)];
+
+      if (!byStatus.pending.length)  renderEmpty(listPending,  'Nenhuma candidatura pendente.');
+      else byStatus.pending.forEach(app => listPending.appendChild(renderCard(app, volunteer(app), onAction)));
+
+      if (!byStatus.accepted.length) renderEmpty(listAccepted, 'Nenhuma candidatura aceita.');
+      else byStatus.accepted.forEach(app => listAccepted.appendChild(renderCard(app, volunteer(app), onAction)));
+
+      if (!byStatus.rejected.length) renderEmpty(listRejected, 'Nenhuma candidatura recusada.');
+      else byStatus.rejected.forEach(app => listRejected.appendChild(renderCard(app, volunteer(app), onAction)));
+
+    } catch (err) {
+      console.error('Erro ao carregar candidaturas:', err);
+      setText('[data-action-title]', 'Erro ao carregar dados.');
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', init);
+})();

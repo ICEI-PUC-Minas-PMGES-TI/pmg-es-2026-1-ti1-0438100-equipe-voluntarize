@@ -1,0 +1,421 @@
+[hidden] {
+  display: none !important;
+}
+
+.cadastro-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.back-button {
+  min-width: 122px;
+  min-height: 44px;
+  align-self: flex-start;
+  flex-shrink: 0;
+  padding-inline: 20px;
+  letter-spacing: 0;
+}
+
+.choice-card,
+.cadastro-card {
+  width: min(440px, 100%);
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+}
+
+.choice-card {
+  width: min(920px, 100%);
+  min-height: 514px;
+  margin: auto;
+  padding: 40px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.choice-card > p {
+  margin: 0 0 28px;
+  font-family: var(--font-alt);
+  font-size: 0.82rem;
+}
+
+.title-pill {
+  min-width: 132px;
+  min-height: 40px;
+  margin-bottom: 20px;
+  cursor: default;
+  letter-spacing: 0;
+}
+
+.choice-options {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 28px;  
+}
+
+.choice-option {
+  width: 180px;
+  padding: 16px 16px 12px;
+  background: var(--color-white);
+  color: var(--color-black);
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: 0.3s ease all;
+}
+
+.choice-option:hover {
+  transform: scale(1.05);
+}
+
+.choice-option.isActive {
+  border-color: var(--color-purple);
+  background: rgba(124, 77, 255, 0.08);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.choice-option.isActive span {
+  background: var(--color-purple);
+  color: var(--color-white);
+}
+
+.choice-option img {
+  width: 132px;
+  max-width: 100%;
+  height: 132px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.choice-option span {
+  display: block;
+  min-height: 32px;
+  padding: 7px;
+  background: var(--color-purple);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.cadastro-shell {
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+}
+
+.illustration-panel {
+  width: 440px;
+  max-width: 40vw;
+  flex: 0 1 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.illustration-panel img {
+  width: min(100%, 360px);
+  max-width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+}
+
+.cadastro-card {
+  flex: 0 0 440px;
+  padding: 20px 40px 14px;
+  display: flex;
+  align-items: center;
+}
+
+.cadastro-form,
+.success-panel {
+  width: 100%;
+}
+
+.card-heading {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.card-heading .title-pill {
+  margin-bottom: 8px;
+}
+
+.card-heading p,
+.success-panel p {
+  margin: 0;
+  font-family: var(--font-alt);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.form-step {
+  min-height: 280px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 112px;
+  gap: 12px;
+}
+
+.field-group {
+  margin-bottom: 2px;
+}
+
+.field-group label {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.input-shell {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.input-shell:focus-within,
+.choice-option:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-md);
+}
+
+.input-shell input,
+.input-shell select,
+.input-shell textarea {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-black);
+  font-size: 0.78rem;
+}
+
+.input-shell select {
+  min-height: 38px;
+  cursor: pointer;
+}
+
+.textarea-shell {
+  min-height: 168px;
+  align-items: flex-start;
+  padding-top: 10px;
+}
+
+.textarea-shell textarea {
+  min-height: 146px;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.helper-text,
+.login-link {
+  color: var(--color-gray-400);
+  font-family: var(--font-alt);
+  font-size: 0.68rem;
+  text-align: center;
+}
+
+.helper-text {
+  display: block;
+  width: min(290px, 100%);
+  margin: 6px auto 0;
+  line-height: 1.3;
+}
+
+.field-error {
+  min-height: 12px;
+  display: block;
+  margin-top: 1px;
+  color: #c0392b;
+  font-family: var(--font-alt);
+  font-size: 0.65rem;
+  line-height: 1.1;
+}
+
+.form-message {
+  min-height: 14px;
+  margin: 0 0 4px;
+  font-family: var(--font-alt);
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+.form-message.error {
+  color: #c0392b;
+}
+
+.form-message.success {
+  color: #27ae60;
+}
+
+.form-actions,
+.step-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-actions {
+  gap: 8px;
+}
+
+.primary-button {
+  min-width: 210px;
+  min-height: 40px;
+  letter-spacing: 0;
+}
+
+.secondary-button {
+  min-width: 100px;
+  min-height: 40px;
+  letter-spacing: 0;
+}
+
+.login-link {
+  margin: 8px 0 0;
+}
+
+.login-link a:hover,
+.secondary-button:hover {
+  color: #7f59c8;
+  text-decoration: underline;
+}
+
+.step-dots {
+  min-height: 14px;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.step-dot {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--color-black);
+  border-radius: 50%;
+  background: var(--color-gray-200);
+}
+
+.step-dot.active {
+  background: var(--color-purple);
+}
+
+.success-panel {
+  text-align: center;
+}
+
+.success-panel img {
+  width: min(240px, 76%);
+  max-height: 230px;
+  margin: 0 auto 20px;
+}
+
+.success-panel h2 {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+  letter-spacing: 0;
+}
+
+.success-panel p {
+  max-width: 320px;
+  margin: 0 auto 22px;
+  color: var(--color-gray-400);
+}
+
+@media (max-width: 900px) {
+  .cadastro-page {
+    padding: 24px 16px;
+  }
+
+  .choice-card {
+    margin: 0 auto;
+  }
+
+  .cadastro-shell {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .illustration-panel {
+    width: 100%;
+    max-width: 100%;
+    flex-basis: auto;
+  }
+
+  .illustration-panel img {
+    max-height: 220px;
+  }
+
+  .cadastro-card {
+    flex-basis: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .cadastro-page {
+    padding: 14px;
+  }
+
+  .choice-card,
+  .cadastro-card {
+    min-height: auto;
+    padding: 28px 20px 20px;
+    border-radius: var(--radius-md);
+  }
+
+  .choice-options {
+    gap: 12px;
+  }
+
+  .choice-option {
+    width: min(150px, 42vw);
+  }
+
+  .illustration-panel img {
+    max-height: 180px;
+  }
+
+  .title-pill,
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .form-step {
+    min-height: auto;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 6px;
+  }
+}

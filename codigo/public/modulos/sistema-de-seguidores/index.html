@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conexões voluntárias | Voluntarize</title>
+    <link rel="stylesheet" href="../../design-system/css/globals.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body class="followers-page">
+    <div id="header-global" data-header-class="site-header followers-header"></div>
+    
+    <main class="container followers-main">
+      <section class="followers-intro" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <h1 id="page-title">Conexões voluntárias</h1>
+          <p>Acompanhe seguidores, ONGs e voluntários conectados.</p>
+        </div>
+        
+        <label class="followers-search" for="search-input">
+          <input
+          id="search-input"
+          type="search"
+          autocomplete="off"
+          placeholder="Buscar"
+          />
+        </label>
+      </section>
+      
+      <p class="data-warning" id="data-warning" hidden>
+        Não foi possível carregar o JSON. Exibindo dados de exemplo para manter a tela testável.
+      </p>
+      
+      <section class="followers-tabs" aria-label="Filtros de conexões">
+        <button class="tab-button is-active" type="button" data-tab="seguidores">
+          <img src="./assets/follower-icon.svg" alt="" />
+          Seguidores
+        </button>
+        <button class="tab-button" type="button" data-tab="seguindo">
+          <img src="./assets/review-user.svg" alt="" />
+          Seguindo
+        </button>
+        <button class="tab-button" type="button" data-tab="ongs">
+          <img src="./assets/follower-icon.svg" alt="" />
+          ONGs
+        </button>
+        <button class="tab-button" type="button" data-tab="voluntarios">
+          <img src="./assets/profile-user.svg" alt="" />
+          Voluntários
+        </button>
+      </section>
+      
+      <section class="content-grid">
+        <article class="surface followers-panel" aria-labelledby="list-title">
+          <div class="panel-heading">
+            <div class="heading-title">
+              <span class="panel-icon panel-icon-purple">
+                <img src="./assets/follower-icon.svg" alt="" />
+              </span>
+              <h2 id="list-title">Seguidores</h2>
+            </div>
+            <span class="panel-count" id="list-count">0 itens</span>
+          </div>
+          <div class="cards-list" id="main-list" aria-live="polite"></div>
+        </article>
+      </section>
+    </main>
+    <script src="../../js/global-header.js"></script>
+  </body>
+  </html>
+  

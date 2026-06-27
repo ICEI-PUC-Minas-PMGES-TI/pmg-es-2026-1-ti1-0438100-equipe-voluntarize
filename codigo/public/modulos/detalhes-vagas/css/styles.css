@@ -1,0 +1,394 @@
+.details-page {
+  width: min(100%, 1100px);
+  margin-inline: auto;
+  padding: 10px var(--space-3) var(--space-4);
+}
+
+.details-header {
+  min-height: 76px;
+  grid-template-columns: auto 1fr auto;
+  padding: var(--space-2) var(--space-4);
+}
+
+.details-logo {
+  width: 142px;
+}
+
+.details-nav {
+  font-size: 0.9rem;
+}
+
+.details-nav a {
+  padding: 6px 0;
+}
+
+.profile-button {
+  --icon-size: 48px;
+  --icon-font-size: 1rem;
+  cursor: pointer;
+}
+
+.profile-button svg,
+.entity-avatar svg,
+.meta-pill svg,
+.followers-badge svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--color-black);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.details-section {
+  margin-top: var(--space-4);
+}
+
+.section-heading {
+  display: grid;
+  grid-template-columns: minmax(28px, 1fr) auto minmax(28px, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+
+.section-heading span {
+  position: relative;
+  height: 2px;
+  background: var(--color-black);
+}
+
+.section-heading span::before,
+.section-heading span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--color-black);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.section-heading span::before {
+  left: -1px;
+}
+
+.section-heading span::after {
+  right: -1px;
+}
+
+.section-heading span:first-child::after,
+.section-heading span:last-child::before {
+  display: none;
+}
+
+.section-heading h1,
+.section-heading h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.details-card {
+  position: relative;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: var(--space-5);
+  min-height: 380px;
+  padding: var(--space-4);
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.details-card::before,
+.details-card::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background: var(--color-black);
+  border-radius: var(--radius-pill);
+}
+
+.details-card::before {
+  top: 16px;
+  right: 18px;
+  width: 380px;
+}
+
+.details-card::after {
+  left: 24px;
+  bottom: 20px;
+  width: 380px;
+}
+
+.details-card__content,
+.details-card__aside {
+  position: relative;
+  z-index: 1;
+}
+
+.details-card__content {
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.detail-title {
+  align-self: center;
+  width: min(100%, 400px);
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: none;
+}
+
+.detail-meta { width: min(100%, 520px); }
+
+.meta-pill {
+  min-height: 36px;
+  width: fit-content;
+  max-width: 100%;
+  color: var(--color-gray-400);
+  font-size: 0.8rem;
+}
+
+.meta-pill--short {
+  min-width: 210px;
+}
+
+.detail-description {
+  max-width: 620px;
+  margin-top: var(--space-1);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.detail-tags {
+  margin-top: auto;
+}
+
+.detail-tags .tag {
+  letter-spacing: 0;
+}
+
+.detail-image {
+  width: 220px;
+  height: 156px;
+}
+
+.detail-image img {
+  max-height: 128px;
+}
+
+.detail-signup,
+.detail-favorite,
+.organizer-profile,
+.participant-card .btn {
+  min-width: 168px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.detail-actions {
+  width: 100%;
+  align-items: center;
+}
+
+.favorite-feedback {
+  min-height: 1.2em;
+  max-width: 220px;
+}
+
+.organizer-card {
+  grid-template-columns: auto 1fr auto;
+  min-height: 160px;
+  padding: var(--space-4) var(--space-6);
+  border-radius: 18px;
+}
+
+.entity-avatar {
+  --icon-size: 84px;
+  --icon-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.entity-avatar svg {
+  width: 52px;
+  height: 52px;
+}
+
+.organizer-card__info h3 {
+  font-family: var(--font-alt);
+  font-size: 2rem;
+  line-height: 1.1;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.organizer-card__info p {
+  margin-top: 4px;
+  color: #4f8950;
+  font-size: 0.85rem;
+}
+
+.organizer-card__stats {
+  justify-items: end;
+}
+
+.rating-badge {
+  min-width: 112px;
+  min-height: 54px;
+  font-size: 1.45rem;
+}
+
+.followers-badge {
+  min-height: 36px;
+  padding: 6px var(--space-2);
+  font-size: 0.85rem;
+}
+
+.organizer-profile {
+  width: fit-content;
+  margin: var(--space-3) auto 0;
+}
+
+.participants-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.participant-card {
+  grid-template-columns: auto 1fr auto;
+  min-height: 108px;
+}
+
+.participant-card .entity-avatar {
+  --icon-size: 64px;
+}
+
+.participant-card .entity-avatar svg {
+  width: 34px;
+  height: 34px;
+}
+
+.participant-card h3 {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.participant-card p {
+  color: var(--color-gray-400);
+  font-size: 0.8rem;
+}
+
+.participant-card .btn {
+  min-width: 136px;
+}
+
+.empty-message {
+  grid-column: 1 / -1;
+  padding: var(--space-3);
+  color: var(--color-gray-400);
+  text-align: center;
+}
+
+.details-footer {
+  min-height: 68px;
+  gap: var(--space-6);
+  margin-top: var(--space-5);
+}
+
+.details-logo--footer {
+  width: 130px;
+}
+
+.details-footer p {
+  color: #666;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 880px) {
+  .details-header,
+  .details-card,
+  .organizer-card,
+  .participant-card {
+    grid-template-columns: 1fr;
+  }
+
+  .details-header,
+  .organizer-card,
+  .participant-card {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .details-nav {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .details-card__content {
+    align-items: center;
+    text-align: center;
+  }
+
+  .meta-pill {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .detail-tags {
+    justify-content: center;
+  }
+
+  .organizer-card__stats {
+    justify-items: center;
+  }
+
+  .participants-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-footer {
+    flex-direction: column;
+    gap: var(--space-2);
+    text-align: center;
+  }
+}
+
+@media (max-width: 540px) {
+  .details-page {
+    padding-inline: var(--space-2);
+  }
+
+  .section-heading {
+    gap: var(--space-2);
+  }
+
+  .section-heading h1,
+  .section-heading h2 {
+    font-size: 0.86rem;
+  }
+
+  .details-card,
+  .organizer-card {
+    padding: var(--space-3);
+  }
+
+  .detail-image {
+    width: 100%;
+  }
+
+  .detail-actions,
+  .detail-signup,
+  .detail-favorite {
+    width: 100%;
+  }
+
+  .organizer-card__info h3 {
+    font-size: 1.55rem;
+  }
+}
