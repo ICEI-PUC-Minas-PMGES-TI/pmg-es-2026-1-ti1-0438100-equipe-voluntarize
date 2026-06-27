@@ -853,3 +853,133 @@ h1, h2, h3, h4 {
     min-height: 190px;
   }
 }
+
+/* HEADER GLOBAL */
+
+.header-shell .mobile-toggle {
+  display: none;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+}
+
+.header-shell .mobile-nav {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: var(--color-white);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  z-index: 50;
+}
+
+.header-shell .mobile-nav a,
+.header-shell .mobile-nav .btn-ghost {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  cursor: pointer;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.header-shell .mobile-nav a:first-child,
+.header-shell .mobile-nav .btn-ghost:first-child {
+  border-top: 0;
+}
+
+.header-shell .site-nav a {
+  display: inline-block;
+  padding: 6px 10px;
+}
+
+#header-user-menu {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#logo-header {
+  cursor: pointer;
+}
+
+#header-user-menu .btn-ghost {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--color-white);
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+
+#header-user-menu .btn-ghost:first-child {
+  border-top: 0;
+}
+
+#header-user-menu .btn-ghost i {
+  width: 18px;
+  text-align: center;
+}
+
+#header-user-menu .btn-ghost.logout {
+  background: transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+#header-user-menu .btn-ghost .label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 900px) {
+  .header-shell header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .header-shell .site-nav {
+    display: none;
+  }
+
+  .header-shell .header-user {
+    display: none !important;
+  }
+
+  .header-shell .mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+  }
+
+  .header-shell .brand-logo {
+    max-width: 140px;
+    height: auto;
+    cursor: pointer;
+  }
+
+  .header-shell a:first-child {
+    flex-shrink: 0;
+  }
+
+  #mobile-menu-deslogar {
+    display: block;
+  }
+}
