@@ -24,6 +24,15 @@ function formatDate(iso) {
   return `${d}/${m}/${y}`;
 }
 
+function isFutureAction(action) {
+  if (!action.date || action.deletedAt) return false;
+  const [year, month, day] = action.date.split('-').map(Number);
+  const actionDate = new Date(year, month - 1, day);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return actionDate >= today;
+}
+
 // Quantidade de cards visíveis no carrossel horizontal por tamanho de tela
 function getVisibleCount() {
   return window.innerWidth <= 480 ? 1 : window.innerWidth <= 768 ? 2 : 3;
@@ -247,20 +256,22 @@ function renderVagaCard(action, ongName, variant = 'ong', appStatus = null) {
 
 async function init() {
   try {
-    const [resOngs, resActions, resApplications, resVolunteers, resFollows] = await Promise.all([
+    const [resOngs, resActions, resApplications, resVolunteers, resFollows, resFavorites] = await Promise.all([
       fetch(api('/ongs')),
       fetch(api('/actions')),
       fetch(api('/applications')),
       fetch(api('/volunteers')),
-      fetch(api('/follows'))
+      fetch(api('/follows')),
+      fetch(api('/favorites'))
     ]);
 
-    const [ongs, actions, applications, volunteers, follows] = await Promise.all([
+    const [ongs, actions, applications, volunteers, follows, favorites] = await Promise.all([
       resOngs.json(),
       resActions.json(),
       resApplications.json(),
       resVolunteers.json(),
-      resFollows.json()
+      resFollows.json(),
+      resFavorites.json()
     ]);
 
     const ongMap = Object.fromEntries(ongs.map(o => [o.id, o.name]));
@@ -288,6 +299,38 @@ async function init() {
       .forEach(a => altaCarousel.track.appendChild(renderAltaCard(a, ongMap[a.ongId] || '')));
     altaCarousel.update();
   }
+
+    // Reaproveita o mesmo carrossel horizontal e os mesmos cards de Vagas Populares.
+    const favoritasCarousel = initHorizontalCarousel(
+      'favoritasTrack',
+      'favoritasPrevBtn',
+      'favoritasNextBtn',
+      'alta-card'
+    );
+    if (favoritasCarousel) {
+      const favoriteActionIds = new Set(
+        favorites
+          .filter(favorite => usuarioCorrente && String(favorite.volunteerId) === String(usuarioCorrente.id))
+          .map(favorite => String(favorite.actionId))
+      );
+      const favoriteActions = actions
+        .filter(action => favoriteActionIds.has(String(action.id)) && isFutureAction(action))
+        .sort((a, b) => a.date.localeCompare(b.date));
+
+      if (isVoluntario && favoriteActions.length) {
+        favoriteActions.forEach(action =>
+          favoritasCarousel.track.appendChild(renderAltaCard(action, ongMap[action.ongId] || ''))
+        );
+      } else {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state favorites-empty';
+        empty.innerHTML = '<i class="fa-regular fa-bookmark"></i><p class="text-bold text-muted">Você ainda não favoritou vagas futuras.</p>';
+        favoritasCarousel.track.appendChild(empty);
+        document.getElementById('favoritasPrevBtn').style.display = 'none';
+        document.getElementById('favoritasNextBtn').style.display = 'none';
+      }
+      favoritasCarousel.update();
+    }
 
     // Carrossel vertical de vagas — conteúdo varia por tipo de usuário:
     // ONG       → suas próprias ações abertas

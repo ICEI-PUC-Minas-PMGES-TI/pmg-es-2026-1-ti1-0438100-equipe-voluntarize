@@ -26,6 +26,115 @@
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   };
 
+  const setFavoriteFeedback = (message, isError = false) => {
+    const feedback = find('[data-favorite-feedback]');
+    if (!feedback) return;
+    feedback.textContent = message;
+    feedback.style.color = isError ? '#8f3232' : '';
+  };
+
+  const renderFavoriteButton = (btn, favorites, user, busy = false) => {
+    if (!btn) return;
+    const isVolunteer = user && user.type === 0;
+    const isFavorite = favorites.length > 0;
+
+    btn.disabled = !isVolunteer || busy;
+    btn.classList.toggle('btn-secondary', isFavorite);
+    btn.classList.toggle('btn-outline', !isFavorite);
+    btn.textContent = isVolunteer
+      ? (isFavorite ? 'Favoritada' : 'Favoritar')
+      : 'Entre para favoritar';
+    btn.setAttribute('aria-pressed', isFavorite ? 'true' : 'false');
+    btn.setAttribute(
+      'aria-label',
+      isFavorite ? 'Remover vaga dos favoritos' : 'Adicionar vaga aos favoritos'
+    );
+  };
+
+  const setupFavoriteButton = async (actionId, user) => {
+    const btn = find('[data-favorite-button]');
+    if (!btn) return;
+
+    let favorites = [];
+    let busy = false;
+    let loadFailed = false;
+    const isVolunteer = user && user.type === 0;
+
+    renderFavoriteButton(btn, favorites, user);
+
+    if (!isVolunteer) {
+      setFavoriteFeedback('Faça login como voluntário para salvar esta vaga.');
+      return;
+    }
+
+    try {
+      busy = true;
+      renderFavoriteButton(btn, favorites, user, busy);
+      const response = await fetch(`${API}/favorites?volunteerId=${user.id}&actionId=${actionId}`);
+      if (!response.ok) throw new Error('Erro ao consultar favoritos.');
+      favorites = await response.json();
+    } catch (error) {
+      loadFailed = true;
+      console.error(error);
+      setFavoriteFeedback('Não foi possível consultar seus favoritos.', true);
+    } finally {
+      busy = false;
+      renderFavoriteButton(btn, favorites, user);
+    }
+
+    if (loadFailed) {
+      btn.disabled = true;
+      return;
+    }
+
+    btn.addEventListener('click', async () => {
+      if (busy) return;
+      busy = true;
+      renderFavoriteButton(btn, favorites, user, busy);
+      setFavoriteFeedback('');
+
+      try {
+        if (favorites.length) {
+          const responses = await Promise.all(
+            favorites.map(favorite => fetch(`${API}/favorites/${favorite.id}`, { method: 'DELETE' }))
+          );
+          if (responses.some(response => !response.ok)) throw new Error('Erro ao remover favorito.');
+          favorites = [];
+          setFavoriteFeedback('Vaga removida dos favoritos.');
+        } else {
+          const queryResponse = await fetch(`${API}/favorites?volunteerId=${user.id}&actionId=${actionId}`);
+          if (!queryResponse.ok) throw new Error('Erro ao verificar favorito existente.');
+          const existingFavorites = await queryResponse.json();
+
+          if (existingFavorites.length) {
+            favorites = existingFavorites;
+            setFavoriteFeedback('Esta vaga já estava nos seus favoritos.');
+            return;
+          }
+
+          const response = await fetch(`${API}/favorites`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              volunteerId: user.id,
+              actionId,
+              createdAt: formatToday()
+            })
+          });
+          if (!response.ok) throw new Error('Erro ao adicionar favorito.');
+          favorites = [await response.json()];
+          setFavoriteFeedback('Vaga adicionada aos favoritos.');
+        }
+      } catch (error) {
+        console.error(error);
+        setFavoriteFeedback('Não foi possível atualizar o favorito.', true);
+      } finally {
+        busy = false;
+        renderFavoriteButton(btn, favorites, user);
+      }
+    });
+  };
+
   const renderSignupButton = (btn, application, action, user) => {
     if (!btn) return;
     const isVolunteer = user && user.type === 0;
@@ -147,6 +256,7 @@
 
       renderTags(action.tags || []);
       renderParticipants(participants);
+      setupFavoriteButton(actionId, user);
 
       try {
         const nextViews = await incrementViews(action);
