@@ -87,6 +87,32 @@
       </div>
     </section>
     
+    <div class="divider-label"><span>Vagas que você favoritou</span></div>
+
+    <section class="section surface surface-purple stack" style="position: relative">
+      <div class="surface surface-white rounded-sm p-4 mb-3 text-center text-sm text-bold">
+        <div class="section-divider-inline" style="width: 150px; position: absolute; top: 7px; right: 50px;">
+          <div class="divider-line divider-black divider-prism-sm prism-right" aria-hidden="true"></div>
+        </div>
+        <p class="text-md text-black mt-1 flex items-center justify-center gap-3">
+          <i class="fa-solid fa-bookmark text-lg"></i>
+          Reveja as vagas futuras que você salvou para participar depois!
+        </p>
+      </div>
+
+      <div class="carousel-wrapper">
+        <button class="btn btn-primary btn-icon-only btn-shadow-sm carousel-btn" id="favoritasPrevBtn" aria-label="Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="carousel-track-container">
+          <div class="carousel-track pb-1" id="favoritasTrack" aria-live="polite"></div>
+        </div>
+        <button class="btn btn-primary btn-icon-only btn-shadow-sm carousel-btn" id="favoritasNextBtn" aria-label="Próximo">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
     <div class="divider-label mb-3"><span>Vagas que você se inscreveu</span></div>
     
     <section id="vagas" class="vagas-section surface surface-green">
