@@ -7,12 +7,12 @@
   
   function api(path) { return (API_BASE ? API_BASE : '') + path; }
 
-  // ===== Banco com persistência em localStorage + fetch do db.json =====
-  const STORAGE_KEY = 'reviews-volunteer';
+  // ===== Banco com persistência em localStorage + fetch do JSON Server =====
+  const STORAGE_KEY = 'reviews-volunteer'; 
 
   let reviews = [];
 
-  // Carrega reviews do localStorage ou do banco de dados
+  // Carrega reviews do JSON Server ou do localStorage como fallback
   async function loadreviews() {
       try {
         const res = await fetch(api('/reviews'));
@@ -30,42 +30,38 @@
       }
     }
 
-
-
   function save() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
   }
 
-  function nextReviewId() {
-    return reviews.reduce((max, r) => Math.max(max, r.id), 0) + 1;
-  }
 
   function todayISO() {
     return new Date().toISOString().slice(0, 10);
   }
 
-
-
-  // Quando o real JSON SERVER for aplicado essa parte será modificada
-  // Contexto da avaliação atual (voluntário)
-  // Os dados do usuário logado devem vir de sessionStorage (como em home.js)
+  // ===== Contexto da avaliação atual (voluntário) =====
   const usuarioCorrente = JSON.parse(sessionStorage.getItem('usuarioCorrente')) || {
     id: 1,
     tipo: 'voluntario',
     nome: 'Voluntário'
   };
 
+  // ===== Pega os dados da URL =====
+  const params = new URLSearchParams(window.location.search);
+  const CURRENT_TARGET_ID   = Number(params.get('targetId')) || 2;
+  const CURRENT_ACTION_ID   = Number(params.get('actionId')) || 1;
+
   const CURRENT_AUTHOR_ID   = usuarioCorrente.id;
   const CURRENT_TARGET_TYPE = "volunteer";
-  const CURRENT_TARGET_ID   = 2; // ID do voluntário que está sendo avaliado (se quiser testar outros ids, só mudar)
-  const CURRENT_ACTION_ID   = 1; // ID da ação ( se quiser testar outros ids, só mudar)
 
- // -------------------------------------------------------------------------------- 
+  console.log('Avaliação context:', {
+    authorId: CURRENT_AUTHOR_ID,
+    targetId: CURRENT_TARGET_ID,
+    actionId: CURRENT_ACTION_ID,
+    targetType: CURRENT_TARGET_TYPE
+  });
 
-
-
-
-
+  // ===== Estrelas =====
   const stars = document.querySelectorAll('.star-btn');
   let currentRating = 0;
 
@@ -88,7 +84,8 @@
     btn.addEventListener('mouseleave', () => paint(currentRating));
   });
 
-  document.getElementById('btnConcluir').addEventListener('click', () => {
+  // ===== Concluir =====
+  document.getElementById('btnConcluir').addEventListener('click', async () => {
     const comentario = document.getElementById('comentario').value.trim();
 
     if (currentRating === 0) {
@@ -96,32 +93,53 @@
       return;
     }
 
+    const novoId =
+  reviews.length > 0
+    ? Math.max(...reviews.map(r => Number(r.id) || 0)) + 1
+    : 1;
+
     const novo = {
-      id: nextReviewId(),
-      authorId:   CURRENT_AUTHOR_ID,
+      id: novoId,
+      authorId: CURRENT_AUTHOR_ID,
       targetType: CURRENT_TARGET_TYPE,
-      targetId:   CURRENT_TARGET_ID,
-      actionId:   CURRENT_ACTION_ID,
-      rating:     currentRating,
-      comment:    comentario,
-      createdAt:  todayISO(),
-      deletedAt:  null
+      targetId: CURRENT_TARGET_ID,
+      actionId: CURRENT_ACTION_ID,
+      rating: currentRating,
+      comment: comentario,
+      createdAt: todayISO(),
+      deletedAt: null
     };
 
-    reviews.push(novo);
-    save();
+    try {
+      // Envia pro servidor com o ID já definido
+      const res = await fetch(API + '/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(novo)
+      });
 
-    console.log('Review criado:', novo);
-    console.log('Lista atualizada:', reviews);
+      if (!res.ok) throw new Error('Erro ao salvar no servidor');
 
-    alert('Avaliação enviada com sucesso! ⭐ ' + currentRating + '/5');
+      const savedReview = await res.json();
+      reviews.push(savedReview);
+      save();
 
-    
-    currentRating = 0;
-    paint(0);
-    document.getElementById('comentario').value = '';
+      console.log('Review criado:', savedReview);
+      console.log('Lista atualizada:', reviews);
+
+      alert('Avaliação enviada com sucesso! ⭐ ' + currentRating + '/5');
+
+      // Reset
+      currentRating = 0;
+      paint(0);
+      document.getElementById('comentario').value = '';
+    } catch (e) {
+      console.error('Erro ao salvar review:', e);
+      alert('Erro ao salvar avaliação. Tente novamente.');
+    }
   });
 
+  // Carrega as reviews quando a página abre
   loadreviews().then(() => {
     console.log('reviews carregados:', reviews);
   });

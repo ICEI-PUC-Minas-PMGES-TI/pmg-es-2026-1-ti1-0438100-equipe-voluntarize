@@ -9,20 +9,7 @@
 </head>
 <body>
   <main class="details-page">
-    <header class="surface grid items-center gap-4 details-header">
-      <img class="details-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize">
-
-      <nav class="flex items-center justify-center gap-4 details-nav" aria-label="Navegação principal">
-        <a href="#">Início</a>
-        <a href="#">Perfil</a>
-        <a href="#">Vagas</a>
-        <a href="#">Minhas Candidaturas</a>
-      </nav>
-
-       <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário" onclick="redirectToProfile()">
-        <i class="fa-regular fa-user"></i>
-      </button>
-    </header>
+    <div id="header-global" data-header-class="surface grid items-center gap-4 details-header"></div>
 
     <section class="details-section" aria-labelledby="details-title">
       <div class="section-heading">
@@ -64,7 +51,7 @@
           <figure class="surface surface-xs flex items-center justify-center detail-image">
             <img src="../../assets/images/imgs-undraw/img-home-banner-bolinhas-pessoas.svg" alt="">
           </figure>
-          <button class="btn btn-primary btn-pad-xs detail-signup" type="button">Inscrever-se</button>
+          <button class="btn btn-primary btn-pad-xs detail-signup" type="button" data-signup-button>Inscrever-se</button>
           <p class="surface surface-xs inline-flex items-center justify-center gap-1 followers-badge" aria-live="polite">
             Visualizações: <span data-action-views>0</span>
           </p>
@@ -125,6 +112,7 @@
     </footer>
   </main>
 
+  <script src="../../js/global-header.js"></script>
   <script src="../../assets/js/dynamic-page.js"></script>
   <script src="./js/detalhes.js"></script>
   <script src="./../../assets/js/redirect-to-profile.js"></script>

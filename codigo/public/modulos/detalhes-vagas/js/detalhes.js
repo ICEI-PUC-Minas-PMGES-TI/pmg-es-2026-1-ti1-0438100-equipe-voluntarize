@@ -10,9 +10,57 @@
     return raw ? Number(raw) : null;
   };
 
+  const getLoggedUser = () => {
+    try {
+      const raw = localStorage.getItem('usuarioLogado');
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return (parsed && parsed.id != null) ? parsed : null;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const formatToday = () => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  };
+
+  const renderSignupButton = (btn, application, action, user) => {
+    if (!btn) return;
+    const isVolunteer = user && user.type === 0;
+    const isOpen = action.status === 'open';
+    const hasApplication = !!application;
+
+    btn.disabled = !isVolunteer || !isOpen;
+    btn.textContent = hasApplication ? 'Cancelar inscrição' : 'Inscrever-se';
+    btn.classList.toggle('btn-danger', hasApplication);
+    btn.classList.toggle('btn-primary', !hasApplication);
+    btn.dataset.applicationId = hasApplication ? application.id : '';
+  };
+
   const formatDate = (date) => { const [y, m, d] = date.split('-'); return `${d}/${m}/${y}`; };
   const formatRating = (r) => Number(r).toFixed(1).replace('.', ',');
   const formatFollowers = (n) => n >= 1000 ? `${Math.round(n / 1000)}K` : String(n);
+
+  const incrementViews = async (action) => {
+    const currentViews = Number.isFinite(action.views) ? action.views : 0;
+
+    const response = await fetch(`${API}/actions/${action.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ views: currentViews + 1 })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Não foi possível atualizar as visualizações da ação ${action.id}.`);
+    }
+
+    const updatedAction = await response.json();
+    return Number.isFinite(updatedAction.views) ? updatedAction.views : currentViews + 1;
+  };
 
   const renderTags = (tags) => {
     const container = find('[data-action-tags]');
@@ -70,6 +118,8 @@
       return;
     }
 
+    const user = getLoggedUser();
+
     try {
       const resAction = await fetch(`${API}/actions/${actionId}`);
       if (!resAction.ok) throw new Error(`Ação ${actionId} não encontrada.`);
@@ -94,10 +144,17 @@
       setText('[data-ong-responsible]', ong.responsibleName);
       setText('[data-ong-rating]', formatRating(ong.rating));
       setText('[data-ong-followers]', formatFollowers(ong.followers || 0));
-      setText('[data-action-views]', (action.views || 0) + 1);
 
       renderTags(action.tags || []);
       renderParticipants(participants);
+
+      try {
+        const nextViews = await incrementViews(action);
+        setText('[data-action-views]', nextViews);
+      } catch (viewError) {
+        console.error('Erro ao contabilizar visualização:', viewError);
+        setText('[data-action-views]', (Number.isFinite(action.views) ? action.views : 0) + 1);
+      }
 
       const organizerBtn = find('.organizer-profile');
       if (organizerBtn) {
@@ -105,6 +162,55 @@
           window.location.href = `../visualizacao-detalhada-ong/index.html?id=${ong.id}`;
         });
       }
+
+      // Botão de inscrição
+      const btn = find('[data-signup-button]');
+      if (!btn) return;
+
+      let currentApplication = null;
+
+      if (user && user.type === 0) {
+        const resApps = await fetch(`${API}/applications?volunteerId=${user.id}&actionId=${actionId}`);
+        if (resApps.ok) {
+          const apps = await resApps.json();
+          currentApplication = apps.find(a => a.status !== 'rejected') || null;
+        }
+      }
+
+      renderSignupButton(btn, currentApplication, action, user);
+
+      btn.addEventListener('click', async () => {
+        if (!user || user.type !== 0) return;
+        btn.disabled = true;
+
+        try {
+          if (currentApplication) {
+            const res = await fetch(`${API}/applications/${currentApplication.id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error('Erro ao cancelar inscrição.');
+            currentApplication = null;
+          } else {
+            const res = await fetch(`${API}/applications`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                volunteerId: user.id,
+                actionId: actionId,
+                status: 'pending',
+                appliedAt: formatToday(),
+                confirmedAt: null,
+                attended: false
+              })
+            });
+            if (!res.ok) throw new Error('Erro ao realizar inscrição.');
+            currentApplication = await res.json();
+          }
+          renderSignupButton(btn, currentApplication, action, user);
+        } catch (err) {
+          console.error(err);
+          btn.disabled = false;
+        }
+      });
+
     } catch (error) {
       console.error('Erro ao carregar detalhes:', error);
     }

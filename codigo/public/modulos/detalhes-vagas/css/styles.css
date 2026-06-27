@@ -106,8 +106,8 @@
 .details-card::after {
   content: "";
   position: absolute;
-  height: 4px;
-  background: var(--color-green);
+  height: 2px;
+  background: var(--color-black);
   border-radius: var(--radius-pill);
 }
 

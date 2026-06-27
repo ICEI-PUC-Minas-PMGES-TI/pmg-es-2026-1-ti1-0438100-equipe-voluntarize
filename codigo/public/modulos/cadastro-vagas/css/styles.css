@@ -1,107 +1,123 @@
 .page {
   width: 100%;
+  max-width: calc(980px + (var(--space-4) * 2));
   min-height: 100vh;
-  min-height: 100dvh;
-  padding: 32px 48px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-inline: auto;
+  padding: var(--space-4);
 }
 
 .back-button {
-  min-width: 122px;
-  min-height: 44px;
   align-self: flex-start;
-  flex-shrink: 0;
-  padding-inline: 20px;
+  min-width: 112px;
+  min-height: 36px;
   letter-spacing: 0;
 }
 
 .action-card {
-  width: 100%;
-  min-height: 0;
-  flex: 1;
-  display: flex;
+  width: min(100%, 980px);
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) minmax(360px, 1fr);
   align-items: center;
-  justify-content: center;
-  gap: 64px;
+  gap: var(--space-6);
+  margin-inline: auto;
+  padding: clamp(var(--space-5), 5vw, var(--space-6));
 }
 
 .illustration {
-  width: 440px;
-  max-width: 40vw;
-  flex: 0 1 440px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .illustration__image {
-  width: min(100%, 360px);
-  max-width: 100%;
-  max-height: 360px;
-  object-fit: contain;
+  width: min(100%, 300px);
+  height: auto;
 }
 
 .action-form {
-  width: min(440px, 100%);
-  flex: 0 0 440px;
-  gap: 8px;
-  padding: 18px 32px;
-  border-radius: 24px;
-  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 520px;
+  justify-self: center;
+  gap: var(--space-2);
 }
 
 .form-header {
-  margin-bottom: 2px;
   text-align: center;
+  margin-bottom: var(--space-1);
 }
 
 .form-header h1 {
-  width: fit-content;
-  min-width: 132px;
-  min-height: 40px;
-  margin: 0 auto;
-  padding: 9px 16px;
-  border: var(--border);
-  border-radius: var(--radius-sm);
+  width: min(100%, 360px);
+  margin-inline: auto;
+  padding: 10px var(--space-3);
+  border: 1px solid var(--color-gray-400);
+  border-radius: var(--radius-xs);
   box-shadow: var(--shadow-sm);
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 400;
   letter-spacing: 0;
 }
 
 .form-header p {
-  margin-top: 8px;
-  font-family: var(--font-alt);
-  font-size: 0.78rem;
+  margin-top: var(--space-2);
+  font-size: 0.9rem;
 }
 
 .action-field {
-  min-height: 42px;
-  border-radius: var(--radius-md);
+  min-height: 48px;
+  border-width: 1px;
+  border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
 }
 
 .action-field:focus-within {
-  outline: none;
-  box-shadow: var(--shadow-md);
+  border-color: var(--color-purple);
+  box-shadow: var(--shadow-sm);
 }
 
 .field-icon {
-  width: 46px;
+  width: 52px;
+}
+
+.field-icon::after {
+  width: 1px;
+  background: var(--color-gray-400);
 }
 
 .field-icon svg {
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   fill: none;
-  stroke: var(--color-black);
+  stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.7;
 }
 
+.page-heading .divider-line {
+  margin-block: var(--space-2);
+}
+
+.page-heading p {
+  color: #666;
+}
+
+.action-card {
+  grid-template-columns: minmax(240px, 0.75fr) minmax(420px, 1.25fr);
+  gap: clamp(var(--space-4), 5vw, var(--space-6));
+  padding: clamp(var(--space-4), 5vw, var(--space-6));
+}
+
+.illustration__image {
+  width: min(100%, 320px);
+}
+
+.action-form,
 .action-field .field-input {
   min-width: 0;
   padding: 9px 12px;
@@ -118,28 +134,60 @@
   padding-top: 12px;
 }
 
-.action-field--tags {
-  min-height: 64px;
-  align-items: stretch;
+.action-tags-box {
+  position: relative;
 }
 
-.tags-control {
+.action-tags-box__inner {
+  min-height: 64px;
+  min-height: 118px;
+}
+
+.action-tags-label svg {
+  width: 17px;
+  height: 17px;
+}
+
+.action-tags-selected {
   min-width: 0;
+  min-height: 32px;
   flex: 1;
   display: grid;
-  gap: 2px;
-  padding: 7px 12px;
-}
-
-.tags-control__label {
+  gap: 4px;
+  padding: 10px var(--space-3);
   font-family: var(--font-alt);
-  font-size: 0.75rem;
 }
 
-.tags-control .field-input {
-  padding: 0;
+.action-tags-dropdown {
+  position: absolute;
+  inset: calc(100% + 7px) 0 auto;
+  z-index: 20;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
+.action-tags-dropdown.open {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.action-tag-option {
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.action-tag-option.selected {
+  background: var(--color-green);
+  opacity: 0.7;
+}
+
+.action-tags-selected .tag {
+  letter-spacing: 0;
+  text-transform: none;
 .tags-control small {
   color: var(--color-gray-400);
   font-family: var(--font-alt);
@@ -147,10 +195,10 @@
 }
 
 .feedback {
-  min-height: 14px;
-  color: #27ae60;
+  min-height: 21px;
+  color: #246d16;
   font-family: var(--font-alt);
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   text-align: center;
 }
 
@@ -165,46 +213,55 @@
   letter-spacing: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 840px) {
   .page {
-    padding: 24px 16px;
+    justify-content: flex-start;
+    padding: var(--space-3);
   }
 
   .action-card {
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .illustration {
-    width: 100%;
-    max-width: 100%;
-    flex-basis: auto;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    min-height: auto;
   }
 
   .illustration__image {
-    max-height: 220px;
-  }
-
-  .action-form {
-    flex-basis: auto;
+    width: min(60vw, 230px);
   }
 }
 
-@media (max-width: 520px) {
-  .page {
-    padding: 14px;
+@media (max-width: 620px) {
+  .header-shell {
+    min-height: 0;
+    padding-top: var(--space-1);
   }
 
-  .illustration__image {
-    max-height: 180px;
+  .site-header {
+    position: static;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    transform: none;
   }
 
-  .action-form {
-    padding: 24px 20px;
-    border-radius: var(--radius-md);
+  .site-header .site-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .action-page {
+    padding-inline: var(--space-2);
+  }
+
+  .action-card {
+    padding: var(--space-3);
   }
 
   .field-icon {
-    width: 42px;
+    width: 46px;
+  }
+
+  .form-header h1 {
+    font-size: 0.88rem;
   }
 }
