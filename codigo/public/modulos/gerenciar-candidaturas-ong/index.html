@@ -12,7 +12,7 @@
 
   <div id="header-global" data-header-class="site-header"></div>
 
-  <main class="container section stack gap-4">
+  <main class="container section manage-page">
 
     <div class="manage-header surface surface-green">
       <div>
@@ -24,14 +24,44 @@
       </a>
     </div>
 
-    <div class="divider-label"><span>Candidaturas Pendentes</span></div>
-    <section data-list-pending class="candidates-grid"></section>
+    <section class="status-section status-pending">
+      <div class="status-heading">
+        <span class="icon-token icon-purple icon-sm icon-square" aria-hidden="true">
+          <i class="fa-regular fa-clock"></i>
+        </span>
+        <div>
+          <h2 class="h4">Candidaturas Pendentes</h2>
+          <p class="text-xs text-muted">Aguardando retorno da ONG</p>
+        </div>
+      </div>
+      <div data-list-pending class="candidates-grid"></div>
+    </section>
 
-    <div class="divider-label"><span>Candidaturas Aceitas</span></div>
-    <section data-list-accepted class="candidates-grid"></section>
+    <section class="status-section status-accepted">
+      <div class="status-heading">
+        <span class="icon-token icon-green icon-sm icon-square" aria-hidden="true">
+          <i class="fa-solid fa-check"></i>
+        </span>
+        <div>
+          <h2 class="h4">Candidaturas Aceitas</h2>
+          <p class="text-xs text-muted">Voluntários confirmados</p>
+        </div>
+      </div>
+      <div data-list-accepted class="candidates-grid"></div>
+    </section>
 
-    <div class="divider-label"><span>Candidaturas Recusadas</span></div>
-    <section data-list-rejected class="candidates-grid"></section>
+    <section class="status-section status-rejected">
+      <div class="status-heading">
+        <span class="icon-token icon-white icon-sm icon-square" aria-hidden="true">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+        <div>
+          <h2 class="h4">Candidaturas Recusadas</h2>
+          <p class="text-xs text-muted">Candidaturas não selecionadas</p>
+        </div>
+      </div>
+      <div data-list-rejected class="candidates-grid"></div>
+    </section>
 
   </main>
 

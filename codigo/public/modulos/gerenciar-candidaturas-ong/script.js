@@ -7,7 +7,7 @@
   const getActionId = () => {
     const params = new URLSearchParams(window.location.search);
     const raw = params.get('id') || params.get('actionId');
-    return raw ? Number(raw) : null;
+    return raw || null;
   };
 
   const getLoggedUser = () => {
@@ -27,32 +27,48 @@
     return `${d}/${m}/${y}`;
   };
 
+  const getVolunteerProfileUrl = (volunteerId) => (
+    `../visualizacao-detalhada-voluntario/index.html?id=${encodeURIComponent(String(volunteerId))}`
+  );
+
   const STATUS_LABEL = { pending: 'Pendente', accepted: 'Aceito', rejected: 'Recusado' };
   const STATUS_CLS   = { pending: 'tag-yellow', accepted: 'tag-green', rejected: 'tag-red' };
 
   const renderEmpty = (container, msg) => {
     const p = document.createElement('p');
-    p.className = 'text-sm text-muted';
-    p.textContent = msg;
+    p.className = 'empty-state-card text-sm text-muted';
+
+    const icon = document.createElement('span');
+    icon.className = 'icon-token icon-white icon-xs';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.innerHTML = '<i class="fa-regular fa-folder-open"></i>';
+
+    const text = document.createElement('span');
+    text.textContent = msg;
+
+    p.append(icon, text);
     container.appendChild(p);
   };
 
   const renderCard = (application, volunteer, onAction) => {
     const card = document.createElement('article');
-    card.className = 'surface candidate-card';
+    card.className = 'surface surface-sm candidate-card';
 
     const statusCls = STATUS_CLS[application.status] || '';
     const statusLabel = STATUS_LABEL[application.status] || application.status;
+    const volunteerId = volunteer && volunteer.id != null ? volunteer.id : application.volunteerId;
 
     card.innerHTML = `
       <div class="candidate-info">
         <span class="icon-token icon-purple icon-sm" aria-hidden="true">
           <i class="fa-regular fa-user"></i>
         </span>
-        <div>
-          <h3 class="text-md text-bold">${volunteer ? volunteer.name : 'Voluntário #' + application.volunteerId}</h3>
-          <p class="text-xs text-muted">Inscrito em: ${formatDate(application.appliedAt)}</p>
-          ${volunteer ? `<p class="text-xs text-muted">★ ${Number(volunteer.rating || 0).toFixed(1).replace('.', ',')} &nbsp;·&nbsp; ${volunteer.email}</p>` : ''}
+        <div class="candidate-main">
+          <h3 class="text-md text-bold candidate-title">${volunteer ? volunteer.name : 'Voluntário #' + application.volunteerId}</h3>
+          <div class="candidate-meta text-xs text-muted">
+            <span><i class="fa-regular fa-calendar"></i> Inscrito em: ${formatDate(application.appliedAt)}</span>
+            ${volunteer ? `<span><i class="fa-solid fa-star"></i> ${Number(volunteer.rating || 0).toFixed(1).replace('.', ',')} &nbsp;·&nbsp; ${volunteer.email}</span>` : ''}
+          </div>
         </div>
         <span class="tag tag-xs ${statusCls} candidate-status">${statusLabel}</span>
       </div>
@@ -64,27 +80,35 @@
     if (application.status === 'pending') {
       const btnAccept = document.createElement('button');
       btnAccept.className = 'btn btn-primary btn-pad-xs';
-      btnAccept.textContent = 'Aceitar';
+      btnAccept.innerHTML = '<i class="fa-solid fa-check"></i> Aceitar';
       btnAccept.addEventListener('click', () => onAction(application, 'accepted', card));
 
       const btnReject = document.createElement('button');
       btnReject.className = 'btn btn-outline btn-pad-xs';
-      btnReject.textContent = 'Recusar';
+      btnReject.innerHTML = '<i class="fa-solid fa-xmark"></i> Recusar';
       btnReject.addEventListener('click', () => onAction(application, 'rejected', card));
 
       actionsEl.append(btnAccept, btnReject);
     } else if (application.status === 'accepted') {
       const btnReject = document.createElement('button');
       btnReject.className = 'btn btn-outline btn-pad-xs';
-      btnReject.textContent = 'Recusar';
+      btnReject.innerHTML = '<i class="fa-solid fa-xmark"></i> Recusar';
       btnReject.addEventListener('click', () => onAction(application, 'rejected', card));
       actionsEl.append(btnReject);
     } else if (application.status === 'rejected') {
       const btnAccept = document.createElement('button');
       btnAccept.className = 'btn btn-primary btn-pad-xs';
-      btnAccept.textContent = 'Aceitar';
+      btnAccept.innerHTML = '<i class="fa-solid fa-check"></i> Aceitar';
       btnAccept.addEventListener('click', () => onAction(application, 'accepted', card));
       actionsEl.append(btnAccept);
+    }
+
+    if (volunteerId != null) {
+      const profileLink = document.createElement('a');
+      profileLink.className = 'btn btn-secondary btn-pad-xs profile-button';
+      profileLink.href = getVolunteerProfileUrl(volunteerId);
+      profileLink.innerHTML = '<i class="fa-regular fa-address-card"></i> Ver perfil';
+      actionsEl.appendChild(profileLink);
     }
 
     return card;
