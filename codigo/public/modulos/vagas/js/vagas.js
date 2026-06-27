@@ -136,7 +136,7 @@ function renderCardVaga(action, nomeOng) {
 
   const cta = ce('div', 'vaga-card-cta');
   const btn = ce('button', 'btn btn-primary btn-pad-sm');
-  const detailsUrl = '../detalhes-vagas/detalhes.html';
+  const detailsUrl = `../detalhes-vagas/detalhes.html?id=${action.id}`;
   btn.textContent = 'Ver Detalhes';
   btn.type = 'button';
   btn.addEventListener('click', () => {
