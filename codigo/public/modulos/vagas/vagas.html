@@ -4,28 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Buscar Vagas – Visão Voluntários</title>
-
   <link rel="stylesheet" href="../../design-system/css/globals.css" />
   <link rel="stylesheet" href="./css/vagas.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="icon" href="../../assets/images/logo/logo-icon.png" type="image/x-icon">
 </head>
 <body>
 
-  <div class="container header-shell">
-    <header class="site-header">
-      <img class="brand-logo" src="./../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
-      <nav class="site-nav" aria-label="Navegação principal">
-        <a href="../home/home-voluntarios.html">Início</a>
-        <a href="../meu-perfil/meu-perfil.html">Perfil</a>
-        <a href="./vagas.html" class="text-green">Vagas</a>
-        <a href="../busca-ongs-mapa/index.html">Mapa de ONGs</a>
-        <a href="#">Minhas Candidaturas</a>
-      </nav>
-      <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário" onclick="redirectToProfile()">
-        <i class="fa-regular fa-user"></i>
-      </button>
-    </header>
-  </div>
+  <div id="header-global" data-header-class="site-header"></div>
 
   <main class="container section stack gap-4">
 
@@ -139,6 +125,7 @@
     </footer>
   </div>
 
+  <script src="../../js/global-header.js"></script>
   <script src="../../assets/js/dynamic-page.js"></script>
   <script src="./js/vagas.js"></script>
   <script src="./../../assets/js/redirect-to-profile.js"></script>

@@ -1,4 +1,9 @@
+const API_BASE = (window.__ENV && window.__ENV.UR_API) ? window.__ENV.UR_API.replace(/\/$/, "") : "";
 const STORAGE_KEY = "tiaw_usuarios_voluntarios";
+
+function api(path) {
+  return API_BASE + path;
+}
 
 const choiceScreen = document.getElementById("choiceScreen");
 const registerScreen = document.getElementById("registerScreen");
@@ -22,7 +27,7 @@ let selectedRegisterType = "volunteers";
 const registerRoutes = {
   ongs: {
     jsonKey: "ongs",
-    url: "../cadastro-ong/index.html"
+    url: "../cadastro-ong/index.html?start=1"
   },
   volunteers: {
     jsonKey: "volunteers",
@@ -163,14 +168,6 @@ function cpfAlreadyExists(cpfValue) {
   return readUsers().some((user) => onlyDigits(String(user.cpf || user.cpfNumeros || "")) === cpfDigits);
 }
 
-function createUserId() {
-  if (window.crypto && typeof window.crypto.randomUUID === "function") {
-    return window.crypto.randomUUID();
-  }
-
-  return `vol-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
-}
-
 function validateStep(stepIndex) {
   clearStepErrors(stepIndex);
 
@@ -272,6 +269,7 @@ function validateAllSteps() {
 function showRegister() {
   choiceScreen.hidden = true;
   registerScreen.hidden = false;
+  backButton.hidden = false;
   updateStep();
 }
 
@@ -279,10 +277,18 @@ function selectRegisterType(type) {
   selectedRegisterType = type;
 
   choiceButtons.forEach((button) => {
-    const selected = button.dataset.registerType === type;
-    button.classList.toggle("selected", selected);
-    button.setAttribute("aria-pressed", String(selected));
+    button.classList.remove("isActive");
+    button.setAttribute("aria-pressed", "false");
   });
+
+  const activeButton = choiceButtons.find(
+    button => button.dataset.registerType === type
+  );
+
+  if (activeButton) {
+    activeButton.classList.add("isActive");
+    activeButton.setAttribute("aria-pressed", "true");
+  }
 }
 
 function startSelectedRegister() {
@@ -320,29 +326,57 @@ function goToStep(stepIndex) {
   updateStep();
 }
 
-function buildUser() {
-  const email = normalizeText(getField("email").value);
-  const cpf = getField("cpf").value;
-
+async function buildUser() {
   return {
-    id: createUserId(),
-    tipo: "voluntario",
-    nome: normalizeText(getField("nome").value),
-    login: email,
-    email,
-    senha: getField("senha").value,
-    telefone: getField("telefone").value,
-    cpf,
-    cpfNumeros: onlyDigits(cpf),
-    cidade: normalizeText(getField("cidade").value),
-    estado: getField("estado").value,
-    areaInteresse: getField("areaInteresse").value,
-    historia: normalizeText(getField("historia").value),
-    criadoEm: new Date().toISOString()
+    id: await generateNewId(),
+    name: normalizeText(getField("nome").value),
+    email: normalizeText(getField("email").value),
+    password: getField("senha").value,
+    cpf: getField("cpf").value,
+    birthDate: null,
+    cep: "",
+    bio: normalizeText(getField("historia").value),
+    phone: getField("telefone").value,
+    city: normalizeText(getField("cidade").value),
+    state: getField("estado").value,
+    interestArea: getField("areaInteresse").value,
+    profilePicture: "",
+    rating: 0,
+    createdAt: new Date().toISOString().slice(0, 10),
+    deletedAt: null
   };
 }
 
-function handleSubmit(event) {
+async function generateNewId(){
+  const listResponse = await fetch(api("/volunteers"));
+
+  if (!listResponse.ok) {
+    throw new Error("Nao foi possivel consultar as Voluntários.");
+  }
+  const volunteers = await listResponse.json();
+  return parseInt(volunteers[volunteers.length - 1].id) + 1;
+}
+
+async function postUser(user) {
+  const response = await fetch(api("/volunteers"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user)
+  });
+
+  if (!response.ok) {
+    throw new Error("Nao foi possivel salvar o voluntario.");
+  }
+
+  return response.json();
+}
+
+function setSubmitting(isSubmitting) {
+  submitButton.disabled = isSubmitting;
+  submitButton.textContent = isSubmitting ? "Cadastrando..." : "Cadastrar";
+}
+
+async function handleSubmit(event) {
   event.preventDefault();
 
   if (!validateAllSteps()) {
@@ -357,21 +391,31 @@ function handleSubmit(event) {
     return;
   }
 
-  const users = readUsers();
-  const newUser = buildUser();
-
-  users.push(newUser);
-  saveUsers(users);
-
-  form.hidden = true;
-  successPanel.hidden = false;
+  setSubmitting(true);
   setMessage("", "");
+
+  try {
+    const user = await buildUser();
+    const savedUser = await postUser(user);
+    const users = readUsers();
+    users.push(savedUser);
+    saveUsers(users);
+
+    form.hidden = true;
+    successPanel.hidden = false;
+  } catch (error) {
+    console.error(error);
+    setMessage("Nao foi possivel salvar no servidor. Verifique se a API esta ativa.", "error");
+  } finally {
+    setSubmitting(false);
+  }
 }
 
 backButton.addEventListener("click", () => {
   if (!registerScreen.hidden && currentStep === 0) {
     registerScreen.hidden = true;
     choiceScreen.hidden = false;
+    backButton.hidden = true;
     return;
   }
 
@@ -426,3 +470,7 @@ Array.from(form.elements).forEach((field) => {
 });
 
 selectRegisterType(selectedRegisterType);
+
+if (new URLSearchParams(window.location.search).get("start") === "1") {
+  showRegister();
+}

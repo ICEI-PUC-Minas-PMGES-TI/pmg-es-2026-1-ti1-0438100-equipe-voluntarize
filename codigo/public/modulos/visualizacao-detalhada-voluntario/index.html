@@ -1,145 +1,122 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Visualiza&ccedil;&atilde;o Detalhada do Volunt&aacute;rio</title>
-    <link rel="stylesheet" href="../../design-system/css/globals.css" />
-    <link rel="stylesheet" href="./style.css" />
-    <script defer src="./script.js"></script>
-  </head>
-  <body>
-    <div class="volunteer-page">
-      <div class="container header-shell">
-        <header class="site-header">
-          <a href="../../index.html" aria-label="Ir para o in&iacute;cio">
-            <img
-              class="brand-logo"
-              src="../../assets/images/logo/logo-horizontal.png"
-              alt="Voluntarize"
-            />
-          </a>
 
-          <nav class="site-nav" aria-label="Navega&ccedil;&atilde;o principal">
-            <a href="../../index.html">In&iacute;cio</a>
-            <a href="#">Perfil</a>
-            <a href="#">Vagas</a>
-            <a href="#">Minhas Candidaturas</a>
-          </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil do Voluntário | Voluntarize</title>
+  <link rel="stylesheet" href="../../design-system/css/globals.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="../../assets/images/logo/logo-icon.png" type="image/x-icon">
+</head>
 
-          <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário" onclick="redirectToProfile()">
-            <i class="fa-regular fa-user"></i>
+<body>
+  <div id="header-global" data-header-class="site-header"></div>
+
+  <main class="container section stack gap-4">
+
+    <section class="surface surface-green">
+      <div class="flex justify-between items-center flex-wrap gap-4">
+
+        <div class="flex items-center gap-3">
+          <div>
+            <span class="icon-token icon-lg icon-purple">
+              <i class="fa-regular fa-user"></i>
+            </span>
+          </div>
+          <div class="stack gap-1">
+            <h1 class="h3" id="volunteer-name"></h1>
+            <div id="volunteer-meta" class="vol-meta font-alt text-sm text-muted"></div>
+          </div>
+        </div>
+
+        <div class="stack items-end gap-2">
+          <span class="tag tag-white tag-sm">
+            <i class="fa-solid fa-star"></i>
+            <span id="volunteer-rating"></span>
+          </span>
+          <span class="text-sm text-semibold">
+            <i class="fa-solid fa-users"></i>
+            <span id="volunteer-followers"></span>
+            <span class="font-alt"> Seguidores</span>
+          </span>
+          <button class="btn btn-secondary btn-pad-sm" id="follow-button" type="button">
+            <i class="fa-solid fa-user-plus"></i> Seguir
           </button>
-        </header>
+        </div>
+
       </div>
+    </section>
 
-      <main class="container section volunteer-main">
-        <section class="surface surface-green profile-hero" aria-labelledby="volunteer-name">
-          <div class="profile-avatar" aria-hidden="true">
-            <img src="../../assets/images/profile-user.svg" alt="" />
-          </div>
-
-          <div class="profile-copy">
-            <h1 class="volunteer-name" id="volunteer-name"></h1>
-            <p class="text-sm" id="volunteer-meta"></p>
-          </div>
-
-          <aside class="profile-actions" aria-label="Resumo do volunt&aacute;rio">
-            <p class="rating-badge">
-              <span id="volunteer-rating"></span>
-              <img src="../../assets/images/star.svg" alt="" />
-            </p>
-            <p class="tag tag-white tag-static tag-xs followers-badge">
-              <img src="../../assets/images/follower-icon.svg" alt="" />
-              <span id="volunteer-followers"></span>
-              <span>Seguidores</span>
-            </p>
-            <button
-              class="btn btn-secondary btn-pad-xs btn-shadow-xs btn-border-thin follow-button"
-              id="follow-button"
-              type="button"
-            ></button>
-          </aside>
-        </section>
-
-        <div class="volunteer-divider">
-          <span class="volunteer-line volunteer-line-left" aria-hidden="true"></span>
-          <span class="volunteer-divider-text">Hist&oacute;ria da ONG</span>
-          <span class="volunteer-line volunteer-line-right" aria-hidden="true"></span>
-        </div>
-
-        <section class="surface story-card" aria-labelledby="story-title">
-          <div class="story-copy">
-            <h2 class="surface surface-purple surface-xs story-title" id="story-title"></h2>
-            <div class="story-text font-alt text-sm" id="volunteer-story"></div>
-          </div>
-
-          <img
-            class="story-illustration"
-            src="../../assets/images/story-person.svg"
-            alt=""
-            aria-hidden="true"
-          />
-        </section>
-
-        <div class="volunteer-divider">
-          <span class="volunteer-line volunteer-line-left" aria-hidden="true"></span>
-          <span class="volunteer-divider-text">Hist&oacute;rico de A&ccedil;&otilde;es</span>
-          <span class="volunteer-line volunteer-line-right" aria-hidden="true"></span>
-        </div>
-
-        <section class="actions-panel" aria-label="Hist&oacute;rico de a&ccedil;&otilde;es">
-          <button
-            class="btn btn-secondary btn-icon-only btn-icon-only-xs btn-shadow-xs btn-border-thin"
-            id="previous-action"
-            type="button"
-            aria-label="A&ccedil;&atilde;o anterior"
-          >
-            &lt;
-          </button>
-
-          <div class="actions-list" id="actions-list"></div>
-
-          <button
-            class="btn btn-secondary btn-icon-only btn-icon-only-xs btn-shadow-xs btn-border-thin"
-            id="next-action"
-            type="button"
-            aria-label="Pr&oacute;xima a&ccedil;&atilde;o"
-          >
-            &gt;
-          </button>
-        </section>
-
-        <div class="volunteer-divider">
-          <span class="volunteer-line volunteer-line-left" aria-hidden="true"></span>
-          <span class="volunteer-divider-text">Avalia&ccedil;&otilde;es</span>
-          <span class="volunteer-line volunteer-line-right" aria-hidden="true"></span>
-        </div>
-
-        <section class="reviews-panel" aria-label="Avalia&ccedil;&otilde;es">
-          <p class="surface surface-xs review-heading">
-            <img src="../../assets/images/review-icon.svg" alt="" />
-            Veja o que outros usu&aacute;rios disseram sobre trabalhar com
-            <span id="review-volunteer-name"></span>
-          </p>
-
-          <div class="reviews-list" id="reviews-list"></div>
-        </section>
-      </main>
-
-      <div class="container mb-4">
-        <footer class="site-footer">
-          <img
-            class="brand-logo"
-            src="../../assets/images/logo/logo-horizontal.png"
-            alt="Voluntarize"
-          />
-          <p class="text-xs">
-            Plataforma de volunt&aacute;rios @ 2026 | Todos os direitos reservados
-          </p>
-        </footer>
-      </div>
+    <div class="divider-label">
+      <span>História do Voluntário</span>
     </div>
-    <script src="../../assets/js/profile-redirect.js"></script>
-  </body>
+
+    <section class="surface stack">
+      <div>
+        <span class="tag tag-purple">
+          <i class="fa-solid fa-book-open"></i>
+          <span id="story-title"></span>
+        </span>
+      </div>
+      <div class="historia-content">
+        <div id="volunteer-story" class="historia-vol-text text-sm font-alt"></div>
+        <div class="historia-ilustracao">
+          <img src="../../assets/images/imgs-undraw/img-pessoas-unidas-landing.svg" alt="Voluntário em ação" />
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-label">
+      <span>Histórico de Ações</span>
+    </div>
+
+    <section class="surface surface-white stack">
+      <div class="surface surface-green p-3 flex items-center gap-2 text-sm text-bold">
+        <i class="fa-solid fa-fire"></i>
+        Veja as ações em que este voluntário participou!
+      </div>
+      <div class="actions-wrapper">
+        <button class="btn btn-secondary btn-icon-only btn-pad-xs" id="previous-action" aria-label="Ação anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="carousel-track-container">
+          <div class="carousel-track" id="actions-list"></div>
+        </div>
+        <button class="btn btn-secondary btn-icon-only btn-pad-xs" id="next-action" aria-label="Próxima ação">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <div class="divider-label">
+      <span>Avaliações</span>
+    </div>
+
+    <section class="surface surface-purple stack">
+      <div class="reviews-alert">
+        <i class="fa-solid fa-check"></i>
+        <p class="text-sm text-bold">
+          Veja o que os usuários disseram sobre <strong id="review-volunteer-name"></strong>
+        </p>
+      </div>
+      <div class="grid grid-3" id="reviews-list"></div>
+    </section>
+
+  </main>
+
+  <div class="container mb-4">
+    <footer class="site-footer">
+      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
+      <p class="text-sm">
+        Plataforma de voluntários @ 2026 | Todos os direitos reservados
+      </p>
+    </footer>
+  </div>
+
+  <script src="../../js/global-header.js"></script>
+  <script src="./script.js"></script>
+</body>
+
 </html>

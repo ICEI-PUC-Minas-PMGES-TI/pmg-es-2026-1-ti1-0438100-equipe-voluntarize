@@ -7,24 +7,13 @@
   <link rel="stylesheet" href="../../design-system/css/globals.css" />
   <link rel="stylesheet" href="./style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="icon" href="../../assets/images/logo/logo-icon.png" type="image/x-icon">
 </head>
 <body>
 
-  <div class="container header-shell">
-    <header class="site-header">
-      <img class="brand-logo" src="../../assets/images/logo/logo-horizontal.png" alt="Voluntarize" />
-      <nav class="site-nav" aria-label="Navegação">
-        <a href="../home/home-ong.html">Início</a>
-        <a href="#">Perfil</a>
-        <a href="#">Vagas</a>
-      </nav>
-      <button class="btn btn-secondary btn-icon-only btn-rounded-full btn-shadow-sm" aria-label="Usuário" onclick="redirectToProfile()">
-        <i class="fa-regular fa-user"></i>
-      </button>
-    </header>
-  </div>
+  <div id="header-global" data-header-class="site-header"></div>
 
-  <main class="container section stack gap-4">
+  <main class="container section manage-page">
 
     <div class="manage-header surface surface-green">
       <div>
@@ -36,14 +25,44 @@
       </a>
     </div>
 
-    <div class="divider-label"><span>Candidaturas Pendentes</span></div>
-    <section data-list-pending class="candidates-grid"></section>
+    <section class="status-section status-pending">
+      <div class="status-heading">
+        <span class="icon-token icon-purple icon-sm icon-square" aria-hidden="true">
+          <i class="fa-regular fa-clock"></i>
+        </span>
+        <div>
+          <h2 class="h4">Candidaturas Pendentes</h2>
+          <p class="text-xs text-muted">Aguardando retorno da ONG</p>
+        </div>
+      </div>
+      <div data-list-pending class="candidates-grid"></div>
+    </section>
 
-    <div class="divider-label"><span>Candidaturas Aceitas</span></div>
-    <section data-list-accepted class="candidates-grid"></section>
+    <section class="status-section status-accepted">
+      <div class="status-heading">
+        <span class="icon-token icon-green icon-sm icon-square" aria-hidden="true">
+          <i class="fa-solid fa-check"></i>
+        </span>
+        <div>
+          <h2 class="h4">Candidaturas Aceitas</h2>
+          <p class="text-xs text-muted">Voluntários confirmados</p>
+        </div>
+      </div>
+      <div data-list-accepted class="candidates-grid"></div>
+    </section>
 
-    <div class="divider-label"><span>Candidaturas Recusadas</span></div>
-    <section data-list-rejected class="candidates-grid"></section>
+    <section class="status-section status-rejected">
+      <div class="status-heading">
+        <span class="icon-token icon-white icon-sm icon-square" aria-hidden="true">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+        <div>
+          <h2 class="h4">Candidaturas Recusadas</h2>
+          <p class="text-xs text-muted">Candidaturas não selecionadas</p>
+        </div>
+      </div>
+      <div data-list-rejected class="candidates-grid"></div>
+    </section>
 
   </main>
 
@@ -54,6 +73,7 @@
     </footer>
   </div>
 
+  <script src="../../js/global-header.js"></script>
   <script src="../../assets/js/dynamic-page.js"></script>
   <script src="./script.js"></script>
   <script src="./../../assets/js/redirect-to-profile.js"></script>

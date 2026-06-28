@@ -5,48 +5,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro de Usuario Voluntario</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/cadastro-usuario.js" defer></script>
+  <link rel="stylesheet" href="../../design-system/css/globals.css">
+  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" href="../../assets/images/logo/logo-icon.png" type="image/x-icon">
 </head>
 
 <body>
   <main class="cadastro-page">
-    <button class="back-button" type="button" id="backButton" aria-label="Voltar">
+    <button class="btn btn-secondary btn-shadow-sm btn-rounded-sm back-button" type="button" id="backButton" aria-label="Voltar" hidden>
+      <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
       Voltar
     </button>
-
+    
     <section class="choice-card" id="choiceScreen" aria-labelledby="choiceTitle">
-      <span class="title-pill" id="choiceTitle">Cadastrar</span>
+      <span class="btn btn-outline btn-pad-sm btn-shadow-sm title-pill" id="choiceTitle">Cadastrar</span>
       <p>Selecione o tipo de cadastro que mais se adequa a voce:</p>
-
+      
       <div class="choice-options">
         <button class="choice-option" type="button" data-register-type="ongs" aria-pressed="false">
-          <img src="assets/successful-group.svg" alt="">
+          <img src="../cadastro-ong/assets/successful-group.svg" alt="">
           <span>ONG</span>
         </button>
-
+        
         <button class="choice-option selected" type="button" data-register-type="volunteers" aria-pressed="true">
           <img src="assets/successful-person.svg" alt="">
           <span>Voluntario</span>
         </button>
       </div>
-
-      <button class="primary-button" type="button" id="startRegister">Prosseguir</button>
+      
+      <button class="btn btn-primary btn-pad-md btn-shadow-md primary-button" type="button" id="startRegister">Prosseguir</button>
       <p class="login-link">Ja tem uma conta? <a href="../login/login.html">Entrar!</a></p>
     </section>
-
+    
     <section class="cadastro-shell" id="registerScreen" aria-labelledby="cadastroTitulo" hidden>
       <aside class="illustration-panel" aria-hidden="true">
         <img id="stepIllustration" src="assets/successful-person.svg" alt="">
       </aside>
-
+      
       <section class="cadastro-card">
         <form class="cadastro-form" id="cadastroUsuarioForm" novalidate>
           <div class="card-heading">
-            <span class="title-pill" id="cadastroTitulo">Cadastro</span>
+            <span class="btn btn-outline btn-pad-sm btn-shadow-sm title-pill" id="cadastroTitulo">Cadastro</span>
             <p id="stepIntro">Venha fazer parte dessa comunidade!</p>
           </div>
-
+          
           <div class="form-step" data-step="0">
             <div class="field-group">
               <label for="nome">Nome completo</label>
@@ -55,7 +58,7 @@
               </div>
               <small class="field-error" id="erro-nome"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="email">E-mail</label>
               <div class="input-shell">
@@ -63,7 +66,7 @@
               </div>
               <small class="field-error" id="erro-email"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="senha">Senha</label>
               <div class="input-shell">
@@ -71,7 +74,7 @@
               </div>
               <small class="field-error" id="erro-senha"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="confirmarSenha">Confirmar senha</label>
               <div class="input-shell">
@@ -80,7 +83,7 @@
               <small class="field-error" id="erro-confirmarSenha"></small>
             </div>
           </div>
-
+          
           <div class="form-step" data-step="1" hidden>
             <div class="field-group">
               <label for="telefone">Telefone</label>
@@ -89,7 +92,7 @@
               </div>
               <small class="field-error" id="erro-telefone"></small>
             </div>
-
+            
             <div class="field-group">
               <label for="cpf">CPF</label>
               <div class="input-shell">
@@ -97,7 +100,7 @@
               </div>
               <small class="field-error" id="erro-cpf"></small>
             </div>
-
+            
             <div class="field-row">
               <div class="field-group">
                 <label for="cidade">Cidade</label>
@@ -106,7 +109,7 @@
                 </div>
                 <small class="field-error" id="erro-cidade"></small>
               </div>
-
+              
               <div class="field-group">
                 <label for="estado">Estado</label>
                 <div class="input-shell">
@@ -144,7 +147,7 @@
                 <small class="field-error" id="erro-estado"></small>
               </div>
             </div>
-
+            
             <div class="field-group">
               <label for="areaInteresse">Area de interesse</label>
               <div class="input-shell">
@@ -162,7 +165,7 @@
               <small class="field-error" id="erro-areaInteresse"></small>
             </div>
           </div>
-
+          
           <div class="form-step" data-step="2" hidden>
             <div class="field-group">
               <label for="historia">Sua historia</label>
@@ -173,33 +176,34 @@
               <small class="field-error" id="erro-historia"></small>
             </div>
           </div>
-
+          
           <p class="form-message" id="formMessage" role="alert" aria-live="polite"></p>
-
+          
           <div class="form-actions">
-            <button class="secondary-button" type="button" id="prevStep">Voltar</button>
-            <button class="primary-button" type="button" id="nextStep">Proximo</button>
-            <button class="primary-button" type="submit" id="submitForm" hidden>Cadastrar</button>
+            <button class="btn btn-ghost btn-pad-sm secondary-button" type="button" id="prevStep">Voltar</button>
+            <button class="btn btn-primary btn-pad-sm btn-shadow-md primary-button" type="button" id="nextStep">Proximo</button>
+            <button class="btn btn-primary btn-pad-sm btn-shadow-md primary-button" type="submit" id="submitForm" hidden>Cadastrar</button>
           </div>
-
+          
           <p class="login-link">Ja tem uma conta? <a href="../login/login.html">Entrar!</a></p>
-
+          
           <div class="step-dots" aria-label="Etapas do cadastro">
             <span class="step-dot active" data-dot="0"></span>
             <span class="step-dot" data-dot="1"></span>
             <span class="step-dot" data-dot="2"></span>
           </div>
         </form>
-
+        
         <section class="success-panel" id="successPanel" hidden>
           <img src="assets/successful-person.svg" alt="">
           <h2>Cadastro realizado!</h2>
           <p>Seu perfil de voluntario foi salvo com sucesso.</p>
-          <a class="primary-button" href="../login/login.html">Entrar</a>
+          <a class="btn btn-primary btn-pad-sm btn-shadow-md primary-button" href="../login/login.html">Entrar</a>
         </section>
       </section>
     </section>
   </main>
+  <script src="js/cadastro-usuario.js"></script>
   <script src="./../../assets/js/redirect-to-profile.js"></script>
 </body>
 </html>
