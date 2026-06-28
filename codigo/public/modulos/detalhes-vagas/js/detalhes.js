@@ -7,7 +7,7 @@
   const getActionId = () => {
     const params = new URLSearchParams(window.location.search);
     const raw = params.get('id') || params.get('acaoId') || params.get('vagaId');
-    return raw || null;
+    return raw ? Number(raw) : null;
   };
 
   const getLoggedUser = () => {
@@ -135,19 +135,6 @@
     });
   };
 
-  const renderSignupButton = (btn, application, action, user) => {
-    if (!btn) return;
-    const isVolunteer = user && user.type === 0;
-    const isOpen = action.status === 'open';
-    const hasApplication = !!application;
-
-    btn.disabled = !isVolunteer || !isOpen;
-    btn.textContent = hasApplication ? 'Cancelar inscrição' : 'Inscrever-se';
-    btn.classList.toggle('btn-danger', hasApplication);
-    btn.classList.toggle('btn-primary', !hasApplication);
-    btn.dataset.applicationId = hasApplication ? application.id : '';
-  };
-
   const formatDate = (date) => { const [y, m, d] = date.split('-'); return `${d}/${m}/${y}`; };
   const formatRating = (r) => Number(r).toFixed(1).replace('.', ',');
   const formatFollowers = (n) => n >= 1000 ? `${Math.round(n / 1000)}K` : String(n);
@@ -180,7 +167,6 @@
       container.appendChild(el);
     });
   };
-
 
   async function isPresenceConfirmed(volunteerId, actionId) {
     try {
@@ -322,7 +308,7 @@
       setText('[data-ong-followers]', formatFollowers(ong.followers || 0));
 
       renderTags(action.tags || []);
-      renderParticipants(participants);
+      await renderParticipants(participants, actionId, user, action.ongId, isActionDateReached(action.date));
       setupFavoriteButton(actionId, user);
 
       try {
@@ -422,13 +408,11 @@ async function renderSignupButton(btn, application, action, user, API) {
   btn.classList.remove('btn-danger');
   btn.classList.add('btn-primary');
 
- 
   if (isOng) {
     btn.style.display = 'none';
     return;
   }
 
-  
   if (actionStarted) {
     if (isVolunteer && hasApplication) {
       const confirmed = await isPresenceConfirmedGlobal(API, user.id, action.id);
@@ -447,7 +431,6 @@ async function renderSignupButton(btn, application, action, user, API) {
           btn.dataset.mode = 'avaliar-ong';
         }
       } else {
-        
         btn.style.display = 'none';
         btn.dataset.mode = '';
       }
