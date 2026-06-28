@@ -362,7 +362,7 @@ async function postOng(ong) {
   const response = await fetch(api("/ongs"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
+    body: JSON.stringify(ong)
   });
 
   if (!response.ok) {
