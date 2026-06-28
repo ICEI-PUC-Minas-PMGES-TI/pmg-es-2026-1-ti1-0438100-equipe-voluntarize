@@ -287,7 +287,7 @@ Esta seção apresenta todos os detalhes da solução criada no projeto.
 ## Vídeo do Projeto
 
 
-[![Vídeo do projeto](../codigo/public/assets/images/logo/logo-icon.png)]()
+[![Vídeo do projeto](../codigo/public/assets/images/logo/logo-icon.png)](https://drive.google.com/file/d/1s49Kp22Vft7Y7MpADV_zCiVmx1zQq9OS/view)
 
 
 ## Funcionalidades
