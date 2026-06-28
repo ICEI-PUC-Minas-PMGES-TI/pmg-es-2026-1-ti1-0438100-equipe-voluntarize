@@ -322,7 +322,7 @@ function goToStep(stepIndex) {
 
 async function createOng() {
   return {
-    id: await generateNewid(),
+    id: await generateNewId(),
     name: normalizeText(field("nomeOng").value),
     email: normalizeText(field("email").value),
     password: field("senha").value,
