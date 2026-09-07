@@ -6,8 +6,7 @@
 
   const getActionId = () => {
     const params = new URLSearchParams(window.location.search);
-    const raw = params.get('id') || params.get('acaoId') || params.get('vagaId');
-    return raw ? Number(raw) : null;
+    return params.get('id') || params.get('acaoId') || params.get('vagaId') || null;
   };
 
   const getLoggedUser = () => {
